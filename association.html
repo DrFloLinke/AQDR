@@ -303,7 +303,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10.3" data-path="logit.html"><a href="logit.html#exercises-8"><i class="fa fa-check"></i><b>10.3</b> Exercises</a></li>
 </ul></li>
-<li class="part"><span><b>IV Advanced Topics</b></span></li>
+<li class="part"><span><b>IV AdDVANCED TOPICS</b></span></li>
 <li class="chapter" data-level="11" data-path="rmarkdown.html"><a href="rmarkdown.html"><i class="fa fa-check"></i><b>11</b> R Markdown</a>
 <ul>
 <li class="chapter" data-level="11.1" data-path="rmarkdown.html"><a href="rmarkdown.html#content-10"><i class="fa fa-check"></i><b>11.1</b> Content</a>
@@ -497,30 +497,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="association.html#cb377-1" tabindex="-1"></a><span class="fu">cor</span>(wages)</span></code></pre></div>
 <p>To visualize pariswise relationships between two variables using a plot that is a bit more sophisticated that the one produced by <code>pairs()</code> we can use the <code>ggpairs</code> function from the <code>GGally</code> package, which produced a <code>ggplot</code> style plot, presenting correlations, density plots and scatter plots of all the numeric variables in our dataset:</p>
 <div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="association.html#cb378-1" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
-<span id="cb378-2"><a href="association.html#cb378-2" tabindex="-1"></a><span class="fu">ggpairs</span>(scores)</span></code></pre></div>
+<span id="cb378-2"><a href="association.html#cb378-2" tabindex="-1"></a>Registered S3 method overwritten by <span class="st">&#39;GGally&#39;</span><span class="sc">:</span></span>
+<span id="cb378-3"><a href="association.html#cb378-3" tabindex="-1"></a>  method from   </span>
+<span id="cb378-4"><a href="association.html#cb378-4" tabindex="-1"></a>  <span class="sc">+</span>.gg   ggplot2</span></code></pre></div>
+<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="association.html#cb379-1" tabindex="-1"></a><span class="fu">ggpairs</span>(scores)</span></code></pre></div>
 <p><img src="main_files/figure-html/unnamed-chunk-380-1.png" width="672" /></p>
 </div>
 </div>
 <div id="further-details" class="section level3 unnumbered hasAnchor">
 <h3>Further details<a href="association.html#further-details" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Here some more details on how the p-value is computed:</p>
-<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="association.html#cb379-1" tabindex="-1"></a>err <span class="ot">&lt;-</span> <span class="fu">sd</span>(wages<span class="sc">$</span>change)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">nrow</span>(wages))</span>
-<span id="cb379-2"><a href="association.html#cb379-2" tabindex="-1"></a>tscore <span class="ot">&lt;-</span> <span class="fu">mean</span>(wages<span class="sc">$</span>change)<span class="sc">/</span>err</span>
-<span id="cb379-3"><a href="association.html#cb379-3" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">length</span>(wages<span class="sc">$</span>change) <span class="sc">-</span> <span class="dv">1</span></span>
-<span id="cb379-4"><a href="association.html#cb379-4" tabindex="-1"></a><span class="fu">pt</span>(tscore, df, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>) <span class="sc">*</span> <span class="dv">2</span></span>
-<span id="cb379-5"><a href="association.html#cb379-5" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.007687596</span></span></code></pre></div>
-<div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb380-1"><a href="association.html#cb380-1" tabindex="-1"></a><span class="fu">t.test</span>(wages<span class="sc">$</span>change)</span>
-<span id="cb380-2"><a href="association.html#cb380-2" tabindex="-1"></a></span>
-<span id="cb380-3"><a href="association.html#cb380-3" tabindex="-1"></a>    One Sample t<span class="sc">-</span>test</span>
-<span id="cb380-4"><a href="association.html#cb380-4" tabindex="-1"></a></span>
-<span id="cb380-5"><a href="association.html#cb380-5" tabindex="-1"></a>data<span class="sc">:</span>  wages<span class="sc">$</span>change</span>
-<span id="cb380-6"><a href="association.html#cb380-6" tabindex="-1"></a>t <span class="ot">=</span> <span class="fl">2.7211</span>, df <span class="ot">=</span> <span class="dv">99</span>, p<span class="sc">-</span>value <span class="ot">=</span> <span class="fl">0.007688</span></span>
-<span id="cb380-7"><a href="association.html#cb380-7" tabindex="-1"></a>alternative hypothesis<span class="sc">:</span> true mean is not equal to <span class="dv">0</span></span>
-<span id="cb380-8"><a href="association.html#cb380-8" tabindex="-1"></a><span class="dv">95</span> percent confidence interval<span class="sc">:</span></span>
-<span id="cb380-9"><a href="association.html#cb380-9" tabindex="-1"></a> <span class="fl">0.004033511</span> <span class="fl">0.025755527</span></span>
-<span id="cb380-10"><a href="association.html#cb380-10" tabindex="-1"></a>sample estimates<span class="sc">:</span></span>
-<span id="cb380-11"><a href="association.html#cb380-11" tabindex="-1"></a> mean of x </span>
-<span id="cb380-12"><a href="association.html#cb380-12" tabindex="-1"></a><span class="fl">0.01489452</span> </span></code></pre></div>
+<div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb380-1"><a href="association.html#cb380-1" tabindex="-1"></a>err <span class="ot">&lt;-</span> <span class="fu">sd</span>(wages<span class="sc">$</span>change)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">nrow</span>(wages))</span>
+<span id="cb380-2"><a href="association.html#cb380-2" tabindex="-1"></a>tscore <span class="ot">&lt;-</span> <span class="fu">mean</span>(wages<span class="sc">$</span>change)<span class="sc">/</span>err</span>
+<span id="cb380-3"><a href="association.html#cb380-3" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">length</span>(wages<span class="sc">$</span>change) <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb380-4"><a href="association.html#cb380-4" tabindex="-1"></a><span class="fu">pt</span>(tscore, df, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>) <span class="sc">*</span> <span class="dv">2</span></span>
+<span id="cb380-5"><a href="association.html#cb380-5" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.007687596</span></span></code></pre></div>
+<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="association.html#cb381-1" tabindex="-1"></a><span class="fu">t.test</span>(wages<span class="sc">$</span>change)</span>
+<span id="cb381-2"><a href="association.html#cb381-2" tabindex="-1"></a></span>
+<span id="cb381-3"><a href="association.html#cb381-3" tabindex="-1"></a>    One Sample t<span class="sc">-</span>test</span>
+<span id="cb381-4"><a href="association.html#cb381-4" tabindex="-1"></a></span>
+<span id="cb381-5"><a href="association.html#cb381-5" tabindex="-1"></a>data<span class="sc">:</span>  wages<span class="sc">$</span>change</span>
+<span id="cb381-6"><a href="association.html#cb381-6" tabindex="-1"></a>t <span class="ot">=</span> <span class="fl">2.7211</span>, df <span class="ot">=</span> <span class="dv">99</span>, p<span class="sc">-</span>value <span class="ot">=</span> <span class="fl">0.007688</span></span>
+<span id="cb381-7"><a href="association.html#cb381-7" tabindex="-1"></a>alternative hypothesis<span class="sc">:</span> true mean is not equal to <span class="dv">0</span></span>
+<span id="cb381-8"><a href="association.html#cb381-8" tabindex="-1"></a><span class="dv">95</span> percent confidence interval<span class="sc">:</span></span>
+<span id="cb381-9"><a href="association.html#cb381-9" tabindex="-1"></a> <span class="fl">0.004033511</span> <span class="fl">0.025755527</span></span>
+<span id="cb381-10"><a href="association.html#cb381-10" tabindex="-1"></a>sample estimates<span class="sc">:</span></span>
+<span id="cb381-11"><a href="association.html#cb381-11" tabindex="-1"></a> mean of x </span>
+<span id="cb381-12"><a href="association.html#cb381-12" tabindex="-1"></a><span class="fl">0.01489452</span> </span></code></pre></div>
 </div>
 </div>
 <div id="summary-6" class="section level2 hasAnchor" number="8.2">
@@ -529,9 +532,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3>Functions list<a href="association.html#functions-list-6" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <table>
 <colgroup>
-<col width="10%" />
-<col width="18%" />
-<col width="70%" />
+<col width="12%" />
+<col width="6%" />
+<col width="80%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -541,16 +544,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">cov()</td>
-<td align="left">c(“pROC”, “package:stats”)</td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">var()</td>
-<td align="left">c(“pROC”, “package:stats”)</td>
-<td align="left">NA</td>
-</tr>
 <tr class="odd">
 <td align="left">length()</td>
 <td align="left">base</td>
@@ -612,57 +605,57 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="left">collapse the dataset to a summary statistic. Usually used with group_by()</td>
 </tr>
 <tr class="odd">
-<td align="left">ggpairs()</td>
-<td align="left">GGally</td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
 <td align="left">aes()</td>
 <td align="left">ggplot2</td>
 <td align="left">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">geom_col()</td>
 <td align="left">ggplot2</td>
 <td align="left">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">geom_errorbar()</td>
 <td align="left">ggplot2</td>
 <td align="left">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">ggplot()</td>
 <td align="left">ggplot2</td>
 <td align="left">Create a ggplot graph</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">labs()</td>
 <td align="left">ggplot2</td>
 <td align="left">Customise labels in GGPLOT2</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">labs()</td>
 <td align="left">ggplot2</td>
 <td align="left">Add a vertical line in GGPLOT2</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">ylab()</td>
 <td align="left">ggplot2</td>
 <td align="left">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">pairs()</td>
 <td align="left">graphics</td>
 <td align="left">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">read_csv()</td>
 <td align="left">readr</td>
 <td align="left">read tibble from a csv file</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">cor()</td>
+<td align="left">stats</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">cov()</td>
 <td align="left">stats</td>
 <td align="left">NA</td>
 </tr>
@@ -681,6 +674,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="left">stats</td>
 <td align="left">NA</td>
 </tr>
+<tr class="odd">
+<td align="left">var()</td>
+<td align="left">stats</td>
+<td align="left">NA</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -695,12 +693,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol start="3" style="list-style-type: decimal">
 <li>Using correlation, examine which relationship is stronger - the one between years since PhD and salary or the one between years in service and salary.</li>
 </ol>
-<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="association.html#cb381-1" tabindex="-1"></a><span class="co">#ANSWER</span></span>
-<span id="cb381-2"><a href="association.html#cb381-2" tabindex="-1"></a><span class="fu">cor</span>(Salaries<span class="sc">$</span>salary, Salaries<span class="sc">$</span>yrs.since.phd)</span>
-<span id="cb381-3"><a href="association.html#cb381-3" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.4192311</span></span></code></pre></div>
-<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb382-1"><a href="association.html#cb382-1" tabindex="-1"></a><span class="fu">cor</span>(Salaries<span class="sc">$</span>salary, Salaries<span class="sc">$</span>yrs.service)</span>
-<span id="cb382-2"><a href="association.html#cb382-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.3347447</span></span></code></pre></div>
-<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="association.html#cb383-1" tabindex="-1"></a><span class="co">#the relationship between years since PhD and salary appears to be stronger</span></span></code></pre></div>
+<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb382-1"><a href="association.html#cb382-1" tabindex="-1"></a><span class="co">#ANSWER</span></span>
+<span id="cb382-2"><a href="association.html#cb382-2" tabindex="-1"></a><span class="fu">cor</span>(Salaries<span class="sc">$</span>salary, Salaries<span class="sc">$</span>yrs.since.phd)</span>
+<span id="cb382-3"><a href="association.html#cb382-3" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.4192311</span></span></code></pre></div>
+<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="association.html#cb383-1" tabindex="-1"></a><span class="fu">cor</span>(Salaries<span class="sc">$</span>salary, Salaries<span class="sc">$</span>yrs.service)</span>
+<span id="cb383-2"><a href="association.html#cb383-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.3347447</span></span></code></pre></div>
+<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="association.html#cb384-1" tabindex="-1"></a><span class="co">#the relationship between years since PhD and salary appears to be stronger</span></span></code></pre></div>
 <ol start="4" style="list-style-type: decimal">
 <li>Use t-tests to check whether we can confirm or reject the following hypothesis, based on the sample in the <code>Salaries</code> dataset.</li>
 </ol>
@@ -712,13 +710,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol start="5" style="list-style-type: decimal">
 <li>Recall the plot produced towards the end of the previous chapter depicting the average salary by age group and academic discipline. Produce the same plot, but this time include error bars depicting the confidence intervals around each of the means. The code to produce the table used in the last exercises is below. Note that you need to modify it (by computing the standard errors) before plotting the data. Remeber about adding appropriate labels to the plot.</li>
 </ol>
-<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="association.html#cb384-1" tabindex="-1"></a>byage <span class="ot">&lt;-</span> Salaries <span class="sc">%&gt;%</span></span>
-<span id="cb384-2"><a href="association.html#cb384-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">yrs_range =</span> <span class="fu">cut_width</span>(yrs.since.phd, <span class="dv">5</span>, <span class="at">boundary =</span> <span class="dv">5</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb384-3"><a href="association.html#cb384-3" tabindex="-1"></a>  <span class="fu">group_by</span>(yrs_range, discipline) <span class="sc">%&gt;%</span></span>
-<span id="cb384-4"><a href="association.html#cb384-4" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg =</span> <span class="fu">mean</span>(salary, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb384-5"><a href="association.html#cb384-5" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
-<span id="cb384-6"><a href="association.html#cb384-6" tabindex="-1"></a><span class="st">`</span><span class="at">summarise()</span><span class="st">`</span> has grouped output by <span class="st">&#39;yrs_range&#39;</span>. You can override using the <span class="st">`</span><span class="at">.groups</span><span class="st">`</span></span>
-<span id="cb384-7"><a href="association.html#cb384-7" tabindex="-1"></a>argument.</span></code></pre></div>
+<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="association.html#cb385-1" tabindex="-1"></a>byage <span class="ot">&lt;-</span> Salaries <span class="sc">%&gt;%</span></span>
+<span id="cb385-2"><a href="association.html#cb385-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">yrs_range =</span> <span class="fu">cut_width</span>(yrs.since.phd, <span class="dv">5</span>, <span class="at">boundary =</span> <span class="dv">5</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb385-3"><a href="association.html#cb385-3" tabindex="-1"></a>  <span class="fu">group_by</span>(yrs_range, discipline) <span class="sc">%&gt;%</span></span>
+<span id="cb385-4"><a href="association.html#cb385-4" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg =</span> <span class="fu">mean</span>(salary, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb385-5"><a href="association.html#cb385-5" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb385-6"><a href="association.html#cb385-6" tabindex="-1"></a><span class="st">`</span><span class="at">summarise()</span><span class="st">`</span> has grouped output by <span class="st">&#39;yrs_range&#39;</span>. You can override using the <span class="st">`</span><span class="at">.groups</span><span class="st">`</span></span>
+<span id="cb385-7"><a href="association.html#cb385-7" tabindex="-1"></a>argument.</span></code></pre></div>
 <ol start="6" style="list-style-type: decimal">
 <li>Examine the correlation between years since phd and average salary in each of the groups defined in the data.</li>
 </ol>
