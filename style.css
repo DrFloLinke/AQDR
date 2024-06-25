@@ -1,11 +1,11 @@
 
 .book .book-summary {
-  background: #552D62;
+  background: #3b6890;
 }
 
 
 .book .book-body {
-  background: #886C91;
+  background: #879db0;
 }
 
 .book .book-summary ul.summary li, 
@@ -24,7 +24,7 @@
 }
 
 .book .book-summary ul.summary li a.gitbook-link {
-  color: #e6e0e9;
+  color: #e9eef2;
 }
 
 .book .book-summary ul.summary li.done i.fa-check
