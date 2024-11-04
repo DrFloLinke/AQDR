@@ -37,3 +37,14 @@
 }
 
 table { caption-side: bottom }
+
+.book.font-family-0 {
+  font-family: Avenir, Helvetica, "sans serif";
+}
+.book.font-family-1 {
+  font-family: Avenir, Helvetica, "sans serif";
+}
+
+.summary{
+font-family: Avenir, Helvetica, "sans serif";
+}
