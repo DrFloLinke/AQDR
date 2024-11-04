@@ -45,6 +45,20 @@ table { caption-side: bottom }
   font-family: Avenir, Helvetica, "sans serif";
 }
 
+h1 {
+  font-family: Avenir, Helvetica, "sans serif";
+  font-size:   48px;
+  font-weight: normal;
+}
+
+
+h2,h3,h4 {
+  font-family: Avenir, Helvetica, "sans serif";
+  font-size:   24px;
+  font-weight: normal;
+}
+
+
 .summary{
 font-family: Avenir, Helvetica, "sans serif";
 }
