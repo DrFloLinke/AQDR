@@ -48,3 +48,9 @@ table { caption-side: bottom }
 .summary{
 font-family: Avenir, Helvetica, "sans serif";
 }
+
+li.appendix span, li.part span { /* for TOC part names */
+  margin-top: 1em;
+  opacity: 1 !important;
+  text-transform: uppercase;
+}
