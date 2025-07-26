@@ -1,368 +1,100 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html lang="en">
 <head>
-
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>11 R Markdown | main.knit</title>
-  <meta name="description" content="Analysing Quantitative Data with R " />
-  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
-
-  <meta property="og:title" content="11 R Markdown | main.knit" />
-  <meta property="og:type" content="book" />
-  
-  
-  
-
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="11 R Markdown | main.knit" />
-  
-  
-  
-
-
-
-
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  
-  
-<link rel="prev" href="logit.html"/>
-<link rel="next" href="course-summary.html"/>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
-<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
-
-
-
-
-
-
-
-<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
-<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/font-awesome-6.5.2/js/script.js"></script>
-<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
-<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
-<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.33/datatables.js"></script>
-<link href="libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
-<link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
-
-
-<style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-</style>
-
-<style type="text/css">
-  
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-</style>
-
-<link rel="stylesheet" href="style.css" type="text/css" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>11 R Markdown |  Analysing Quantitative Data with R  </title>
+<meta name="generator" content="bookdown 0.43 with bs4_book()">
+<meta property="og:title" content="11 R Markdown |  Analysing Quantitative Data with R  ">
+<meta property="og:type" content="book">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="11 R Markdown |  Analysing Quantitative Data with R  ">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Lexend-0.4.10/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.9.0/transition.js"></script><script src="libs/bs3compat-0.9.0/tabs.js"></script><script src="libs/bs3compat-0.9.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/font-awesome-6.5.2/js/script.js"></script><link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.33/datatables.js"></script><link href="libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script><link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
+<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+<meta name="description" content="11.1 Content One of the more persuasive arguments to use R (over say SPSS) is its ability to easily make work reproducible. This means that you could give your RScript to another person, and they...">
+<meta property="og:description" content="11.1 Content One of the more persuasive arguments to use R (over say SPSS) is its ability to easily make work reproducible. This means that you could give your RScript to another person, and they...">
+<meta name="twitter:description" content="11.1 Content One of the more persuasive arguments to use R (over say SPSS) is its ability to easily make work reproducible. This means that you could give your RScript to another person, and they...">
 </head>
+<body data-spy="scroll" data-target="#toc">
 
-<body>
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
-
-
-  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
-
-    <div class="book-summary">
-      <nav role="navigation">
-
-<ul class="summary">
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
-<li class="chapter" data-level="" data-path="accessibility.html"><a href="accessibility.html"><i class="fa fa-check"></i>Accessibility</a></li>
-<li class="part"><span><b>I THE BASICS</b></span></li>
-<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
-<ul>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#what-is-r-and-why-should-i-learn-it"><i class="fa fa-check"></i>What is R and why should I learn it?</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#the-course-structure"><i class="fa fa-check"></i>The course structure</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#setup"><i class="fa fa-check"></i>Setup</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#layout"><i class="fa fa-check"></i>Layout</a>
-<ul>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#console-pane"><i class="fa fa-check"></i>Console pane</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#source-pane"><i class="fa fa-check"></i>Source pane</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#environment-pane"><i class="fa fa-check"></i>Environment pane</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#filesplothelp-pane"><i class="fa fa-check"></i>Files/plot/help … pane</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="2" data-path="basics.html"><a href="basics.html"><i class="fa fa-check"></i><b>2</b> Basics of R Programming</a>
-<ul>
-<li class="chapter" data-level="2.1" data-path="basics.html"><a href="basics.html#content"><i class="fa fa-check"></i><b>2.1</b> Content</a>
-<ul>
-<li class="chapter" data-level="" data-path="basics.html"><a href="basics.html#arithmetic-operations-and-assignment"><i class="fa fa-check"></i>Arithmetic operations and assignment</a></li>
-<li class="chapter" data-level="" data-path="basics.html"><a href="basics.html#vectors"><i class="fa fa-check"></i>Vectors</a></li>
-<li class="chapter" data-level="" data-path="basics.html"><a href="basics.html#coercion"><i class="fa fa-check"></i>Coercion</a></li>
-<li class="chapter" data-level="" data-path="basics.html"><a href="basics.html#logical-values-and-operators"><i class="fa fa-check"></i>Logical Values and Operators</a></li>
-<li class="chapter" data-level="" data-path="basics.html"><a href="basics.html#indexing"><i class="fa fa-check"></i>Indexing</a></li>
-<li class="chapter" data-level="" data-path="basics.html"><a href="basics.html#sorting"><i class="fa fa-check"></i>Sorting</a></li>
-</ul></li>
-<li class="chapter" data-level="2.2" data-path="basics.html"><a href="basics.html#summary"><i class="fa fa-check"></i><b>2.2</b> Summary</a>
-<ul>
-<li class="chapter" data-level="" data-path="basics.html"><a href="basics.html#functions-list"><i class="fa fa-check"></i>Functions list</a></li>
-</ul></li>
-<li class="chapter" data-level="2.3" data-path="basics.html"><a href="basics.html#exercises"><i class="fa fa-check"></i><b>2.3</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="datastructures.html"><a href="datastructures.html"><i class="fa fa-check"></i><b>3</b> Data structures</a>
-<ul>
-<li class="chapter" data-level="3.1" data-path="datastructures.html"><a href="datastructures.html#content-1"><i class="fa fa-check"></i><b>3.1</b> Content</a>
-<ul>
-<li class="chapter" data-level="" data-path="datastructures.html"><a href="datastructures.html#data-frames"><i class="fa fa-check"></i>Data Frames</a></li>
-<li class="chapter" data-level="" data-path="datastructures.html"><a href="datastructures.html#factors"><i class="fa fa-check"></i>Factors</a></li>
-<li class="chapter" data-level="" data-path="datastructures.html"><a href="datastructures.html#reading-and-writing-the-data"><i class="fa fa-check"></i>Reading and writing the data</a></li>
-<li class="chapter" data-level="" data-path="datastructures.html"><a href="datastructures.html#missing-values"><i class="fa fa-check"></i>Missing values</a></li>
-<li class="chapter" data-level="" data-path="datastructures.html"><a href="datastructures.html#lists"><i class="fa fa-check"></i>Lists</a></li>
-</ul></li>
-<li class="chapter" data-level="3.2" data-path="datastructures.html"><a href="datastructures.html#summary-1"><i class="fa fa-check"></i><b>3.2</b> Summary</a>
-<ul>
-<li class="chapter" data-level="" data-path="datastructures.html"><a href="datastructures.html#functions-list-1"><i class="fa fa-check"></i>Functions list</a></li>
-</ul></li>
-<li class="chapter" data-level="3.3" data-path="datastructures.html"><a href="datastructures.html#exercises-1"><i class="fa fa-check"></i><b>3.3</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="exploratory.html"><a href="exploratory.html"><i class="fa fa-check"></i><b>4</b> Exploratory Data Analysis</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="exploratory.html"><a href="exploratory.html#content-2"><i class="fa fa-check"></i><b>4.1</b> Content</a>
-<ul>
-<li class="chapter" data-level="" data-path="exploratory.html"><a href="exploratory.html#what-is-exploratory-data-analysis"><i class="fa fa-check"></i>What is exploratory data analysis?</a></li>
-<li class="chapter" data-level="" data-path="exploratory.html"><a href="exploratory.html#first-look-at-the-data"><i class="fa fa-check"></i>First look at the data</a></li>
-<li class="chapter" data-level="" data-path="exploratory.html"><a href="exploratory.html#numeric-vs-categorical-variables"><i class="fa fa-check"></i>Numeric vs categorical variables</a></li>
-<li class="chapter" data-level="" data-path="exploratory.html"><a href="exploratory.html#numeric-variables"><i class="fa fa-check"></i>Numeric variables</a></li>
-<li class="chapter" data-level="" data-path="exploratory.html"><a href="exploratory.html#categorical-variables"><i class="fa fa-check"></i>Categorical variables</a></li>
-<li class="chapter" data-level="" data-path="exploratory.html"><a href="exploratory.html#customizing-visualizations"><i class="fa fa-check"></i>Customizing visualizations</a></li>
-</ul></li>
-<li class="chapter" data-level="4.2" data-path="exploratory.html"><a href="exploratory.html#summary-2"><i class="fa fa-check"></i><b>4.2</b> Summary</a>
-<ul>
-<li class="chapter" data-level="" data-path="exploratory.html"><a href="exploratory.html#functions-list-2"><i class="fa fa-check"></i>Functions list</a></li>
-</ul></li>
-<li class="chapter" data-level="4.3" data-path="exploratory.html"><a href="exploratory.html#exercises-2"><i class="fa fa-check"></i><b>4.3</b> Exercises</a></li>
-</ul></li>
-<li class="part"><span><b>II ADVANCED DATA MANIPULATION</b></span></li>
-<li class="chapter" data-level="5" data-path="programming.html"><a href="programming.html"><i class="fa fa-check"></i><b>5</b> Key Programming Concepts</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="programming.html"><a href="programming.html#content-3"><i class="fa fa-check"></i><b>5.1</b> Content</a>
-<ul>
-<li class="chapter" data-level="" data-path="programming.html"><a href="programming.html#control-flow-statements"><i class="fa fa-check"></i>Control flow statements</a></li>
-<li class="chapter" data-level="" data-path="programming.html"><a href="programming.html#for-loops"><i class="fa fa-check"></i>For loops</a></li>
-<li class="chapter" data-level="" data-path="programming.html"><a href="programming.html#if-statements"><i class="fa fa-check"></i>If statements</a></li>
-<li class="chapter" data-level="" data-path="programming.html"><a href="programming.html#functions"><i class="fa fa-check"></i>Functions</a></li>
-<li class="chapter" data-level="" data-path="programming.html"><a href="programming.html#sapply"><i class="fa fa-check"></i>Sapply</a></li>
-</ul></li>
-<li class="chapter" data-level="5.2" data-path="programming.html"><a href="programming.html#summary-3"><i class="fa fa-check"></i><b>5.2</b> Summary</a>
-<ul>
-<li class="chapter" data-level="" data-path="programming.html"><a href="programming.html#functions-list-3"><i class="fa fa-check"></i>Functions list</a></li>
-</ul></li>
-<li class="chapter" data-level="5.3" data-path="programming.html"><a href="programming.html#exercises-3"><i class="fa fa-check"></i><b>5.3</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="dplyr.html"><a href="dplyr.html"><i class="fa fa-check"></i><b>6</b> Data Manipulation</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="dplyr.html"><a href="dplyr.html#content-4"><i class="fa fa-check"></i><b>6.1</b> Content</a>
-<ul>
-<li class="chapter" data-level="" data-path="dplyr.html"><a href="dplyr.html#reading-the-data"><i class="fa fa-check"></i>Reading the data</a></li>
-<li class="chapter" data-level="" data-path="dplyr.html"><a href="dplyr.html#the-pipe-operator"><i class="fa fa-check"></i>The pipe operator</a></li>
-<li class="chapter" data-level="" data-path="dplyr.html"><a href="dplyr.html#dataset-manipulation"><i class="fa fa-check"></i>Dataset manipulation</a></li>
-<li class="chapter" data-level="" data-path="dplyr.html"><a href="dplyr.html#reshaping-data"><i class="fa fa-check"></i>Reshaping data</a></li>
-<li class="chapter" data-level="" data-path="dplyr.html"><a href="dplyr.html#joining"><i class="fa fa-check"></i>Joining</a></li>
-<li class="chapter" data-level="" data-path="dplyr.html"><a href="dplyr.html#aggregating-data"><i class="fa fa-check"></i>Aggregating data</a></li>
-</ul></li>
-<li class="chapter" data-level="6.2" data-path="dplyr.html"><a href="dplyr.html#summary-4"><i class="fa fa-check"></i><b>6.2</b> Summary</a>
-<ul>
-<li class="chapter" data-level="" data-path="dplyr.html"><a href="dplyr.html#functions-list-4"><i class="fa fa-check"></i>Functions list</a></li>
-</ul></li>
-<li class="chapter" data-level="6.3" data-path="dplyr.html"><a href="dplyr.html#exercises-4"><i class="fa fa-check"></i><b>6.3</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="visualization.html"><a href="visualization.html"><i class="fa fa-check"></i><b>7</b> Data Visualization</a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="visualization.html"><a href="visualization.html#content-5"><i class="fa fa-check"></i><b>7.1</b> Content</a>
-<ul>
-<li class="chapter" data-level="" data-path="visualization.html"><a href="visualization.html#the-plotting-syntax"><i class="fa fa-check"></i>The plotting syntax</a></li>
-<li class="chapter" data-level="" data-path="visualization.html"><a href="visualization.html#all-about-geoms---plot-types-in-ggplot2"><i class="fa fa-check"></i>All about geoms - plot types in ggplot2</a></li>
-<li class="chapter" data-level="" data-path="visualization.html"><a href="visualization.html#multiple-plots"><i class="fa fa-check"></i>Multiple plots</a></li>
-<li class="chapter" data-level="" data-path="visualization.html"><a href="visualization.html#customizing-plots"><i class="fa fa-check"></i>Customizing plots</a></li>
-<li class="chapter" data-level="" data-path="visualization.html"><a href="visualization.html#saving-plots"><i class="fa fa-check"></i>Saving plots</a></li>
-</ul></li>
-<li class="chapter" data-level="7.2" data-path="visualization.html"><a href="visualization.html#summary-5"><i class="fa fa-check"></i><b>7.2</b> Summary</a>
-<ul>
-<li class="chapter" data-level="" data-path="visualization.html"><a href="visualization.html#functions-list-5"><i class="fa fa-check"></i>Functions list</a></li>
-</ul></li>
-<li class="chapter" data-level="7.3" data-path="visualization.html"><a href="visualization.html#exercises-5"><i class="fa fa-check"></i><b>7.3</b> Exercises</a></li>
-</ul></li>
-<li class="part"><span><b>III DATA ANALYSIS</b></span></li>
-<li class="chapter" data-level="8" data-path="association.html"><a href="association.html"><i class="fa fa-check"></i><b>8</b> Statistical Inference and Association</a>
-<ul>
-<li class="chapter" data-level="8.1" data-path="association.html"><a href="association.html#content-6"><i class="fa fa-check"></i><b>8.1</b> Content</a>
-<ul>
-<li class="chapter" data-level="" data-path="association.html"><a href="association.html#comparing-means"><i class="fa fa-check"></i>Comparing means</a></li>
-<li class="chapter" data-level="" data-path="association.html"><a href="association.html#relationship-between-two-continuous-variables"><i class="fa fa-check"></i>Relationship between two continuous variables</a></li>
-<li class="chapter" data-level="" data-path="association.html"><a href="association.html#further-details"><i class="fa fa-check"></i>Further details</a></li>
-</ul></li>
-<li class="chapter" data-level="8.2" data-path="association.html"><a href="association.html#summary-6"><i class="fa fa-check"></i><b>8.2</b> Summary</a>
-<ul>
-<li class="chapter" data-level="" data-path="association.html"><a href="association.html#functions-list-6"><i class="fa fa-check"></i>Functions list</a></li>
-</ul></li>
-<li class="chapter" data-level="8.3" data-path="association.html"><a href="association.html#exercises-6"><i class="fa fa-check"></i><b>8.3</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="9" data-path="ols.html"><a href="ols.html"><i class="fa fa-check"></i><b>9</b> Linear Regression</a>
-<ul>
-<li class="chapter" data-level="9.1" data-path="ols.html"><a href="ols.html#content-7"><i class="fa fa-check"></i><b>9.1</b> Content</a>
-<ul>
-<li class="chapter" data-level="" data-path="ols.html"><a href="ols.html#introduction-1"><i class="fa fa-check"></i>Introduction</a></li>
-<li class="chapter" data-level="" data-path="ols.html"><a href="ols.html#bivariate-linear-regression"><i class="fa fa-check"></i>Bivariate Linear Regression</a></li>
-<li class="chapter" data-level="" data-path="ols.html"><a href="ols.html#multiple-linear-regression"><i class="fa fa-check"></i>Multiple Linear Regression</a></li>
-</ul></li>
-<li class="chapter" data-level="9.2" data-path="ols.html"><a href="ols.html#summary-7"><i class="fa fa-check"></i><b>9.2</b> Summary</a>
-<ul>
-<li class="chapter" data-level="" data-path="ols.html"><a href="ols.html#functions-list-7"><i class="fa fa-check"></i>Functions list</a></li>
-</ul></li>
-<li class="chapter" data-level="9.3" data-path="ols.html"><a href="ols.html#exercises-7"><i class="fa fa-check"></i><b>9.3</b> Exercises</a></li>
-<li class="chapter" data-level="9.4" data-path="ols.html"><a href="ols.html#references"><i class="fa fa-check"></i><b>9.4</b> References</a></li>
-</ul></li>
-<li class="chapter" data-level="10" data-path="logit.html"><a href="logit.html"><i class="fa fa-check"></i><b>10</b> Logistic Regression</a>
-<ul>
-<li class="chapter" data-level="10.1" data-path="logit.html"><a href="logit.html#content-8"><i class="fa fa-check"></i><b>10.1</b> Content</a>
-<ul>
-<li class="chapter" data-level="" data-path="logit.html"><a href="logit.html#logit---the-intuition"><i class="fa fa-check"></i>Logit - The Intuition</a></li>
-<li class="chapter" data-level="" data-path="logit.html"><a href="logit.html#logit---the-estimation"><i class="fa fa-check"></i>Logit - The Estimation</a></li>
-<li class="chapter" data-level="" data-path="logit.html"><a href="logit.html#logit---the-output"><i class="fa fa-check"></i>Logit - The Output</a></li>
-<li class="chapter" data-level="" data-path="logit.html"><a href="logit.html#logit---interpreting-the-coefficients"><i class="fa fa-check"></i>Logit - Interpreting the Coefficients</a></li>
-<li class="chapter" data-level="" data-path="logit.html"><a href="logit.html#logit---model-fit"><i class="fa fa-check"></i>Logit - Model Fit</a></li>
-</ul></li>
-<li class="chapter" data-level="10.2" data-path="logit.html"><a href="logit.html#summary-8"><i class="fa fa-check"></i><b>10.2</b> Summary</a>
-<ul>
-<li class="chapter" data-level="" data-path="logit.html"><a href="logit.html#functions-list-8"><i class="fa fa-check"></i>Functions list</a></li>
-</ul></li>
-<li class="chapter" data-level="10.3" data-path="logit.html"><a href="logit.html#exercises-8"><i class="fa fa-check"></i><b>10.3</b> Exercises</a></li>
-</ul></li>
-<li class="part"><span><b>IV ADVANCED TOPICS</b></span></li>
-<li class="chapter" data-level="11" data-path="rmarkdown.html"><a href="rmarkdown.html"><i class="fa fa-check"></i><b>11</b> R Markdown</a>
-<ul>
-<li class="chapter" data-level="11.1" data-path="rmarkdown.html"><a href="rmarkdown.html#content-9"><i class="fa fa-check"></i><b>11.1</b> Content</a>
-<ul>
-<li class="chapter" data-level="" data-path="rmarkdown.html"><a href="rmarkdown.html#introduction-2"><i class="fa fa-check"></i>Introduction</a></li>
-<li class="chapter" data-level="" data-path="rmarkdown.html"><a href="rmarkdown.html#usage"><i class="fa fa-check"></i>Usage</a></li>
-<li class="chapter" data-level="" data-path="rmarkdown.html"><a href="rmarkdown.html#the-components-of-an-r-markdown-document"><i class="fa fa-check"></i>The Components of an R Markdown Document</a></li>
-<li class="chapter" data-level="" data-path="rmarkdown.html"><a href="rmarkdown.html#figures-and-graphs"><i class="fa fa-check"></i>Figures and Graphs</a></li>
-<li class="chapter" data-level="" data-path="rmarkdown.html"><a href="rmarkdown.html#useful-stuff"><i class="fa fa-check"></i>Useful Stuff</a></li>
-<li class="chapter" data-level="" data-path="rmarkdown.html"><a href="rmarkdown.html#bibliography"><i class="fa fa-check"></i>Bibliography</a></li>
-<li class="chapter" data-level="" data-path="rmarkdown.html"><a href="rmarkdown.html#stargazer"><i class="fa fa-check"></i>stargazer</a></li>
-</ul></li>
-<li class="chapter" data-level="11.2" data-path="rmarkdown.html"><a href="rmarkdown.html#summary-9"><i class="fa fa-check"></i><b>11.2</b> Summary</a>
-<ul>
-<li class="chapter" data-level="" data-path="rmarkdown.html"><a href="rmarkdown.html#functions-list-9"><i class="fa fa-check"></i>Functions list</a></li>
-</ul></li>
-<li class="chapter" data-level="11.3" data-path="rmarkdown.html"><a href="rmarkdown.html#exercises-9"><i class="fa fa-check"></i><b>11.3</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="12" data-path="course-summary.html"><a href="course-summary.html"><i class="fa fa-check"></i><b>12</b> Course summary</a>
-<ul>
-<li class="chapter" data-level="" data-path="course-summary.html"><a href="course-summary.html#index-of-functions-used-throughout-the-course"><i class="fa fa-check"></i>Index of functions used throughout the course</a></li>
-</ul></li>
-</ul>
-
-      </nav>
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title=""><p><img src="images/Crest_white.png" width="75" style="display:block; margin:auto; margin-bottom:3em;"> Analysing Quantitative Data with R <br></p></a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
 
-    <div class="book-body">
-      <div class="body-inner">
-        <div class="book-header" role="navigation">
-          <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"><div class="line-block">Analysing Quantitative Data with R <img align="right" src="images/Crest_white.png" width="75"></div></a>
-          </h1>
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Preface</a></li>
+<li><a class="" href="accessibility.html">Accessibility</a></li>
+<li class="book-part">THE BASICS</li>
+<li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="" href="basics.html"><span class="header-section-number">2</span> Basics of R Programming</a></li>
+<li><a class="" href="datastructures.html"><span class="header-section-number">3</span> Data structures</a></li>
+<li><a class="" href="exploratory.html"><span class="header-section-number">4</span> Exploratory Data Analysis</a></li>
+<li class="book-part">ADVANCED DATA MANIPULATION</li>
+<li><a class="" href="programming.html"><span class="header-section-number">5</span> Key Programming Concepts</a></li>
+<li><a class="" href="dplyr.html"><span class="header-section-number">6</span> Data Manipulation</a></li>
+<li><a class="" href="visualization.html"><span class="header-section-number">7</span> Data Visualization</a></li>
+<li class="book-part">DATA ANALYSIS</li>
+<li><a class="" href="association.html"><span class="header-section-number">8</span> Statistical Inference and Association</a></li>
+<li><a class="" href="ols.html"><span class="header-section-number">9</span> Linear Regression</a></li>
+<li><a class="" href="logit.html"><span class="header-section-number">10</span> Logistic Regression</a></li>
+<li class="book-part">ADVANCED TOPICS</li>
+<li><a class="active" href="rmarkdown.html"><span class="header-section-number">11</span> R Markdown</a></li>
+<li><a class="" href="course-summary.html"><span class="header-section-number">12</span> Course summary</a></li>
+</ul>
+
+        <div class="book-extra">
+          
         </div>
-
-        <div class="page-wrapper" tabindex="-1" role="main">
-          <div class="page-inner">
-
-            <section class="normal" id="section-">
-<div id="rmarkdown" class="section level1 hasAnchor" number="11">
-<h1><span class="header-section-number">11</span> R Markdown<a href="rmarkdown.html#rmarkdown" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="content-9" class="section level2 hasAnchor" number="11.1">
-<h2><span class="header-section-number">11.1</span> Content<a href="rmarkdown.html#content-9" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><script src="sidebar-link.js"></script><div id="rmarkdown" class="section level1" number="11">
+<h1>
+<span class="header-section-number">11</span> R Markdown<a class="anchor" aria-label="anchor" href="#rmarkdown"><i class="fas fa-link"></i></a>
+</h1>
+<div id="content-9" class="section level2" number="11.1">
+<h2>
+<span class="header-section-number">11.1</span> Content<a class="anchor" aria-label="anchor" href="#content-9"><i class="fas fa-link"></i></a>
+</h2>
 <p>One of the more persuasive arguments to use R (over say SPSS) is its ability to easily make work reproducible. This means that you could give your RScript to another person, and they would be able to replicate, step by step your data preparation and analysis, obtaining the same results. This is not only a fundamental part of any scientific enquiry, but also helpful to you, should you wish to replicate your own work at a later stage. Take it from me: after a few months you will have forgotten any data management procedure or steps used in an analysis. How do you achieve this? You can, of course, use annotations in your RScript to explain to others and yourself what you have done in each step. And in fact you should do exactly that as a matter of routine. But we can go a step further than that.</p>
 <p>You might have asked yourself when studying the previous Chapters how to get all the great output in the form of Tables and Figures into an essay, or your dissertation. The answer to this is Markdown. It lets you create reproducible essays / articles with great ease, and even has a feature to create your bibliography and take care of your referencing. Intrigued? Then read on!</p>
 <p>By the way, this very webpage is also created with R Markdown.</p>
-<div id="introduction-2" class="section level3 unnumbered hasAnchor">
-<h3>Introduction<a href="rmarkdown.html#introduction-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="introduction-2" class="section level3 unnumbered">
+<h3>Introduction<a class="anchor" aria-label="anchor" href="#introduction-2"><i class="fas fa-link"></i></a>
+</h3>
 <p>So, what is R Markdown? As promised in the introduction,</p>
 <blockquote>
 <p>R Markdown provides a unified authoring framework for data science, combining your code, its results, and your prose commentary. R Markdown documents are fully reproducible and support dozens of output formats, like PDFs, Word files, slideshows, and more. (<a href="https://r4ds.had.co.nz/r-markdown.html" class="uri">https://r4ds.had.co.nz/r-markdown.html</a>)</p>
 </blockquote>
 </div>
-<div id="usage" class="section level3 unnumbered hasAnchor">
-<h3>Usage<a href="rmarkdown.html#usage" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="usage" class="section level3 unnumbered">
+<h3>Usage<a class="anchor" aria-label="anchor" href="#usage"><i class="fas fa-link"></i></a>
+</h3>
 <ul>
 <li><p>For communicating to decision makers, who want to focus on the conclusions, not the code behind the analysis.</p></li>
 <li><p>For collaborating with other data scientists (including future you!), who are interested in both your conclusions, and how you reached them ( i.e. the code).</p></li>
@@ -370,23 +102,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>(<a href="https://r4ds.had.co.nz/r-markdown.html" class="uri">https://r4ds.had.co.nz/r-markdown.html</a>)</p>
 </div>
-<div id="the-components-of-an-r-markdown-document" class="section level3 unnumbered hasAnchor">
-<h3>The Components of an R Markdown Document<a href="rmarkdown.html#the-components-of-an-r-markdown-document" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="the-components-of-an-r-markdown-document" class="section level3 unnumbered">
+<h3>The Components of an R Markdown Document<a class="anchor" aria-label="anchor" href="#the-components-of-an-r-markdown-document"><i class="fas fa-link"></i></a>
+</h3>
 <ul>
 <li>YAML</li>
 <li>Text</li>
 <li>Code Chunks</li>
 </ul>
-<div id="the-yaml" class="section level4 unnumbered hasAnchor">
-<h4>The YAML<a href="rmarkdown.html#the-yaml" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="the-yaml" class="section level4 unnumbered">
+<h4>The YAML<a class="anchor" aria-label="anchor" href="#the-yaml"><i class="fas fa-link"></i></a>
+</h4>
 <ul>
 <li>Acronym for “Yet Another Markup Language”</li>
 <li>Contains the settings for the entire document</li>
 <li>Primarily parameters and bibliography</li>
 </ul>
 </div>
-<div id="text" class="section level4 unnumbered hasAnchor">
-<h4>Text<a href="rmarkdown.html#text" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="text" class="section level4 unnumbered">
+<h4>Text<a class="anchor" aria-label="anchor" href="#text"><i class="fas fa-link"></i></a>
+</h4>
 <p>Writing</p>
 <ul>
 <li>Basically, you can just write the text as you always would.</li>
@@ -397,17 +132,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Markdown is not WYSIWYG (What You See Is What You Get)</li>
 <li>Compiling is called “Knitting”</li>
 </ul>
-<p><img src="files/markdown/spell.png" width="75%" /></p>
-<div id="headings" class="section level5 unnumbered hasAnchor">
-<h5>Headings<a href="rmarkdown.html#headings" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div class="inline-figure"><img src="files/markdown/spell.png" width="75%"></div>
+<div id="headings" class="section level5 unnumbered">
+<h5>Headings<a class="anchor" aria-label="anchor" href="#headings"><i class="fas fa-link"></i></a>
+</h5>
 <pre><code># Heading 
 
 ## Sub-Heading
 
 ### Sub-Sub Heading</code></pre>
 </div>
-<div id="emphasis" class="section level5 unnumbered hasAnchor">
-<h5>Emphasis<a href="rmarkdown.html#emphasis" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div id="emphasis" class="section level5 unnumbered">
+<h5>Emphasis<a class="anchor" aria-label="anchor" href="#emphasis"><i class="fas fa-link"></i></a>
+</h5>
 <pre><code>*italic*
 
 **bold**
@@ -416,27 +153,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 \underline(underline)</code></pre>
 </div>
-<div id="links" class="section level5 unnumbered hasAnchor">
-<h5>Links<a href="rmarkdown.html#links" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div id="links" class="section level5 unnumbered">
+<h5>Links<a class="anchor" aria-label="anchor" href="#links"><i class="fas fa-link"></i></a>
+</h5>
 <ul>
 <li>Just insert the link</li>
 </ul>
 </div>
-<div id="lists-1" class="section level5 unnumbered hasAnchor">
-<h5>Lists<a href="rmarkdown.html#lists-1" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div id="lists-1" class="section level5 unnumbered">
+<h5>Lists<a class="anchor" aria-label="anchor" href="#lists-1"><i class="fas fa-link"></i></a>
+</h5>
 <pre><code>- 
     - 
     - </code></pre>
 </div>
-<div id="numbered-lists" class="section level5 unnumbered hasAnchor">
-<h5>Numbered Lists<a href="rmarkdown.html#numbered-lists" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div id="numbered-lists" class="section level5 unnumbered">
+<h5>Numbered Lists<a class="anchor" aria-label="anchor" href="#numbered-lists"><i class="fas fa-link"></i></a>
+</h5>
 <pre><code>1. 
     a. 
     b. 
 2. </code></pre>
 </div>
-<div id="line-breaks" class="section level5 unnumbered hasAnchor">
-<h5>Line Breaks<a href="rmarkdown.html#line-breaks" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div id="line-breaks" class="section level5 unnumbered">
+<h5>Line Breaks<a class="anchor" aria-label="anchor" href="#line-breaks"><i class="fas fa-link"></i></a>
+</h5>
 <p>This will not produce a line break:</p>
 <pre><code>line 1
 line 2</code></pre>
@@ -445,15 +186,17 @@ line 2</code></pre>
 
 line 2</code></pre>
 </div>
-<div id="block-quotes" class="section level5 unnumbered hasAnchor">
-<h5>Block Quotes<a href="rmarkdown.html#block-quotes" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div id="block-quotes" class="section level5 unnumbered">
+<h5>Block Quotes<a class="anchor" aria-label="anchor" href="#block-quotes"><i class="fas fa-link"></i></a>
+</h5>
 <ul>
 <li>Simply precede the quote with “<span class="math inline">\(&gt;\)</span>”</li>
 <li>The block will turn green when you do so</li>
 </ul>
 </div>
-<div id="equations" class="section level5 unnumbered hasAnchor">
-<h5>Equations<a href="rmarkdown.html#equations" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div id="equations" class="section level5 unnumbered">
+<h5>Equations<a class="anchor" aria-label="anchor" href="#equations"><i class="fas fa-link"></i></a>
+</h5>
 <ul>
 <li>Two ways to set equations</li>
 <li>Either wrapped in $ signs</li>
@@ -482,16 +225,19 @@ line 2</code></pre>
   Y = \beta_{0} + \beta_{1} x_{i} + \epsilon
 \end{equation*}\]</span></p>
 </div>
-<div id="list-of-symbols" class="section level5 unnumbered hasAnchor">
-<h5>List of Symbols<a href="rmarkdown.html#list-of-symbols" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div id="list-of-symbols" class="section level5 unnumbered">
+<h5>List of Symbols<a class="anchor" aria-label="anchor" href="#list-of-symbols"><i class="fas fa-link"></i></a>
+</h5>
 <p>You can find a good compilation of symbols here:</p>
 <p><a href="https://latex.wikia.org/wiki/List_of_LaTeX_symbols" class="uri">https://latex.wikia.org/wiki/List_of_LaTeX_symbols</a></p>
 </div>
 </div>
-<div id="code-chunks" class="section level4 unnumbered hasAnchor">
-<h4>Code Chunks<a href="rmarkdown.html#code-chunks" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div id="in-line-r-code" class="section level5 unnumbered hasAnchor">
-<h5>In-Line R Code<a href="rmarkdown.html#in-line-r-code" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div id="code-chunks" class="section level4 unnumbered">
+<h4>Code Chunks<a class="anchor" aria-label="anchor" href="#code-chunks"><i class="fas fa-link"></i></a>
+</h4>
+<div id="in-line-r-code" class="section level5 unnumbered">
+<h5>In-Line R Code<a class="anchor" aria-label="anchor" href="#in-line-r-code"><i class="fas fa-link"></i></a>
+</h5>
 <p>You can include R Code in Markdown by wrapping it in</p>
 <div class="sourceCode" id="cb350"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb350-1"><a href="rmarkdown.html#cb350-1" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb350-2"><a href="rmarkdown.html#cb350-2" tabindex="-1"></a></span>
@@ -510,7 +256,7 @@ line 2</code></pre>
 <span id="cb352-2"><a href="rmarkdown.html#cb352-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">8</span></span></code></pre></div>
 <p>Chunk Options</p>
 <p>Types of Output Suppressed by:</p>
-<p><img src="files/markdown/table.png" width="75%" /></p>
+<div class="inline-figure"><img src="files/markdown/table.png" width="75%"></div>
 <p>Examples</p>
 <p>Display, but not calculate:</p>
 <div class="sourceCode" id="cb353"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb353-1"><a href="rmarkdown.html#cb353-1" tabindex="-1"></a><span class="in">```{r eval=F}</span></span>
@@ -527,41 +273,45 @@ line 2</code></pre>
 </div>
 </div>
 </div>
-<div id="figures-and-graphs" class="section level3 unnumbered hasAnchor">
-<h3>Figures and Graphs<a href="rmarkdown.html#figures-and-graphs" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="figures-and-graphs" class="section level3 unnumbered">
+<h3>Figures and Graphs<a class="anchor" aria-label="anchor" href="#figures-and-graphs"><i class="fas fa-link"></i></a>
+</h3>
 <p>You can also use this to include figures and graphs:</p>
-<div class="sourceCode" id="cb356"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb356-1"><a href="rmarkdown.html#cb356-1" tabindex="-1"></a><span class="in">```{r echo=FALSE, out.width=&#39;75%&#39;}</span></span>
-<span id="cb356-2"><a href="rmarkdown.html#cb356-2" tabindex="-1"></a><span class="in">knitr::include_graphics(&#39;./filename.png&#39;)</span></span>
+<div class="sourceCode" id="cb356"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb356-1"><a href="rmarkdown.html#cb356-1" tabindex="-1"></a><span class="in">```{r echo=FALSE, out.width='75%'}</span></span>
+<span id="cb356-2"><a href="rmarkdown.html#cb356-2" tabindex="-1"></a><span class="in">knitr::include_graphics('./filename.png')</span></span>
 <span id="cb356-3"><a href="rmarkdown.html#cb356-3" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <p>Add a Caption!</p>
-<div class="sourceCode" id="cb357"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb357-1"><a href="rmarkdown.html#cb357-1" tabindex="-1"></a><span class="in">```{r echo=FALSE, out.width=&#39;75%&#39;, fig.cap=&quot;\\label{fig:test}Test Caption&quot;}</span></span>
-<span id="cb357-2"><a href="rmarkdown.html#cb357-2" tabindex="-1"></a><span class="in">knitr::include_graphics(&#39;./filename.png&#39;)</span></span>
+<div class="sourceCode" id="cb357"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb357-1"><a href="rmarkdown.html#cb357-1" tabindex="-1"></a><span class="in">```{r echo=FALSE, out.width='75%', fig.cap="\\label{fig:test}Test Caption"}</span></span>
+<span id="cb357-2"><a href="rmarkdown.html#cb357-2" tabindex="-1"></a><span class="in">knitr::include_graphics('./filename.png')</span></span>
 <span id="cb357-3"><a href="rmarkdown.html#cb357-3" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <p>And then refer to it in the text with</p>
 <div class="sourceCode" id="cb358"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb358-1"><a href="rmarkdown.html#cb358-1" tabindex="-1"></a>\ref{fig:test}</span></code></pre></div>
 <p>Example</p>
-<div class="sourceCode" id="cb359"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb359-1"><a href="rmarkdown.html#cb359-1" tabindex="-1"></a><span class="in">```{r echo=FALSE, out.width=&#39;75%&#39;, fig.cap=&quot;\\label{fig:spell}RStudio Task Bar&quot;}</span></span>
-<span id="cb359-2"><a href="rmarkdown.html#cb359-2" tabindex="-1"></a><span class="in">knitr::include_graphics(&#39;./spell.png&#39;)</span></span>
+<div class="sourceCode" id="cb359"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb359-1"><a href="rmarkdown.html#cb359-1" tabindex="-1"></a><span class="in">```{r echo=FALSE, out.width='75%', fig.cap="\\label{fig:spell}RStudio Task Bar"}</span></span>
+<span id="cb359-2"><a href="rmarkdown.html#cb359-2" tabindex="-1"></a><span class="in">knitr::include_graphics('./spell.png')</span></span>
 <span id="cb359-3"><a href="rmarkdown.html#cb359-3" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb359-4"><a href="rmarkdown.html#cb359-4" tabindex="-1"></a></span>
 <span id="cb359-5"><a href="rmarkdown.html#cb359-5" tabindex="-1"></a>As we can see in \ref{fig:spell}</span></code></pre></div>
 <p>turns into</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-456"></span>
-<img src="files/markdown/spell.png" alt="\label{fig:spell}RStudio Task Bar" width="75%" />
-<p class="caption">
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-456"></span>
+<img src="files/markdown/spell.png" alt="\label{fig:spell}RStudio Task Bar" width="75%"><p class="caption">
 Figure 11.1: RStudio Task Bar
 </p>
 </div>
 <p>As we can see in Figure 11.1</p>
 </div>
-<div id="useful-stuff" class="section level3 unnumbered hasAnchor">
-<h3>Useful Stuff<a href="rmarkdown.html#useful-stuff" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div id="spell-checker" class="section level4 unnumbered hasAnchor">
-<h4>Spell-Checker<a href="rmarkdown.html#spell-checker" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p><img src="files/markdown/spell.png" width="75%" /></p>
+<div id="useful-stuff" class="section level3 unnumbered">
+<h3>Useful Stuff<a class="anchor" aria-label="anchor" href="#useful-stuff"><i class="fas fa-link"></i></a>
+</h3>
+<div id="spell-checker" class="section level4 unnumbered">
+<h4>Spell-Checker<a class="anchor" aria-label="anchor" href="#spell-checker"><i class="fas fa-link"></i></a>
+</h4>
+<div class="inline-figure"><img src="files/markdown/spell.png" width="75%"></div>
 </div>
-<div id="useful-commands" class="section level4 unnumbered hasAnchor">
-<h4>Useful Commands<a href="rmarkdown.html#useful-commands" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="useful-commands" class="section level4 unnumbered">
+<h4>Useful Commands<a class="anchor" aria-label="anchor" href="#useful-commands"><i class="fas fa-link"></i></a>
+</h4>
 <ul>
 <li>New page</li>
 </ul>
@@ -574,8 +324,9 @@ Figure 11.1: RStudio Task Bar
 <span id="cb361-3"><a href="rmarkdown.html#cb361-3" tabindex="-1"></a>\end{center}</span></code></pre></div>
 </div>
 </div>
-<div id="bibliography" class="section level3 unnumbered hasAnchor">
-<h3>Bibliography<a href="rmarkdown.html#bibliography" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="bibliography" class="section level3 unnumbered">
+<h3>Bibliography<a class="anchor" aria-label="anchor" href="#bibliography"><i class="fas fa-link"></i></a>
+</h3>
 <ul>
 <li>It is possible (and most highly recommended) to include an automatic bibliography in Markdown</li>
 <li>This requires more coding language and LaTeX</li>
@@ -587,14 +338,16 @@ Figure 11.1: RStudio Task Bar
 <li>Consistent citation</li>
 <li>Automatically conform to PAIS style</li>
 </ul>
-<div id="getting-started" class="section level4 unnumbered hasAnchor">
-<h4>Getting Started<a href="rmarkdown.html#getting-started" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="getting-started" class="section level4 unnumbered">
+<h4>Getting Started<a class="anchor" aria-label="anchor" href="#getting-started"><i class="fas fa-link"></i></a>
+</h4>
 <ul>
 <li>Download and install:
 <ul>
 <li>Mac: MacTeX (<a href="http://www.tug.org/mactex/" class="uri">http://www.tug.org/mactex/</a>)</li>
 <li>Windows: MiKTeX (<a href="https://miktex.org/" class="uri">https://miktex.org/</a>)</li>
-</ul></li>
+</ul>
+</li>
 <li>These contain a complete TeX system with LaTeX itself and editors to write documents.</li>
 </ul>
 <p>More on: <a href="https://www.latex-project.org/get/" class="uri">https://www.latex-project.org/get/</a></p>
@@ -604,8 +357,9 @@ Figure 11.1: RStudio Task Bar
 <li>Add a heading at the very end of the document called </li>
 </ul>
 </div>
-<div id="citations-in-markdown" class="section level4 unnumbered hasAnchor">
-<h4>Citations in Markdown<a href="rmarkdown.html#citations-in-markdown" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="citations-in-markdown" class="section level4 unnumbered">
+<h4>Citations in Markdown<a class="anchor" aria-label="anchor" href="#citations-in-markdown"><i class="fas fa-link"></i></a>
+</h4>
 <p>Citations</p>
 <pre><code>Text [@grolemund:2016, p. 361]  
 
@@ -614,13 +368,14 @@ Text [@grolemund:2016, pp. 33-35, 38-39 and *passim*].</code></pre>
 <pre><code>Grolemund and Wickham write that ... [-@grolemund:2016]  </code></pre>
 <p>This can be useful when the author is already mentioned in the text.</p>
 </div>
-<div id="the-.bib-file" class="section level4 unnumbered hasAnchor">
-<h4>The .bib file<a href="rmarkdown.html#the-.bib-file" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="the-.bib-file" class="section level4 unnumbered">
+<h4>The .bib file<a class="anchor" aria-label="anchor" href="#the-.bib-file"><i class="fas fa-link"></i></a>
+</h4>
 <p>Every citation needs to have a reference in the .bib file, such as:</p>
 <pre><code>@book{grolemund:2016,
   author={Garrett Grolemund and Hadley Wickham},
   title={R for Data Science},
-  publisher={O&#39;Reilly Media},
+  publisher={O'Reilly Media},
   year={2016}}</code></pre>
 <p>You can only edit this file in LaTeX</p>
 <p>If you want to learn more about , there is another Moodle Skills Module called <a href="https://moodle.warwick.ac.uk/course/view.php?id=42025">Academic Writing in LaTeX</a> available.</p>
@@ -631,11 +386,12 @@ Text [@grolemund:2016, pp. 33-35, 38-39 and *passim*].</code></pre>
 <span id="cb365-4"><a href="rmarkdown.html#cb365-4" tabindex="-1"></a></span>
 <span id="cb365-5"><a href="rmarkdown.html#cb365-5" tabindex="-1"></a><span class="fu"># References</span></span></code></pre></div>
 <p>turns into this output</p>
-<p><img src="files/markdown/bib.png" width="75%" /></p>
+<div class="inline-figure"><img src="files/markdown/bib.png" width="75%"></div>
 </div>
 </div>
-<div id="stargazer" class="section level3 unnumbered hasAnchor">
-<h3>stargazer<a href="rmarkdown.html#stargazer" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="stargazer" class="section level3 unnumbered">
+<h3>stargazer<a class="anchor" aria-label="anchor" href="#stargazer"><i class="fas fa-link"></i></a>
+</h3>
 <p>I have little to no patience for students (or academics!) who are fiddling around in MS Word and are using all sorts of fancy options to make their Tables and Figures as unreadable as possible. You can tell that I am quite particular when it comes to the tabular display of statistical output.</p>
 <p>When you study for a degree in Political Science, you are acquiring the skills to write professionally about a topic of the discipline, and to analyse a research question within its remit. James A. Stimson puts it very aptly in his article <a href="http://stimson.web.unc.edu/files/2018/02/Writing.pdf">Writing in Political Science</a> when he says:</p>
 <blockquote>
@@ -667,23 +423,25 @@ and understand the analysis completely from the text. (p.10)</p>
 <li>Its beautiful aesthetics</li>
 </ul>
 <p>Estimating a Model, replicating the work by Fearon and Laitin (2003)</p>
-<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="rmarkdown.html#cb366-1" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
-<span id="cb366-2"><a href="rmarkdown.html#cb366-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb366-3"><a href="rmarkdown.html#cb366-3" tabindex="-1"></a><span class="fu">library</span>(pROC)</span>
-<span id="cb366-4"><a href="rmarkdown.html#cb366-4" tabindex="-1"></a><span class="fu">library</span>(stargazer)</span></code></pre></div>
+<div class="sourceCode" id="cb366"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://haven.tidyverse.org">haven</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://xrobin.github.io/pROC/">pROC</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">stargazer</span><span class="op">)</span></span></code></pre></div>
 <p>Data Prep</p>
-<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="rmarkdown.html#cb367-1" tabindex="-1"></a>fearon <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">&quot;data/fearon.dta&quot;</span>)</span>
-<span id="cb367-2"><a href="rmarkdown.html#cb367-2" tabindex="-1"></a></span>
-<span id="cb367-3"><a href="rmarkdown.html#cb367-3" tabindex="-1"></a>fearon<span class="sc">$</span>onset[fearon<span class="sc">$</span>onset<span class="sc">==</span><span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb367-4"><a href="rmarkdown.html#cb367-4" tabindex="-1"></a></span>
-<span id="cb367-5"><a href="rmarkdown.html#cb367-5" tabindex="-1"></a>fearon<span class="sc">$</span>onset <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(fearon<span class="sc">$</span>onset)</span></code></pre></div>
+<div class="sourceCode" id="cb367"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">fearon</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html">read_dta</a></span><span class="op">(</span><span class="st">"data/fearon.dta"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">fearon</span><span class="op">$</span><span class="va">onset</span><span class="op">[</span><span class="va">fearon</span><span class="op">$</span><span class="va">onset</span><span class="op">==</span><span class="fl">4</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
+<span></span>
+<span><span class="va">fearon</span><span class="op">$</span><span class="va">onset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">fearon</span><span class="op">$</span><span class="va">onset</span><span class="op">)</span></span></code></pre></div>
 <p>Model 1</p>
 <div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="rmarkdown.html#cb368-1" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(onset <span class="sc">~</span> gdpenl,</span>
 <span id="cb368-2"><a href="rmarkdown.html#cb368-2" tabindex="-1"></a>             <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> logit),</span>
 <span id="cb368-3"><a href="rmarkdown.html#cb368-3" tabindex="-1"></a>             <span class="at">na.action =</span> na.exclude,</span>
 <span id="cb368-4"><a href="rmarkdown.html#cb368-4" tabindex="-1"></a>             <span class="at">data =</span> fearon)</span>
 <span id="cb368-5"><a href="rmarkdown.html#cb368-5" tabindex="-1"></a></span>
-<span id="cb368-6"><a href="rmarkdown.html#cb368-6" tabindex="-1"></a>prob_model1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(model1, <span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span>
+<span id="cb368-6"><a href="rmarkdown.html#cb368-6" tabindex="-1"></a>prob_model1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(model1, <span class="at">type=</span><span class="st">"response"</span>)</span>
 <span id="cb368-7"><a href="rmarkdown.html#cb368-7" tabindex="-1"></a>fearon<span class="sc">$</span>prob_model1 <span class="ot">&lt;-</span> <span class="fu">unlist</span>(prob_model1)</span>
 <span id="cb368-8"><a href="rmarkdown.html#cb368-8" tabindex="-1"></a></span>
 <span id="cb368-9"><a href="rmarkdown.html#cb368-9" tabindex="-1"></a>roc_model1 <span class="ot">&lt;-</span> <span class="fu">roc</span>(fearon<span class="sc">$</span>onset, fearon<span class="sc">$</span>prob_model1)</span>
@@ -695,7 +453,7 @@ and understand the analysis completely from the text. (p.10)</p>
 <span id="cb369-3"><a href="rmarkdown.html#cb369-3" tabindex="-1"></a>             <span class="at">na.action =</span> na.exclude,</span>
 <span id="cb369-4"><a href="rmarkdown.html#cb369-4" tabindex="-1"></a>             <span class="at">data =</span> fearon)</span>
 <span id="cb369-5"><a href="rmarkdown.html#cb369-5" tabindex="-1"></a></span>
-<span id="cb369-6"><a href="rmarkdown.html#cb369-6" tabindex="-1"></a>prob_model2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(model2, <span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span>
+<span id="cb369-6"><a href="rmarkdown.html#cb369-6" tabindex="-1"></a>prob_model2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(model2, <span class="at">type=</span><span class="st">"response"</span>)</span>
 <span id="cb369-7"><a href="rmarkdown.html#cb369-7" tabindex="-1"></a>fearon<span class="sc">$</span>prob_model2 <span class="ot">&lt;-</span> <span class="fu">unlist</span>(prob_model2)</span>
 <span id="cb369-8"><a href="rmarkdown.html#cb369-8" tabindex="-1"></a></span>
 <span id="cb369-9"><a href="rmarkdown.html#cb369-9" tabindex="-1"></a>roc_model2 <span class="ot">&lt;-</span> <span class="fu">roc</span>(fearon<span class="sc">$</span>onset, fearon<span class="sc">$</span>prob_model2)</span>
@@ -707,7 +465,7 @@ and understand the analysis completely from the text. (p.10)</p>
 <span id="cb370-3"><a href="rmarkdown.html#cb370-3" tabindex="-1"></a>             <span class="at">na.action =</span> na.exclude,</span>
 <span id="cb370-4"><a href="rmarkdown.html#cb370-4" tabindex="-1"></a>             <span class="at">data =</span> fearon)</span>
 <span id="cb370-5"><a href="rmarkdown.html#cb370-5" tabindex="-1"></a></span>
-<span id="cb370-6"><a href="rmarkdown.html#cb370-6" tabindex="-1"></a>prob_model3 <span class="ot">&lt;-</span> <span class="fu">predict</span>(model3, <span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span>
+<span id="cb370-6"><a href="rmarkdown.html#cb370-6" tabindex="-1"></a>prob_model3 <span class="ot">&lt;-</span> <span class="fu">predict</span>(model3, <span class="at">type=</span><span class="st">"response"</span>)</span>
 <span id="cb370-7"><a href="rmarkdown.html#cb370-7" tabindex="-1"></a>fearon<span class="sc">$</span>prob_model3 <span class="ot">&lt;-</span> <span class="fu">unlist</span>(prob_model3)</span>
 <span id="cb370-8"><a href="rmarkdown.html#cb370-8" tabindex="-1"></a></span>
 <span id="cb370-9"><a href="rmarkdown.html#cb370-9" tabindex="-1"></a>roc_model3 <span class="ot">&lt;-</span> <span class="fu">roc</span>(fearon<span class="sc">$</span>onset, fearon<span class="sc">$</span>prob_model3)</span>
@@ -715,7 +473,7 @@ and understand the analysis completely from the text. (p.10)</p>
 <span id="cb370-11"><a href="rmarkdown.html#cb370-11" tabindex="-1"></a>Setting direction<span class="sc">:</span> controls <span class="sc">&lt;</span> cases</span></code></pre></div>
 <p>Now we use <code>stargazer</code> to put the results into a table. I am suppressing the annoying heager here, and am adjusting the font size, too.</p>
 <p>Output</p>
-<p><img src="images/11/tab1.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="inline-figure"><img src="images/11/tab1.png" width="75%" style="display: block; margin: auto;"></div>
 <p>You will note that <code>stargazer</code> adds the asterisks that Stimson is so strongly (and correctly) opposed to. The rating of lower p-values with increasing numbers of asterisks suggests a certain goal (like wanting to stay in a five-star hotel), but this goal is nonesense. If you want to know more about this, I recommend an excellent module called “Introduction to Quantitative Political Analysis I” where you learn about the p-value and the Type I and Type II errors. <code>stargazer</code>’s practice to include these asterisks is therefore misguided, but since most journals insist on this nonsense, it is worthwhile to get used to it.</p>
 <p>Font Sizes</p>
 <ul>
@@ -738,144 +496,164 @@ and understand the analysis completely from the text. (p.10)</p>
 variable names to stand for concepts. These are personal code words that
 convey no meaning to readers. (p.10)</p>
 </blockquote>
-<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="rmarkdown.html#cb372-1" tabindex="-1"></a><span class="fu">stargazer</span>(model1, model2, model3,</span>
-<span id="cb372-2"><a href="rmarkdown.html#cb372-2" tabindex="-1"></a>          <span class="at">header=</span>F, </span>
-<span id="cb372-3"><a href="rmarkdown.html#cb372-3" tabindex="-1"></a>          <span class="at">font.size =</span> <span class="st">&quot;tiny&quot;</span>, </span>
-<span id="cb372-4"><a href="rmarkdown.html#cb372-4" tabindex="-1"></a>          <span class="at">covariate.labels =</span> <span class="fu">c</span>(<span class="st">&quot;GDP per capita (in logged 1985</span><span class="sc">\\</span><span class="st">$ thousands)&quot;</span>,</span>
-<span id="cb372-5"><a href="rmarkdown.html#cb372-5" tabindex="-1"></a>                               <span class="st">&quot;Population (logged, in thousands)&quot;</span>,</span>
-<span id="cb372-6"><a href="rmarkdown.html#cb372-6" tabindex="-1"></a>                               <span class="st">&quot;Mountainous Terrain (logged </span><span class="sc">\\</span><span class="st">% of total)&quot;</span>),</span>
-<span id="cb372-7"><a href="rmarkdown.html#cb372-7" tabindex="-1"></a>          <span class="at">dep.var.labels   =</span> <span class="st">&quot;Onset of Civil War&quot;</span>)</span></code></pre></div>
-<p><img src="images/11/tab2.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb372"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/stargazer/man/stargazer.html">stargazer</a></span><span class="op">(</span><span class="va">model1</span>, <span class="va">model2</span>, <span class="va">model3</span>,</span>
+<span>          header<span class="op">=</span><span class="cn">F</span>, </span>
+<span>          font.size <span class="op">=</span> <span class="st">"tiny"</span>, </span>
+<span>          covariate.labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"GDP per capita (in logged 1985\\$ thousands)"</span>,</span>
+<span>                               <span class="st">"Population (logged, in thousands)"</span>,</span>
+<span>                               <span class="st">"Mountainous Terrain (logged \\% of total)"</span><span class="op">)</span>,</span>
+<span>          dep.var.labels   <span class="op">=</span> <span class="st">"Onset of Civil War"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="images/11/tab2.png" width="75%" style="display: block; margin: auto;"></div>
 <p>Suppress Statistics</p>
-<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="rmarkdown.html#cb373-1" tabindex="-1"></a><span class="fu">stargazer</span>(model1, model2, model3,</span>
-<span id="cb373-2"><a href="rmarkdown.html#cb373-2" tabindex="-1"></a>          <span class="at">header=</span>F, </span>
-<span id="cb373-3"><a href="rmarkdown.html#cb373-3" tabindex="-1"></a>          <span class="at">font.size =</span> <span class="st">&quot;tiny&quot;</span>, </span>
-<span id="cb373-4"><a href="rmarkdown.html#cb373-4" tabindex="-1"></a>          <span class="at">covariate.labels =</span> <span class="fu">c</span>(<span class="st">&quot;GDP per capita (in logged 1985</span><span class="sc">\\</span><span class="st">$ thousands)&quot;</span>,</span>
-<span id="cb373-5"><a href="rmarkdown.html#cb373-5" tabindex="-1"></a>                               <span class="st">&quot;Population (logged, in thousands)&quot;</span>,</span>
-<span id="cb373-6"><a href="rmarkdown.html#cb373-6" tabindex="-1"></a>                               <span class="st">&quot;Mountainous Terrain (logged </span><span class="sc">\\</span><span class="st">% of total)&quot;</span>),</span>
-<span id="cb373-7"><a href="rmarkdown.html#cb373-7" tabindex="-1"></a>          <span class="at">dep.var.labels   =</span> <span class="st">&quot;Onset of Civil War&quot;</span>,</span>
-<span id="cb373-8"><a href="rmarkdown.html#cb373-8" tabindex="-1"></a>          <span class="at">omit.stat =</span> <span class="fu">c</span>(<span class="st">&quot;aic&quot;</span>, <span class="st">&quot;ll&quot;</span>))</span></code></pre></div>
-<p><img src="images/11/tab3.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb373"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/stargazer/man/stargazer.html">stargazer</a></span><span class="op">(</span><span class="va">model1</span>, <span class="va">model2</span>, <span class="va">model3</span>,</span>
+<span>          header<span class="op">=</span><span class="cn">F</span>, </span>
+<span>          font.size <span class="op">=</span> <span class="st">"tiny"</span>, </span>
+<span>          covariate.labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"GDP per capita (in logged 1985\\$ thousands)"</span>,</span>
+<span>                               <span class="st">"Population (logged, in thousands)"</span>,</span>
+<span>                               <span class="st">"Mountainous Terrain (logged \\% of total)"</span><span class="op">)</span>,</span>
+<span>          dep.var.labels   <span class="op">=</span> <span class="st">"Onset of Civil War"</span>,</span>
+<span>          omit.stat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"aic"</span>, <span class="st">"ll"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="images/11/tab3.png" width="75%" style="display: block; margin: auto;"></div>
 <p>For a full list of abbreviations for statistics, see page 22 of <a href="https://cran.r-project.org/web/packages/stargazer/stargazer.pdf" class="uri">https://cran.r-project.org/web/packages/stargazer/stargazer.pdf</a></p>
 <p>Add ROC Curve</p>
-<div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb374-1"><a href="rmarkdown.html#cb374-1" tabindex="-1"></a><span class="fu">stargazer</span>(model1, model2, model3,</span>
-<span id="cb374-2"><a href="rmarkdown.html#cb374-2" tabindex="-1"></a>          <span class="at">header=</span>F, </span>
-<span id="cb374-3"><a href="rmarkdown.html#cb374-3" tabindex="-1"></a>          <span class="at">font.size =</span> <span class="st">&quot;tiny&quot;</span>, </span>
-<span id="cb374-4"><a href="rmarkdown.html#cb374-4" tabindex="-1"></a>          <span class="at">covariate.labels =</span> <span class="fu">c</span>(<span class="st">&quot;GDP per capita (in logged 1985</span><span class="sc">\\</span><span class="st">$ thousands)&quot;</span>,</span>
-<span id="cb374-5"><a href="rmarkdown.html#cb374-5" tabindex="-1"></a>                               <span class="st">&quot;Population (logged, in thousands)&quot;</span>,</span>
-<span id="cb374-6"><a href="rmarkdown.html#cb374-6" tabindex="-1"></a>                               <span class="st">&quot;Mountainous Terrain (logged </span><span class="sc">\\</span><span class="st">% of total)&quot;</span>),</span>
-<span id="cb374-7"><a href="rmarkdown.html#cb374-7" tabindex="-1"></a>          <span class="at">dep.var.labels   =</span> <span class="st">&quot;Onset of Civil War&quot;</span>,</span>
-<span id="cb374-8"><a href="rmarkdown.html#cb374-8" tabindex="-1"></a>          <span class="at">omit.stat =</span> <span class="fu">c</span>(<span class="st">&quot;aic&quot;</span>, <span class="st">&quot;ll&quot;</span>),</span>
-<span id="cb374-9"><a href="rmarkdown.html#cb374-9" tabindex="-1"></a>          <span class="at">add.lines =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">&quot;ROC Curve&quot;</span>, <span class="fu">auc</span>(roc_model1), </span>
-<span id="cb374-10"><a href="rmarkdown.html#cb374-10" tabindex="-1"></a>                              <span class="fu">auc</span>(roc_model2), <span class="fu">auc</span>(roc_model3))))</span></code></pre></div>
-<p><img src="images/11/tab4.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb374"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/stargazer/man/stargazer.html">stargazer</a></span><span class="op">(</span><span class="va">model1</span>, <span class="va">model2</span>, <span class="va">model3</span>,</span>
+<span>          header<span class="op">=</span><span class="cn">F</span>, </span>
+<span>          font.size <span class="op">=</span> <span class="st">"tiny"</span>, </span>
+<span>          covariate.labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"GDP per capita (in logged 1985\\$ thousands)"</span>,</span>
+<span>                               <span class="st">"Population (logged, in thousands)"</span>,</span>
+<span>                               <span class="st">"Mountainous Terrain (logged \\% of total)"</span><span class="op">)</span>,</span>
+<span>          dep.var.labels   <span class="op">=</span> <span class="st">"Onset of Civil War"</span>,</span>
+<span>          omit.stat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"aic"</span>, <span class="st">"ll"</span><span class="op">)</span>,</span>
+<span>          add.lines <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ROC Curve"</span>, <span class="fu"><a href="https://rdrr.io/pkg/pROC/man/auc.html">auc</a></span><span class="op">(</span><span class="va">roc_model1</span><span class="op">)</span>, </span>
+<span>                              <span class="fu"><a href="https://rdrr.io/pkg/pROC/man/auc.html">auc</a></span><span class="op">(</span><span class="va">roc_model2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/pROC/man/auc.html">auc</a></span><span class="op">(</span><span class="va">roc_model3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="images/11/tab4.png" width="75%" style="display: block; margin: auto;"></div>
 <p>Round ROC Curve</p>
-<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="rmarkdown.html#cb375-1" tabindex="-1"></a><span class="fu">stargazer</span>(model1, model2, model3,</span>
-<span id="cb375-2"><a href="rmarkdown.html#cb375-2" tabindex="-1"></a>          <span class="at">header=</span>F, </span>
-<span id="cb375-3"><a href="rmarkdown.html#cb375-3" tabindex="-1"></a>          <span class="at">font.size =</span> <span class="st">&quot;tiny&quot;</span>, </span>
-<span id="cb375-4"><a href="rmarkdown.html#cb375-4" tabindex="-1"></a>          <span class="at">covariate.labels =</span> <span class="fu">c</span>(<span class="st">&quot;GDP per capita (in logged 1985</span><span class="sc">\\</span><span class="st">$ thousands)&quot;</span>,</span>
-<span id="cb375-5"><a href="rmarkdown.html#cb375-5" tabindex="-1"></a>                               <span class="st">&quot;Population (logged, in thousands)&quot;</span>,</span>
-<span id="cb375-6"><a href="rmarkdown.html#cb375-6" tabindex="-1"></a>                               <span class="st">&quot;Mountainous Terrain (logged </span><span class="sc">\\</span><span class="st">% of total)&quot;</span>),</span>
-<span id="cb375-7"><a href="rmarkdown.html#cb375-7" tabindex="-1"></a>          <span class="at">dep.var.labels   =</span> <span class="st">&quot;Onset of Civil War&quot;</span>,</span>
-<span id="cb375-8"><a href="rmarkdown.html#cb375-8" tabindex="-1"></a>          <span class="at">omit.stat =</span> <span class="fu">c</span>(<span class="st">&quot;aic&quot;</span>, <span class="st">&quot;ll&quot;</span>),</span>
-<span id="cb375-9"><a href="rmarkdown.html#cb375-9" tabindex="-1"></a>          <span class="at">add.lines =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">&quot;ROC Curve&quot;</span>, <span class="fu">round</span>(<span class="fu">auc</span>(roc_model1),<span class="dv">2</span>), </span>
-<span id="cb375-10"><a href="rmarkdown.html#cb375-10" tabindex="-1"></a>                              <span class="fu">round</span>(<span class="fu">auc</span>(roc_model2),<span class="dv">2</span>), </span>
-<span id="cb375-11"><a href="rmarkdown.html#cb375-11" tabindex="-1"></a>                              <span class="fu">round</span>(<span class="fu">auc</span>(roc_model3),<span class="dv">2</span>))))</span></code></pre></div>
-<p><img src="images/11/tab5.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb375"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/stargazer/man/stargazer.html">stargazer</a></span><span class="op">(</span><span class="va">model1</span>, <span class="va">model2</span>, <span class="va">model3</span>,</span>
+<span>          header<span class="op">=</span><span class="cn">F</span>, </span>
+<span>          font.size <span class="op">=</span> <span class="st">"tiny"</span>, </span>
+<span>          covariate.labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"GDP per capita (in logged 1985\\$ thousands)"</span>,</span>
+<span>                               <span class="st">"Population (logged, in thousands)"</span>,</span>
+<span>                               <span class="st">"Mountainous Terrain (logged \\% of total)"</span><span class="op">)</span>,</span>
+<span>          dep.var.labels   <span class="op">=</span> <span class="st">"Onset of Civil War"</span>,</span>
+<span>          omit.stat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"aic"</span>, <span class="st">"ll"</span><span class="op">)</span>,</span>
+<span>          add.lines <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ROC Curve"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/pROC/man/auc.html">auc</a></span><span class="op">(</span><span class="va">roc_model1</span><span class="op">)</span>,<span class="fl">2</span><span class="op">)</span>, </span>
+<span>                              <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/pROC/man/auc.html">auc</a></span><span class="op">(</span><span class="va">roc_model2</span><span class="op">)</span>,<span class="fl">2</span><span class="op">)</span>, </span>
+<span>                              <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/pROC/man/auc.html">auc</a></span><span class="op">(</span><span class="va">roc_model3</span><span class="op">)</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="images/11/tab5.png" width="75%" style="display: block; margin: auto;"></div>
 <p>You can also control the number of decimal places with the <code>digits =</code> option more generally. For example, if you want to round everything to two decimal places, you would set <code>digits = 2</code>.</p>
 <p>Lastly, let’s label the Table, so that a reader knows what is being shown.</p>
-<div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb376-1"><a href="rmarkdown.html#cb376-1" tabindex="-1"></a><span class="fu">stargazer</span>(model1, model2, model3,</span>
-<span id="cb376-2"><a href="rmarkdown.html#cb376-2" tabindex="-1"></a>          <span class="at">header=</span>F, </span>
-<span id="cb376-3"><a href="rmarkdown.html#cb376-3" tabindex="-1"></a>          <span class="at">font.size =</span> <span class="st">&quot;tiny&quot;</span>, </span>
-<span id="cb376-4"><a href="rmarkdown.html#cb376-4" tabindex="-1"></a>          <span class="at">covariate.labels =</span> <span class="fu">c</span>(<span class="st">&quot;GDP per capita (in logged 1985</span><span class="sc">\\</span><span class="st">$ thousands)&quot;</span>,</span>
-<span id="cb376-5"><a href="rmarkdown.html#cb376-5" tabindex="-1"></a>                               <span class="st">&quot;Population (logged, in thousands)&quot;</span>,</span>
-<span id="cb376-6"><a href="rmarkdown.html#cb376-6" tabindex="-1"></a>                               <span class="st">&quot;Mountainous Terrain (logged </span><span class="sc">\\</span><span class="st">% of total)&quot;</span>),</span>
-<span id="cb376-7"><a href="rmarkdown.html#cb376-7" tabindex="-1"></a>          <span class="at">dep.var.labels   =</span> <span class="st">&quot;Onset of Civil War&quot;</span>,</span>
-<span id="cb376-8"><a href="rmarkdown.html#cb376-8" tabindex="-1"></a>          <span class="at">omit.stat =</span> <span class="fu">c</span>(<span class="st">&quot;aic&quot;</span>, <span class="st">&quot;ll&quot;</span>),</span>
-<span id="cb376-9"><a href="rmarkdown.html#cb376-9" tabindex="-1"></a>          <span class="at">add.lines =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">&quot;ROC Curve&quot;</span>, <span class="fu">round</span>(<span class="fu">auc</span>(roc_model1),<span class="dv">2</span>), </span>
-<span id="cb376-10"><a href="rmarkdown.html#cb376-10" tabindex="-1"></a>                              <span class="fu">round</span>(<span class="fu">auc</span>(roc_model2),<span class="dv">2</span>), </span>
-<span id="cb376-11"><a href="rmarkdown.html#cb376-11" tabindex="-1"></a>                              <span class="fu">round</span>(<span class="fu">auc</span>(roc_model3),<span class="dv">2</span>))),</span>
-<span id="cb376-12"><a href="rmarkdown.html#cb376-12" tabindex="-1"></a>          <span class="at">title =</span> <span class="st">&quot;Determinants of Civil War (Fearon and Laitin, 2003)&quot;</span>)</span></code></pre></div>
-<p><img src="images/11/tab6.png" width="90%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb376"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/stargazer/man/stargazer.html">stargazer</a></span><span class="op">(</span><span class="va">model1</span>, <span class="va">model2</span>, <span class="va">model3</span>,</span>
+<span>          header<span class="op">=</span><span class="cn">F</span>, </span>
+<span>          font.size <span class="op">=</span> <span class="st">"tiny"</span>, </span>
+<span>          covariate.labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"GDP per capita (in logged 1985\\$ thousands)"</span>,</span>
+<span>                               <span class="st">"Population (logged, in thousands)"</span>,</span>
+<span>                               <span class="st">"Mountainous Terrain (logged \\% of total)"</span><span class="op">)</span>,</span>
+<span>          dep.var.labels   <span class="op">=</span> <span class="st">"Onset of Civil War"</span>,</span>
+<span>          omit.stat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"aic"</span>, <span class="st">"ll"</span><span class="op">)</span>,</span>
+<span>          add.lines <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ROC Curve"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/pROC/man/auc.html">auc</a></span><span class="op">(</span><span class="va">roc_model1</span><span class="op">)</span>,<span class="fl">2</span><span class="op">)</span>, </span>
+<span>                              <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/pROC/man/auc.html">auc</a></span><span class="op">(</span><span class="va">roc_model2</span><span class="op">)</span>,<span class="fl">2</span><span class="op">)</span>, </span>
+<span>                              <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/pROC/man/auc.html">auc</a></span><span class="op">(</span><span class="va">roc_model3</span><span class="op">)</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>          title <span class="op">=</span> <span class="st">"Determinants of Civil War (Fearon and Laitin, 2003)"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="images/11/tab6.png" width="90%" style="display: block; margin: auto;"></div>
 <p>This is a beautiful and informative Table which should be the standard to which you work.</p>
 </div>
 </div>
-<div id="summary-9" class="section level2 hasAnchor" number="11.2">
-<h2><span class="header-section-number">11.2</span> Summary<a href="rmarkdown.html#summary-9" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="functions-list-9" class="section level3 unnumbered hasAnchor">
-<h3>Functions list<a href="rmarkdown.html#functions-list-9" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="summary-9" class="section level2" number="11.2">
+<h2>
+<span class="header-section-number">11.2</span> Summary<a class="anchor" aria-label="anchor" href="#summary-9"><i class="fas fa-link"></i></a>
+</h2>
+<div id="functions-list-9" class="section level3 unnumbered">
+<h3>Functions list<a class="anchor" aria-label="anchor" href="#functions-list-9"><i class="fas fa-link"></i></a>
+</h3>
 </div>
 </div>
-<div id="exercises-9" class="section level2 hasAnchor" number="11.3">
-<h2><span class="header-section-number">11.3</span> Exercises<a href="rmarkdown.html#exercises-9" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="exercises-9" class="section level2" number="11.3">
+<h2>
+<span class="header-section-number">11.3</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-9"><i class="fas fa-link"></i></a>
+</h2>
 <p><em>The solutions for the exercises will be available here on 2021-03-12.</em></p>
-<button class="btn btn-default" onclick="&#10;    async function downloadFile(event) {&#10;      event.preventDefault();&#10;      try {&#10;        const response = await fetch(&#39;data:text/plain;base64,IycgIyMgRXhlcmNpc2VzCiMnIAojJyAqVGhlIHNvbHV0aW9ucyBmb3IgdGhlIGV4ZXJjaXNlcyB3aWxsIGJlIGF2YWlsYWJsZSBoZXJlIG9uIGByIGNvbmZpZyRtYXJrZG93bmAuKgojJyAKIycgCgA=&#39;);&#10;        if (!response.ok) throw new Error(&#39;Network response failed&#39;);&#10;        const blob = await response.blob();&#10;        const blobUrl = window.URL.createObjectURL(blob);&#10;        const a = document.createElement(&#39;a&#39;);&#10;        a.href = blobUrl;&#10;        a.download = &#39;11-markdown-solutions.R&#39;;&#10;        a.style.display = &#39;none&#39;;&#10;        document.body.appendChild(a);&#10;        a.dispatchEvent(new MouseEvent(&#39;click&#39;));&#10;        document.body.removeChild(a);&#10;        setTimeout(() =&gt; {&#10;          window.URL.revokeObjectURL(blobUrl);&#10;        }, 100);&#10;        return false;&#10;      } catch (error) {&#10;        console.error(&#39;Download failed:&#39;, error);&#10;        alert(&#39;Download failed. Please try again.&#39;);&#10;      }&#10;    }&#10;    downloadFile(event);&#10;  "><i class="fa fa-save"></i> Chapter solutions</button>
+<button class="btn btn-default" onclick="
+    async function downloadFile(event) {
+      event.preventDefault();
+      try {
+        const response = await fetch('data:text/plain;base64,IycgIyMgRXhlcmNpc2VzCiMnIAojJyAqVGhlIHNvbHV0aW9ucyBmb3IgdGhlIGV4ZXJjaXNlcyB3aWxsIGJlIGF2YWlsYWJsZSBoZXJlIG9uIGByIGNvbmZpZyRtYXJrZG93bmAuKgojJyAKIycgCgA=');
+        if (!response.ok) throw new Error('Network response failed');
+        const blob = await response.blob();
+        const blobUrl = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = '11-markdown-solutions.R';
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.dispatchEvent(new MouseEvent('click'));
+        document.body.removeChild(a);
+        setTimeout(() =&gt; {
+          window.URL.revokeObjectURL(blobUrl);
+        }, 100);
+        return false;
+      } catch (error) {
+        console.error('Download failed:', error);
+        alert('Download failed. Please try again.');
+      }
+    }
+    downloadFile(event);
+  "><i class="fa fa-save"></i> Chapter solutions</button>
 
 </div>
 </div>
-            </section>
+  <div class="chapter-nav">
+<div class="prev"><a href="logit.html"><span class="header-section-number">10</span> Logistic Regression</a></div>
+<div class="next"><a href="course-summary.html"><span class="header-section-number">12</span> Course summary</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#rmarkdown"><span class="header-section-number">11</span> R Markdown</a></li>
+<li>
+<a class="nav-link" href="#content-9"><span class="header-section-number">11.1</span> Content</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#introduction-2">Introduction</a></li>
+<li><a class="nav-link" href="#usage">Usage</a></li>
+<li><a class="nav-link" href="#the-components-of-an-r-markdown-document">The Components of an R Markdown Document</a></li>
+<li><a class="nav-link" href="#figures-and-graphs">Figures and Graphs</a></li>
+<li><a class="nav-link" href="#useful-stuff">Useful Stuff</a></li>
+<li><a class="nav-link" href="#bibliography">Bibliography</a></li>
+<li><a class="nav-link" href="#stargazer">stargazer</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#summary-9"><span class="header-section-number">11.2</span> Summary</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#functions-list-9">Functions list</a></li></ul>
+</li>
+<li><a class="nav-link" href="#exercises-9"><span class="header-section-number">11.3</span> Exercises</a></li>
+</ul>
 
-          </div>
-        </div>
-      </div>
-<a href="logit.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="course-summary.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
-    </div>
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong><p><img src="images/Crest_white.png" width="75" style="display:block; margin:auto; margin-bottom:3em;"> Analysing Quantitative Data with R <br></p></strong>" was written by </p>
+<p><strong>Dr Flo Reiche</strong> <br><strong>Department of Politics and International Studies</strong> <br><strong>University of Warwick</strong></p>. It was last built on 26 July, 2025.
   </div>
-<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
-<script>
-gitbook.require(["gitbook"], function(gitbook) {
-gitbook.start({
-  "sharing": {
-    "github": false,
-    "facebook": true,
-    "twitter": true,
-    "linkedin": false,
-    "weibo": false,
-    "instapaper": false,
-    "vk": false,
-    "whatsapp": false,
-    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-  },
-  "fontsettings": {
-    "theme": "white",
-    "family": "sans",
-    "size": 2
-  },
-  "edit": {
-    "link": null,
-    "text": null
-  },
-  "history": {
-    "link": null,
-    "text": null
-  },
-  "view": {
-    "link": null,
-    "text": null
-  },
-  "download": null,
-  "search": {
-    "engine": "fuse",
-    "options": null
-  },
-  "toc": {
-    "collapse": "section"
-  },
-  "toc_depth": 2
-});
-});
-</script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
@@ -887,7 +665,22 @@ gitbook.start({
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
 </script>
 </body>
-
 </html>
