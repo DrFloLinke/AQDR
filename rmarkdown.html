@@ -201,26 +201,26 @@ line 2</code></pre>
 <li>Two ways to set equations</li>
 <li>Either wrapped in $ signs</li>
 </ul>
-<div class="sourceCode" id="cb346"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb346-1"><a href="rmarkdown.html#cb346-1" tabindex="-1"></a>$ equation $</span></code></pre></div>
+<div class="sourceCode" id="cb737"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb737-1"><a href="rmarkdown.html#cb737-1" tabindex="-1"></a>$ equation $</span></code></pre></div>
 <ul>
 <li>or</li>
 </ul>
-<div class="sourceCode" id="cb347"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb347-1"><a href="rmarkdown.html#cb347-1" tabindex="-1"></a>\begin{equation}</span>
-<span id="cb347-2"><a href="rmarkdown.html#cb347-2" tabindex="-1"></a>equation</span>
-<span id="cb347-3"><a href="rmarkdown.html#cb347-3" tabindex="-1"></a>\end{equation}</span></code></pre></div>
+<div class="sourceCode" id="cb738"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb738-1"><a href="rmarkdown.html#cb738-1" tabindex="-1"></a>\begin{equation}</span>
+<span id="cb738-2"><a href="rmarkdown.html#cb738-2" tabindex="-1"></a>equation</span>
+<span id="cb738-3"><a href="rmarkdown.html#cb738-3" tabindex="-1"></a>\end{equation}</span></code></pre></div>
 <p>Example</p>
 <p>The command</p>
-<div class="sourceCode" id="cb348"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb348-1"><a href="rmarkdown.html#cb348-1" tabindex="-1"></a>\begin{equation}</span>
-<span id="cb348-2"><a href="rmarkdown.html#cb348-2" tabindex="-1"></a>Y = \beta_{0} + \beta_{1} x_{i} + \epsilon</span>
-<span id="cb348-3"><a href="rmarkdown.html#cb348-3" tabindex="-1"></a>\end{equation}</span></code></pre></div>
+<div class="sourceCode" id="cb739"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb739-1"><a href="rmarkdown.html#cb739-1" tabindex="-1"></a>\begin{equation}</span>
+<span id="cb739-2"><a href="rmarkdown.html#cb739-2" tabindex="-1"></a>Y = \beta_{0} + \beta_{1} x_{i} + \epsilon</span>
+<span id="cb739-3"><a href="rmarkdown.html#cb739-3" tabindex="-1"></a>\end{equation}</span></code></pre></div>
 <p>results in:</p>
 <p><span class="math display">\[\begin{equation}
   Y = \beta_{0} + \beta_{1} x_{i} + \epsilon
 \end{equation}\]</span></p>
 <p>To suppress the numbering you type:</p>
-<div class="sourceCode" id="cb349"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb349-1"><a href="rmarkdown.html#cb349-1" tabindex="-1"></a>\begin{equation*}</span>
-<span id="cb349-2"><a href="rmarkdown.html#cb349-2" tabindex="-1"></a>Y = \beta_{0} + \beta_{1} x_{i} + \epsilon</span>
-<span id="cb349-3"><a href="rmarkdown.html#cb349-3" tabindex="-1"></a>\end{equation*}</span></code></pre></div>
+<div class="sourceCode" id="cb740"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb740-1"><a href="rmarkdown.html#cb740-1" tabindex="-1"></a>\begin{equation*}</span>
+<span id="cb740-2"><a href="rmarkdown.html#cb740-2" tabindex="-1"></a>Y = \beta_{0} + \beta_{1} x_{i} + \epsilon</span>
+<span id="cb740-3"><a href="rmarkdown.html#cb740-3" tabindex="-1"></a>\end{equation*}</span></code></pre></div>
 <p><span class="math display">\[\begin{equation*}
   Y = \beta_{0} + \beta_{1} x_{i} + \epsilon
 \end{equation*}\]</span></p>
@@ -239,37 +239,38 @@ line 2</code></pre>
 <h5>In-Line R Code<a class="anchor" aria-label="anchor" href="#in-line-r-code"><i class="fas fa-link"></i></a>
 </h5>
 <p>You can include R Code in Markdown by wrapping it in</p>
-<div class="sourceCode" id="cb350"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb350-1"><a href="rmarkdown.html#cb350-1" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb350-2"><a href="rmarkdown.html#cb350-2" tabindex="-1"></a></span>
-<span id="cb350-3"><a href="rmarkdown.html#cb350-3" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<div class="sourceCode" id="cb741"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb741-1"><a href="rmarkdown.html#cb741-1" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb741-2"><a href="rmarkdown.html#cb741-2" tabindex="-1"></a></span>
+<span id="cb741-3"><a href="rmarkdown.html#cb741-3" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <p>Shortcut:</p>
 <ul>
 <li>Mac: Option + Command + I</li>
 <li>Windows: Ctrl + Alt + I</li>
 </ul>
 <p>Example</p>
-<div class="sourceCode" id="cb351"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb351-1"><a href="rmarkdown.html#cb351-1" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb351-2"><a href="rmarkdown.html#cb351-2" tabindex="-1"></a><span class="in">5+3</span></span>
-<span id="cb351-3"><a href="rmarkdown.html#cb351-3" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<div class="sourceCode" id="cb742"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb742-1"><a href="rmarkdown.html#cb742-1" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb742-2"><a href="rmarkdown.html#cb742-2" tabindex="-1"></a><span class="in">5+3</span></span>
+<span id="cb742-3"><a href="rmarkdown.html#cb742-3" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <p>results in</p>
-<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="rmarkdown.html#cb352-1" tabindex="-1"></a><span class="dv">5</span><span class="sc">+</span><span class="dv">3</span></span>
-<span id="cb352-2"><a href="rmarkdown.html#cb352-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">8</span></span></code></pre></div>
+<div class="sourceCode" id="cb743"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fl">5</span><span class="op">+</span><span class="fl">3</span></span></code></pre></div>
+<pre><code>[1] 8</code></pre>
 <p>Chunk Options</p>
 <p>Types of Output Suppressed by:</p>
 <div class="inline-figure"><img src="files/markdown/table.png" width="75%"></div>
 <p>Examples</p>
 <p>Display, but not calculate:</p>
-<div class="sourceCode" id="cb353"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb353-1"><a href="rmarkdown.html#cb353-1" tabindex="-1"></a><span class="in">```{r eval=F}</span></span>
-<span id="cb353-2"><a href="rmarkdown.html#cb353-2" tabindex="-1"></a><span class="in">5+3</span></span>
-<span id="cb353-3"><a href="rmarkdown.html#cb353-3" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<div class="sourceCode" id="cb745"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb745-1"><a href="rmarkdown.html#cb745-1" tabindex="-1"></a><span class="in">```{r eval=F}</span></span>
+<span id="cb745-2"><a href="rmarkdown.html#cb745-2" tabindex="-1"></a><span class="in">5+3</span></span>
+<span id="cb745-3"><a href="rmarkdown.html#cb745-3" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <p>Suppress Messages from Packages</p>
-<div class="sourceCode" id="cb354"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb354-1"><a href="rmarkdown.html#cb354-1" tabindex="-1"></a><span class="in">```{r message=F}</span></span>
-<span id="cb354-2"><a href="rmarkdown.html#cb354-2" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
-<span id="cb354-3"><a href="rmarkdown.html#cb354-3" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<div class="sourceCode" id="cb746"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb746-1"><a href="rmarkdown.html#cb746-1" tabindex="-1"></a><span class="in">```{r message=F}</span></span>
+<span id="cb746-2"><a href="rmarkdown.html#cb746-2" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb746-3"><a href="rmarkdown.html#cb746-3" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <p>Suppress Messages from Packages and only display</p>
-<div class="sourceCode" id="cb355"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb355-1"><a href="rmarkdown.html#cb355-1" tabindex="-1"></a><span class="in">```{r message=F, eval=F}</span></span>
-<span id="cb355-2"><a href="rmarkdown.html#cb355-2" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
-<span id="cb355-3"><a href="rmarkdown.html#cb355-3" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<div class="sourceCode" id="cb747"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb747-1"><a href="rmarkdown.html#cb747-1" tabindex="-1"></a><span class="in">```{r message=F, eval=F}</span></span>
+<span id="cb747-2"><a href="rmarkdown.html#cb747-2" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb747-3"><a href="rmarkdown.html#cb747-3" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -277,21 +278,21 @@ line 2</code></pre>
 <h3>Figures and Graphs<a class="anchor" aria-label="anchor" href="#figures-and-graphs"><i class="fas fa-link"></i></a>
 </h3>
 <p>You can also use this to include figures and graphs:</p>
-<div class="sourceCode" id="cb356"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb356-1"><a href="rmarkdown.html#cb356-1" tabindex="-1"></a><span class="in">```{r echo=FALSE, out.width='75%'}</span></span>
-<span id="cb356-2"><a href="rmarkdown.html#cb356-2" tabindex="-1"></a><span class="in">knitr::include_graphics('./filename.png')</span></span>
-<span id="cb356-3"><a href="rmarkdown.html#cb356-3" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<div class="sourceCode" id="cb748"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb748-1"><a href="rmarkdown.html#cb748-1" tabindex="-1"></a><span class="in">```{r echo=FALSE, out.width='75%'}</span></span>
+<span id="cb748-2"><a href="rmarkdown.html#cb748-2" tabindex="-1"></a><span class="in">knitr::include_graphics('./filename.png')</span></span>
+<span id="cb748-3"><a href="rmarkdown.html#cb748-3" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <p>Add a Caption!</p>
-<div class="sourceCode" id="cb357"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb357-1"><a href="rmarkdown.html#cb357-1" tabindex="-1"></a><span class="in">```{r echo=FALSE, out.width='75%', fig.cap="\\label{fig:test}Test Caption"}</span></span>
-<span id="cb357-2"><a href="rmarkdown.html#cb357-2" tabindex="-1"></a><span class="in">knitr::include_graphics('./filename.png')</span></span>
-<span id="cb357-3"><a href="rmarkdown.html#cb357-3" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<div class="sourceCode" id="cb749"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb749-1"><a href="rmarkdown.html#cb749-1" tabindex="-1"></a><span class="in">```{r echo=FALSE, out.width='75%', fig.cap="\\label{fig:test}Test Caption"}</span></span>
+<span id="cb749-2"><a href="rmarkdown.html#cb749-2" tabindex="-1"></a><span class="in">knitr::include_graphics('./filename.png')</span></span>
+<span id="cb749-3"><a href="rmarkdown.html#cb749-3" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <p>And then refer to it in the text with</p>
-<div class="sourceCode" id="cb358"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb358-1"><a href="rmarkdown.html#cb358-1" tabindex="-1"></a>\ref{fig:test}</span></code></pre></div>
+<div class="sourceCode" id="cb750"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb750-1"><a href="rmarkdown.html#cb750-1" tabindex="-1"></a>\ref{fig:test}</span></code></pre></div>
 <p>Example</p>
-<div class="sourceCode" id="cb359"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb359-1"><a href="rmarkdown.html#cb359-1" tabindex="-1"></a><span class="in">```{r echo=FALSE, out.width='75%', fig.cap="\\label{fig:spell}RStudio Task Bar"}</span></span>
-<span id="cb359-2"><a href="rmarkdown.html#cb359-2" tabindex="-1"></a><span class="in">knitr::include_graphics('./spell.png')</span></span>
-<span id="cb359-3"><a href="rmarkdown.html#cb359-3" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb359-4"><a href="rmarkdown.html#cb359-4" tabindex="-1"></a></span>
-<span id="cb359-5"><a href="rmarkdown.html#cb359-5" tabindex="-1"></a>As we can see in \ref{fig:spell}</span></code></pre></div>
+<div class="sourceCode" id="cb751"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb751-1"><a href="rmarkdown.html#cb751-1" tabindex="-1"></a><span class="in">```{r echo=FALSE, out.width='75%', fig.cap="\\label{fig:spell}RStudio Task Bar"}</span></span>
+<span id="cb751-2"><a href="rmarkdown.html#cb751-2" tabindex="-1"></a><span class="in">knitr::include_graphics('./spell.png')</span></span>
+<span id="cb751-3"><a href="rmarkdown.html#cb751-3" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb751-4"><a href="rmarkdown.html#cb751-4" tabindex="-1"></a></span>
+<span id="cb751-5"><a href="rmarkdown.html#cb751-5" tabindex="-1"></a>As we can see in \ref{fig:spell}</span></code></pre></div>
 <p>turns into</p>
 <div class="figure">
 <span style="display:block;" id="fig:unnamed-chunk-456"></span>
@@ -315,13 +316,13 @@ Figure 11.1: RStudio Task Bar
 <ul>
 <li>New page</li>
 </ul>
-<div class="sourceCode" id="cb360"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb360-1"><a href="rmarkdown.html#cb360-1" tabindex="-1"></a>\newpage</span></code></pre></div>
+<div class="sourceCode" id="cb752"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb752-1"><a href="rmarkdown.html#cb752-1" tabindex="-1"></a>\newpage</span></code></pre></div>
 <ul>
 <li>Centering a Line</li>
 </ul>
-<div class="sourceCode" id="cb361"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb361-1"><a href="rmarkdown.html#cb361-1" tabindex="-1"></a>\begin{center}</span>
-<span id="cb361-2"><a href="rmarkdown.html#cb361-2" tabindex="-1"></a>Text to be centred.</span>
-<span id="cb361-3"><a href="rmarkdown.html#cb361-3" tabindex="-1"></a>\end{center}</span></code></pre></div>
+<div class="sourceCode" id="cb753"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb753-1"><a href="rmarkdown.html#cb753-1" tabindex="-1"></a>\begin{center}</span>
+<span id="cb753-2"><a href="rmarkdown.html#cb753-2" tabindex="-1"></a>Text to be centred.</span>
+<span id="cb753-3"><a href="rmarkdown.html#cb753-3" tabindex="-1"></a>\end{center}</span></code></pre></div>
 </div>
 </div>
 <div id="bibliography" class="section level3 unnumbered">
@@ -380,11 +381,11 @@ Text [@grolemund:2016, pp. 33-35, 38-39 and *passim*].</code></pre>
 <p>You can only edit this file in LaTeX</p>
 <p>If you want to learn more about , there is another Moodle Skills Module called <a href="https://moodle.warwick.ac.uk/course/view.php?id=42025">Academic Writing in LaTeX</a> available.</p>
 <p>Input</p>
-<div class="sourceCode" id="cb365"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb365-1"><a href="rmarkdown.html#cb365-1" tabindex="-1"></a><span class="fu"># Introduction</span></span>
-<span id="cb365-2"><a href="rmarkdown.html#cb365-2" tabindex="-1"></a></span>
-<span id="cb365-3"><a href="rmarkdown.html#cb365-3" tabindex="-1"></a>Text <span class="co">[</span><span class="ot">@grolemund:2016, p. 361</span><span class="co">]</span></span>
-<span id="cb365-4"><a href="rmarkdown.html#cb365-4" tabindex="-1"></a></span>
-<span id="cb365-5"><a href="rmarkdown.html#cb365-5" tabindex="-1"></a><span class="fu"># References</span></span></code></pre></div>
+<div class="sourceCode" id="cb757"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb757-1"><a href="rmarkdown.html#cb757-1" tabindex="-1"></a><span class="fu"># Introduction</span></span>
+<span id="cb757-2"><a href="rmarkdown.html#cb757-2" tabindex="-1"></a></span>
+<span id="cb757-3"><a href="rmarkdown.html#cb757-3" tabindex="-1"></a>Text <span class="co">[</span><span class="ot">@grolemund:2016, p. 361</span><span class="co">]</span></span>
+<span id="cb757-4"><a href="rmarkdown.html#cb757-4" tabindex="-1"></a></span>
+<span id="cb757-5"><a href="rmarkdown.html#cb757-5" tabindex="-1"></a><span class="fu"># References</span></span></code></pre></div>
 <p>turns into this output</p>
 <div class="inline-figure"><img src="files/markdown/bib.png" width="75%"></div>
 </div>
@@ -423,54 +424,57 @@ and understand the analysis completely from the text. (p.10)</p>
 <li>Its beautiful aesthetics</li>
 </ul>
 <p>Estimating a Model, replicating the work by Fearon and Laitin (2003)</p>
-<div class="sourceCode" id="cb366"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb758"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://haven.tidyverse.org">haven</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://xrobin.github.io/pROC/">pROC</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">stargazer</span><span class="op">)</span></span></code></pre></div>
 <p>Data Prep</p>
-<div class="sourceCode" id="cb367"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb759"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fearon</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html">read_dta</a></span><span class="op">(</span><span class="st">"data/fearon.dta"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">fearon</span><span class="op">$</span><span class="va">onset</span><span class="op">[</span><span class="va">fearon</span><span class="op">$</span><span class="va">onset</span><span class="op">==</span><span class="fl">4</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
 <span></span>
 <span><span class="va">fearon</span><span class="op">$</span><span class="va">onset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">fearon</span><span class="op">$</span><span class="va">onset</span><span class="op">)</span></span></code></pre></div>
 <p>Model 1</p>
-<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="rmarkdown.html#cb368-1" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(onset <span class="sc">~</span> gdpenl,</span>
-<span id="cb368-2"><a href="rmarkdown.html#cb368-2" tabindex="-1"></a>             <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> logit),</span>
-<span id="cb368-3"><a href="rmarkdown.html#cb368-3" tabindex="-1"></a>             <span class="at">na.action =</span> na.exclude,</span>
-<span id="cb368-4"><a href="rmarkdown.html#cb368-4" tabindex="-1"></a>             <span class="at">data =</span> fearon)</span>
-<span id="cb368-5"><a href="rmarkdown.html#cb368-5" tabindex="-1"></a></span>
-<span id="cb368-6"><a href="rmarkdown.html#cb368-6" tabindex="-1"></a>prob_model1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(model1, <span class="at">type=</span><span class="st">"response"</span>)</span>
-<span id="cb368-7"><a href="rmarkdown.html#cb368-7" tabindex="-1"></a>fearon<span class="sc">$</span>prob_model1 <span class="ot">&lt;-</span> <span class="fu">unlist</span>(prob_model1)</span>
-<span id="cb368-8"><a href="rmarkdown.html#cb368-8" tabindex="-1"></a></span>
-<span id="cb368-9"><a href="rmarkdown.html#cb368-9" tabindex="-1"></a>roc_model1 <span class="ot">&lt;-</span> <span class="fu">roc</span>(fearon<span class="sc">$</span>onset, fearon<span class="sc">$</span>prob_model1)</span>
-<span id="cb368-10"><a href="rmarkdown.html#cb368-10" tabindex="-1"></a>Setting levels<span class="sc">:</span> control <span class="ot">=</span> <span class="dv">0</span>, case <span class="ot">=</span> <span class="dv">1</span></span>
-<span id="cb368-11"><a href="rmarkdown.html#cb368-11" tabindex="-1"></a>Setting direction<span class="sc">:</span> controls <span class="sc">&lt;</span> cases</span></code></pre></div>
+<div class="sourceCode" id="cb760"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">onset</span> <span class="op">~</span> <span class="va">gdpenl</span>,</span>
+<span>             family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span><span class="op">(</span>link <span class="op">=</span> <span class="va">logit</span><span class="op">)</span>,</span>
+<span>             na.action <span class="op">=</span> <span class="va">na.exclude</span>,</span>
+<span>             data <span class="op">=</span> <span class="va">fearon</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">prob_model1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">model1</span>, type<span class="op">=</span><span class="st">"response"</span><span class="op">)</span></span>
+<span><span class="va">fearon</span><span class="op">$</span><span class="va">prob_model1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">prob_model1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">roc_model1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pROC/man/roc.html">roc</a></span><span class="op">(</span><span class="va">fearon</span><span class="op">$</span><span class="va">onset</span>, <span class="va">fearon</span><span class="op">$</span><span class="va">prob_model1</span><span class="op">)</span></span></code></pre></div>
+<pre><code>Setting levels: control = 0, case = 1</code></pre>
+<pre><code>Setting direction: controls &lt; cases</code></pre>
 <p>Model 2</p>
-<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="rmarkdown.html#cb369-1" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(onset <span class="sc">~</span> gdpenl <span class="sc">+</span> lpopl1,</span>
-<span id="cb369-2"><a href="rmarkdown.html#cb369-2" tabindex="-1"></a>             <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> logit),</span>
-<span id="cb369-3"><a href="rmarkdown.html#cb369-3" tabindex="-1"></a>             <span class="at">na.action =</span> na.exclude,</span>
-<span id="cb369-4"><a href="rmarkdown.html#cb369-4" tabindex="-1"></a>             <span class="at">data =</span> fearon)</span>
-<span id="cb369-5"><a href="rmarkdown.html#cb369-5" tabindex="-1"></a></span>
-<span id="cb369-6"><a href="rmarkdown.html#cb369-6" tabindex="-1"></a>prob_model2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(model2, <span class="at">type=</span><span class="st">"response"</span>)</span>
-<span id="cb369-7"><a href="rmarkdown.html#cb369-7" tabindex="-1"></a>fearon<span class="sc">$</span>prob_model2 <span class="ot">&lt;-</span> <span class="fu">unlist</span>(prob_model2)</span>
-<span id="cb369-8"><a href="rmarkdown.html#cb369-8" tabindex="-1"></a></span>
-<span id="cb369-9"><a href="rmarkdown.html#cb369-9" tabindex="-1"></a>roc_model2 <span class="ot">&lt;-</span> <span class="fu">roc</span>(fearon<span class="sc">$</span>onset, fearon<span class="sc">$</span>prob_model2)</span>
-<span id="cb369-10"><a href="rmarkdown.html#cb369-10" tabindex="-1"></a>Setting levels<span class="sc">:</span> control <span class="ot">=</span> <span class="dv">0</span>, case <span class="ot">=</span> <span class="dv">1</span></span>
-<span id="cb369-11"><a href="rmarkdown.html#cb369-11" tabindex="-1"></a>Setting direction<span class="sc">:</span> controls <span class="sc">&lt;</span> cases</span></code></pre></div>
+<div class="sourceCode" id="cb763"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">onset</span> <span class="op">~</span> <span class="va">gdpenl</span> <span class="op">+</span> <span class="va">lpopl1</span>,</span>
+<span>             family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span><span class="op">(</span>link <span class="op">=</span> <span class="va">logit</span><span class="op">)</span>,</span>
+<span>             na.action <span class="op">=</span> <span class="va">na.exclude</span>,</span>
+<span>             data <span class="op">=</span> <span class="va">fearon</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">prob_model2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">model2</span>, type<span class="op">=</span><span class="st">"response"</span><span class="op">)</span></span>
+<span><span class="va">fearon</span><span class="op">$</span><span class="va">prob_model2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">prob_model2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">roc_model2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pROC/man/roc.html">roc</a></span><span class="op">(</span><span class="va">fearon</span><span class="op">$</span><span class="va">onset</span>, <span class="va">fearon</span><span class="op">$</span><span class="va">prob_model2</span><span class="op">)</span></span></code></pre></div>
+<pre><code>Setting levels: control = 0, case = 1</code></pre>
+<pre><code>Setting direction: controls &lt; cases</code></pre>
 <p>Model 3</p>
-<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="rmarkdown.html#cb370-1" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(onset <span class="sc">~</span> gdpenl <span class="sc">+</span> lpopl1 <span class="sc">+</span> lmtnest,</span>
-<span id="cb370-2"><a href="rmarkdown.html#cb370-2" tabindex="-1"></a>             <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> logit),</span>
-<span id="cb370-3"><a href="rmarkdown.html#cb370-3" tabindex="-1"></a>             <span class="at">na.action =</span> na.exclude,</span>
-<span id="cb370-4"><a href="rmarkdown.html#cb370-4" tabindex="-1"></a>             <span class="at">data =</span> fearon)</span>
-<span id="cb370-5"><a href="rmarkdown.html#cb370-5" tabindex="-1"></a></span>
-<span id="cb370-6"><a href="rmarkdown.html#cb370-6" tabindex="-1"></a>prob_model3 <span class="ot">&lt;-</span> <span class="fu">predict</span>(model3, <span class="at">type=</span><span class="st">"response"</span>)</span>
-<span id="cb370-7"><a href="rmarkdown.html#cb370-7" tabindex="-1"></a>fearon<span class="sc">$</span>prob_model3 <span class="ot">&lt;-</span> <span class="fu">unlist</span>(prob_model3)</span>
-<span id="cb370-8"><a href="rmarkdown.html#cb370-8" tabindex="-1"></a></span>
-<span id="cb370-9"><a href="rmarkdown.html#cb370-9" tabindex="-1"></a>roc_model3 <span class="ot">&lt;-</span> <span class="fu">roc</span>(fearon<span class="sc">$</span>onset, fearon<span class="sc">$</span>prob_model3)</span>
-<span id="cb370-10"><a href="rmarkdown.html#cb370-10" tabindex="-1"></a>Setting levels<span class="sc">:</span> control <span class="ot">=</span> <span class="dv">0</span>, case <span class="ot">=</span> <span class="dv">1</span></span>
-<span id="cb370-11"><a href="rmarkdown.html#cb370-11" tabindex="-1"></a>Setting direction<span class="sc">:</span> controls <span class="sc">&lt;</span> cases</span></code></pre></div>
+<div class="sourceCode" id="cb766"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">onset</span> <span class="op">~</span> <span class="va">gdpenl</span> <span class="op">+</span> <span class="va">lpopl1</span> <span class="op">+</span> <span class="va">lmtnest</span>,</span>
+<span>             family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span><span class="op">(</span>link <span class="op">=</span> <span class="va">logit</span><span class="op">)</span>,</span>
+<span>             na.action <span class="op">=</span> <span class="va">na.exclude</span>,</span>
+<span>             data <span class="op">=</span> <span class="va">fearon</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">prob_model3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">model3</span>, type<span class="op">=</span><span class="st">"response"</span><span class="op">)</span></span>
+<span><span class="va">fearon</span><span class="op">$</span><span class="va">prob_model3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">prob_model3</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">roc_model3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pROC/man/roc.html">roc</a></span><span class="op">(</span><span class="va">fearon</span><span class="op">$</span><span class="va">onset</span>, <span class="va">fearon</span><span class="op">$</span><span class="va">prob_model3</span><span class="op">)</span></span></code></pre></div>
+<pre><code>Setting levels: control = 0, case = 1</code></pre>
+<pre><code>Setting direction: controls &lt; cases</code></pre>
 <p>Now we use <code>stargazer</code> to put the results into a table. I am suppressing the annoying heager here, and am adjusting the font size, too.</p>
 <p>Output</p>
 <div class="inline-figure"><img src="images/11/tab1.png" width="75%" style="display: block; margin: auto;"></div>
@@ -479,16 +483,16 @@ and understand the analysis completely from the text. (p.10)</p>
 <ul>
 <li>In descending Order</li>
 </ul>
-<div class="sourceCode" id="cb371"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb371-1"><a href="rmarkdown.html#cb371-1" tabindex="-1"></a>\Huge</span>
-<span id="cb371-2"><a href="rmarkdown.html#cb371-2" tabindex="-1"></a>\huge</span>
-<span id="cb371-3"><a href="rmarkdown.html#cb371-3" tabindex="-1"></a>\LARGE</span>
-<span id="cb371-4"><a href="rmarkdown.html#cb371-4" tabindex="-1"></a>\Large</span>
-<span id="cb371-5"><a href="rmarkdown.html#cb371-5" tabindex="-1"></a>\large</span>
-<span id="cb371-6"><a href="rmarkdown.html#cb371-6" tabindex="-1"></a>\normalsize</span>
-<span id="cb371-7"><a href="rmarkdown.html#cb371-7" tabindex="-1"></a>\small</span>
-<span id="cb371-8"><a href="rmarkdown.html#cb371-8" tabindex="-1"></a>\footnotesize</span>
-<span id="cb371-9"><a href="rmarkdown.html#cb371-9" tabindex="-1"></a>\scriptsize</span>
-<span id="cb371-10"><a href="rmarkdown.html#cb371-10" tabindex="-1"></a>\tiny</span></code></pre></div>
+<div class="sourceCode" id="cb769"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb769-1"><a href="rmarkdown.html#cb769-1" tabindex="-1"></a>\Huge</span>
+<span id="cb769-2"><a href="rmarkdown.html#cb769-2" tabindex="-1"></a>\huge</span>
+<span id="cb769-3"><a href="rmarkdown.html#cb769-3" tabindex="-1"></a>\LARGE</span>
+<span id="cb769-4"><a href="rmarkdown.html#cb769-4" tabindex="-1"></a>\Large</span>
+<span id="cb769-5"><a href="rmarkdown.html#cb769-5" tabindex="-1"></a>\large</span>
+<span id="cb769-6"><a href="rmarkdown.html#cb769-6" tabindex="-1"></a>\normalsize</span>
+<span id="cb769-7"><a href="rmarkdown.html#cb769-7" tabindex="-1"></a>\small</span>
+<span id="cb769-8"><a href="rmarkdown.html#cb769-8" tabindex="-1"></a>\footnotesize</span>
+<span id="cb769-9"><a href="rmarkdown.html#cb769-9" tabindex="-1"></a>\scriptsize</span>
+<span id="cb769-10"><a href="rmarkdown.html#cb769-10" tabindex="-1"></a>\tiny</span></code></pre></div>
 <p>I will ignore the <code>{r results='asis', echo=F, message=F, tab.cap = NULL}</code> environment now, and only show you the actual <code>stargazer</code> script to be used.</p>
 <p>Adding Variable Names, again quoting Stimson:</p>
 <blockquote>
@@ -496,7 +500,7 @@ and understand the analysis completely from the text. (p.10)</p>
 variable names to stand for concepts. These are personal code words that
 convey no meaning to readers. (p.10)</p>
 </blockquote>
-<div class="sourceCode" id="cb372"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb770"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/stargazer/man/stargazer.html">stargazer</a></span><span class="op">(</span><span class="va">model1</span>, <span class="va">model2</span>, <span class="va">model3</span>,</span>
 <span>          header<span class="op">=</span><span class="cn">F</span>, </span>
 <span>          font.size <span class="op">=</span> <span class="st">"tiny"</span>, </span>
@@ -506,7 +510,7 @@ convey no meaning to readers. (p.10)</p>
 <span>          dep.var.labels   <span class="op">=</span> <span class="st">"Onset of Civil War"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="images/11/tab2.png" width="75%" style="display: block; margin: auto;"></div>
 <p>Suppress Statistics</p>
-<div class="sourceCode" id="cb373"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb771"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/stargazer/man/stargazer.html">stargazer</a></span><span class="op">(</span><span class="va">model1</span>, <span class="va">model2</span>, <span class="va">model3</span>,</span>
 <span>          header<span class="op">=</span><span class="cn">F</span>, </span>
 <span>          font.size <span class="op">=</span> <span class="st">"tiny"</span>, </span>
@@ -518,7 +522,7 @@ convey no meaning to readers. (p.10)</p>
 <div class="inline-figure"><img src="images/11/tab3.png" width="75%" style="display: block; margin: auto;"></div>
 <p>For a full list of abbreviations for statistics, see page 22 of <a href="https://cran.r-project.org/web/packages/stargazer/stargazer.pdf" class="uri">https://cran.r-project.org/web/packages/stargazer/stargazer.pdf</a></p>
 <p>Add ROC Curve</p>
-<div class="sourceCode" id="cb374"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb772"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/stargazer/man/stargazer.html">stargazer</a></span><span class="op">(</span><span class="va">model1</span>, <span class="va">model2</span>, <span class="va">model3</span>,</span>
 <span>          header<span class="op">=</span><span class="cn">F</span>, </span>
 <span>          font.size <span class="op">=</span> <span class="st">"tiny"</span>, </span>
@@ -531,7 +535,7 @@ convey no meaning to readers. (p.10)</p>
 <span>                              <span class="fu"><a href="https://rdrr.io/pkg/pROC/man/auc.html">auc</a></span><span class="op">(</span><span class="va">roc_model2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/pROC/man/auc.html">auc</a></span><span class="op">(</span><span class="va">roc_model3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="images/11/tab4.png" width="75%" style="display: block; margin: auto;"></div>
 <p>Round ROC Curve</p>
-<div class="sourceCode" id="cb375"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb773"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/stargazer/man/stargazer.html">stargazer</a></span><span class="op">(</span><span class="va">model1</span>, <span class="va">model2</span>, <span class="va">model3</span>,</span>
 <span>          header<span class="op">=</span><span class="cn">F</span>, </span>
 <span>          font.size <span class="op">=</span> <span class="st">"tiny"</span>, </span>
@@ -546,7 +550,7 @@ convey no meaning to readers. (p.10)</p>
 <div class="inline-figure"><img src="images/11/tab5.png" width="75%" style="display: block; margin: auto;"></div>
 <p>You can also control the number of decimal places with the <code>digits =</code> option more generally. For example, if you want to round everything to two decimal places, you would set <code>digits = 2</code>.</p>
 <p>Lastly, let’s label the Table, so that a reader knows what is being shown.</p>
-<div class="sourceCode" id="cb376"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb774"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/stargazer/man/stargazer.html">stargazer</a></span><span class="op">(</span><span class="va">model1</span>, <span class="va">model2</span>, <span class="va">model3</span>,</span>
 <span>          header<span class="op">=</span><span class="cn">F</span>, </span>
 <span>          font.size <span class="op">=</span> <span class="st">"tiny"</span>, </span>
