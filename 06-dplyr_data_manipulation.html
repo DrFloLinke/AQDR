@@ -1,0 +1,1456 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Data Manipulation – Analysing Quantitative Data with R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./07-data_visualization.html" rel="next">
+<link href="./05-key_programming_concepts.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-7c884608bb88d9d23eddf9360d6659a5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<meta name="theme-color" content="#1d1f2b" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#1d1f2b" media="(prefers-color-scheme: light)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<script>
+// This MUST come before the script src above
+window.MathJax = {
+  tex: {
+    // (Quarto already sets these, but harmless to repeat)
+    inlineMath: [['\\(', '\\)'], ['$', '$']],
+    displayMath: [['\\[', '\\]'], ['$$', '$$']]
+  },
+  // Tell the CHTML output to use Fira
+  chtml: { font: 'mathjax-fira' }
+};
+</script>
+
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./images/Crest_white.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title"><span class="title-long">Analysing Quantitative Data with R</span> <span class="title-short">AQDR</span></span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://drfloreiche.github.io/"> 
+<span class="menu-text">Flo’s Home</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04-exploratory_analysis.html">ADVANCED DATA MANIPULATION</a></li><li class="breadcrumb-item"><a href="./06-dplyr_data_manipulation.html"><span class="chapter-title">Data Manipulation</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">THE BASICS</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-introduction.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-basics.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Basics of R Programming</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-data_structures.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Data Structures</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">ADVANCED DATA MANIPULATION</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-exploratory_analysis.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Exploratory Data Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-key_programming_concepts.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Key Programming Concepts</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-dplyr_data_manipulation.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Data Manipulation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">DATA ANLYSIS</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-data_visualization.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Data Visualization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-statistical_association.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Statistical Inference and Association</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">FURTHER TOPICS</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-ols.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Linear Regression</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-logit.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Logistic Regression</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-markdown.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R Markdown</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">DOCUMENTS</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-downloads.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Downloads</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#dplyr" id="toc-dplyr" class="nav-link active" data-scroll-target="#dplyr">Introduction</a></li>
+  <li><a href="#reading-the-data" id="toc-reading-the-data" class="nav-link" data-scroll-target="#reading-the-data">Reading the data</a>
+  <ul class="collapse">
+  <li><a href="#the-pipe-operator" id="toc-the-pipe-operator" class="nav-link" data-scroll-target="#the-pipe-operator">The pipe operator</a></li>
+  </ul></li>
+  <li><a href="#dataset-manipulation" id="toc-dataset-manipulation" class="nav-link" data-scroll-target="#dataset-manipulation">Dataset manipulation</a>
+  <ul class="collapse">
+  <li><a href="#reshaping-data" id="toc-reshaping-data" class="nav-link" data-scroll-target="#reshaping-data">Reshaping data</a></li>
+  <li><a href="#joining" id="toc-joining" class="nav-link" data-scroll-target="#joining">Joining</a></li>
+  <li><a href="#aggregating-data" id="toc-aggregating-data" class="nav-link" data-scroll-target="#aggregating-data">Aggregating data</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04-exploratory_analysis.html">ADVANCED DATA MANIPULATION</a></li><li class="breadcrumb-item"><a href="./06-dplyr_data_manipulation.html"><span class="chapter-title">Data Manipulation</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">Data Manipulation</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="dplyr" class="level1 unnumbered">
+<h1 class="unnumbered">Introduction</h1>
+<p>While we have already discussed some methods for data manipulation, such as indexing, subsetting and modifying data frames, the majority of R users approach this task using a dedicated collection of packages called <code>tidyverse</code>, introduced by Hadley Wickham, a statistician from New Zealand. While it may seem like this chapter covers tools for performing task that you are already familiar with, <code>tidyverse</code> follows a different philosophy than traditional R, and has a lot of advantages including better code readability and efficiency. As before, to install and load the package, simply run the code below. Remember, that you only need to call <code>install.packages</code> once, to download all the required files from CRAN. <code>library</code> needs to be called every time you start a new R session to attach the library functions to your working environment.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="reading-the-data" class="level1 unnumbered">
+<h1 class="unnumbered">Reading the data</h1>
+<p>In this chapter, we will use the same dataset we’ve used in the <a href="04-exploratory_analysis.html#exploratory">exploratory analysis chapter</a>, which presents individual-level information about a sample of students. However, <code>tidyverse</code> offers an improved set of functions for reading in the data, as part of the <code>readr</code> subpackage - they work fairly similar to <code>read.csv</code> introduced before, however have some advantages (for example they read character columns to <code>character</code> vectors, rather than <code>factors</code> without having to include the <code>stringsAsFactors</code> argument, which was discussed in <a href="reading-from-csv">chapter 3</a>. All the <code>readr</code> reading functions start with <code>read_</code> and are used for different file types. The most usual one is <code>read_csv</code> (which you can use in exactly the same way as <code>read.csv</code>), however in this case we use <code>read_delim</code>, which allows us to read file with any delimiter. In case of the <code>math</code> dataset each row is separated by a semicolon (which you can check by opening the file via a notebook app). Because of that we specify for the second <code>delim</code> argument as in the example below:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>math <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/student/student-mat-data.csv"</span>, <span class="at">delim =</span> <span class="st">";"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>As you can see, running the function returns a message, which shows the specification of each column that was read - <code>col_character</code> refers to <code>character</code> columns, while <code>col_double()</code> means <code>numeric</code> columns. You could force each column to be read as a specific type. For example, you may want a character column to be read as factors in some of the cases - for example sex. As mentioned above, the default setting of <code>read_</code> functions is to read all numbers as numeric variables and all text as character variables.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(math<span class="sc">$</span>sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+</div>
+<p>To read the <code>sex</code> column as factor, we can read the data again, this time specifying the <code>col_types</code> argument. The <code>col_types</code> argument takes a <code>list</code> as input, in which we specify the type of selected columns, for example sex = col_factor() to tell:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>math <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/student/student-mat-data.csv"</span>, <span class="at">delim =</span> <span class="st">";"</span>,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">col_types =</span> <span class="fu">list</span>(<span class="at">sex =</span> <span class="fu">col_factor</span>(<span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"M"</span>,<span class="st">"F"</span>))))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(math<span class="sc">$</span>sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "factor"</code></pre>
+</div>
+</div>
+<p>You may wonder why not simply use the <code>as.factor</code> or <code>factor</code> function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>math<span class="sc">$</span>sex <span class="ot">&lt;-</span> <span class="fu">factor</span>(math<span class="sc">$</span>sex, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"M"</span>,<span class="st">"F"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This is exactly equivalent, however the previous way of doing this is much more explicit and concise. Anyone (including you) who reads your analysis will immedietaly know which columns have you specified to be which type.</p>
+<p>The final facet of the <code>readr</code> package functions is that they load the data as a slightly different data type than the normal <code>read.csv</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>math <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/student/student-mat-data.csv"</span>, <span class="at">sep =</span> <span class="st">";"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(math)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "data.frame"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>math <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/student/student-mat-data.csv"</span>, <span class="at">delim =</span> <span class="st">";"</span>,</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">col_types =</span> <span class="fu">list</span>(<span class="at">sex =</span> <span class="fu">col_factor</span>(<span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"M"</span>,<span class="st">"F"</span>))))</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(math)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "spec_tbl_df" "tbl_df"      "tbl"         "data.frame" </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is_tibble</span>(math)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.data.frame</span>(math)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+<p>The data comes loaded as a <code>tibble</code> (tbl for short). Tibbles are a special kind of data frames implemented by the <code>tidyverse</code> package - the only thing you need to know about them for know, is that <em>everything that you learned about data frames so far applies to tibbles</em>. They offer some improvements, which will not be discussed here.</p>
+<section id="the-pipe-operator" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="the-pipe-operator">The pipe operator</h2>
+<p>Perhaps the most imporant innovation offered by the <code>tidyverse</code> package is the so-called <em>pipe operator</em> <code>%&gt;%</code>. Its use may feel a bit quirky at first, but it is extremely useful and is widely used by most of modern R users.</p>
+<p>As you have learned so-far, R evaluates each function from inside out. For example, we can get the sum of missing values in a data frame by running:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(math))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10</code></pre>
+</div>
+</div>
+<p>This essentially performs two steps - first, runs <code>is.na</code> on the math data frame, which returns a table filled with logical values, <code>FALSE</code> when a given entry is not missing and <code>TRUE</code> when it is. Then <code>sum</code> takes this table as input and adds up the values in it (treating <code>FALSE</code> as 0 and <code>TRUE</code> as 1). In many cases, such statements can get long, difficult to read and error-prone, especially when keyword arguments are specified.</p>
+<p>The same operation may be be done using the pipe operator. In this case, rather than evaluating the sequence of functions from within, they are evaluated left to right. The <code>%&gt;%</code> operator can be understood as a way of _passing the output of the thing on the left to the thing on the right as the first argument:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>math <span class="sc">%&gt;%</span> <span class="fu">is.na</span>() <span class="sc">%&gt;%</span> <span class="fu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10</code></pre>
+</div>
+</div>
+<p>In this example, the <code>math</code> data frame is passed to the <code>is.na</code> function, and then the output is passed to the <code>sum</code> function, which returns exactly the same result. As in the case of the regular call, you may store the output in a variable:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>number_missing <span class="ot">&lt;-</span> math <span class="sc">%&gt;%</span> <span class="fu">is.na</span>() <span class="sc">%&gt;%</span> <span class="fu">sum</span>()</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>number_missing</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10</code></pre>
+</div>
+</div>
+<p>Before continuing we drop the missing observations:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>math <span class="ot">&lt;-</span> math[<span class="fu">complete.cases</span>(math), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>While this may feel slightly unintuitive in this case, it comes in very handy when performing long sequences of operations on data, as we will see in the following sections.</p>
+</section>
+</section>
+<section id="dataset-manipulation" class="level1 unnumbered">
+<h1 class="unnumbered">Dataset manipulation</h1>
+<p>Three key functions are most commonly used for dataset manipulation in the <code>tidyverse</code> package: <code>mutate</code>, <code>select</code> and <code>filter</code>, coming from the <code>dplyr</code> sub-package. They are used as follows: - <code>mutate</code> is used to modify and create columns in data frames - <code>select</code> is used to select columns by name - <code>filter</code> is used to select rows given a set of logical values</p>
+<p>All three functions take the data frame as the first argument. For example, we can create a new column, grade_average by adding together grades for all three years and dividing them by 3:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>math <span class="ot">&lt;-</span> <span class="fu">mutate</span>(math, <span class="at">average =</span> (G1 <span class="sc">+</span> G2 <span class="sc">+</span> G3)<span class="sc">/</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Again, this is equivalent to:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>math<span class="sc">$</span>average <span class="ot">&lt;-</span> (math<span class="sc">$</span>G1 <span class="sc">+</span> math<span class="sc">$</span>G2 <span class="sc">+</span> math<span class="sc">$</span>G3)<span class="sc">/</span><span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>As both operations create a variable called <code>average</code> by adding <code>G1</code>, <code>G2</code> and <code>G3</code> toegether, and dividing them by three. Not however, that in case of <code>mutate</code> there’s no need to specify the <code>$</code> opearator, as you pass the <code>math</code> data frame as the first arguments, so the function knows that the <code>G1</code>, <code>G2</code> and <code>G3</code> names refer to this particular data frame. The <code>mutate</code> function returns the same data frame, but with the additional column <code>average</code>. Most commonly, it is used with the pipe operator:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>math <span class="ot">&lt;-</span> math <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">average =</span> (G1 <span class="sc">+</span> G2 <span class="sc">+</span> G3)<span class="sc">/</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In this case, through the <code>%&gt;%</code> we pass the <code>math</code> data frame to <code>mutate</code>, which creates a new column and returns the updated data.frame, which is stored in <code>math</code>.</p>
+<p><code>filter</code> allows you to filter rows of the data frame, which is an operation similar to indexing. For example, we can get students with average grade higher than 10 by:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>math <span class="sc">%&gt;%</span> <span class="fu">filter</span>(average <span class="sc">&gt;</span> <span class="dv">18</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 34
+  school sex     age address famsize Pstatus  Medu  Fedu Mjob     Fjob    reason
+  &lt;chr&gt;  &lt;fct&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt; 
+1 GP     M        15 U       GT3     T           4     4 services teacher course
+2 GP     M        16 U       GT3     T           4     3 health   servic… reput…
+3 GP     M        15 U       LE3     A           4     4 teacher  teacher course
+4 GP     M        15 U       LE3     T           4     2 teacher  other   course
+5 GP     F        18 U       GT3     T           2     2 at_home  at_home other 
+6 MS     F        18 R       LE3     T           4     4 other    other   reput…
+# ℹ 23 more variables: guardian &lt;chr&gt;, traveltime &lt;dbl&gt;, studytime &lt;dbl&gt;,
+#   failures &lt;dbl&gt;, schoolsup &lt;chr&gt;, famsup &lt;chr&gt;, paid &lt;chr&gt;,
+#   activities &lt;chr&gt;, nursery &lt;chr&gt;, higher &lt;chr&gt;, internet &lt;chr&gt;,
+#   romantic &lt;chr&gt;, famrel &lt;dbl&gt;, freetime &lt;dbl&gt;, goout &lt;dbl&gt;, Dalc &lt;dbl&gt;,
+#   Walc &lt;dbl&gt;, health &lt;dbl&gt;, absences &lt;dbl&gt;, G1 &lt;dbl&gt;, G2 &lt;dbl&gt;, G3 &lt;dbl&gt;,
+#   average &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p>This entire operation could be done in one step, by:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>math <span class="sc">%&gt;%</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">average =</span> (G1 <span class="sc">+</span> G2 <span class="sc">+</span> G3)<span class="sc">/</span><span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(average <span class="sc">&gt;</span> <span class="dv">18</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 34
+  school sex     age address famsize Pstatus  Medu  Fedu Mjob     Fjob    reason
+  &lt;chr&gt;  &lt;fct&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt; 
+1 GP     M        15 U       GT3     T           4     4 services teacher course
+2 GP     M        16 U       GT3     T           4     3 health   servic… reput…
+3 GP     M        15 U       LE3     A           4     4 teacher  teacher course
+4 GP     M        15 U       LE3     T           4     2 teacher  other   course
+5 GP     F        18 U       GT3     T           2     2 at_home  at_home other 
+6 MS     F        18 R       LE3     T           4     4 other    other   reput…
+# ℹ 23 more variables: guardian &lt;chr&gt;, traveltime &lt;dbl&gt;, studytime &lt;dbl&gt;,
+#   failures &lt;dbl&gt;, schoolsup &lt;chr&gt;, famsup &lt;chr&gt;, paid &lt;chr&gt;,
+#   activities &lt;chr&gt;, nursery &lt;chr&gt;, higher &lt;chr&gt;, internet &lt;chr&gt;,
+#   romantic &lt;chr&gt;, famrel &lt;dbl&gt;, freetime &lt;dbl&gt;, goout &lt;dbl&gt;, Dalc &lt;dbl&gt;,
+#   Walc &lt;dbl&gt;, health &lt;dbl&gt;, absences &lt;dbl&gt;, G1 &lt;dbl&gt;, G2 &lt;dbl&gt;, G3 &lt;dbl&gt;,
+#   average &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p>Note that this time we haven’t modified the data frame - the variable <code>average</code> is created only temporarily, so that we can use it as a filter.</p>
+<p>This query shows a bit too many columns. Suppose we wanted to narrow our search and only see the guardian of the students with average higher than 18. We could use the <code>select</code> function, which simply selects the <em>column</em> of the data frame by name:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>math <span class="sc">%&gt;%</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">average =</span> (G1 <span class="sc">+</span> G2 <span class="sc">+</span> G3)<span class="sc">/</span><span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(average <span class="sc">&gt;</span> <span class="dv">18</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(guardian)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 1
+  guardian
+  &lt;chr&gt;   
+1 father  
+2 mother  
+3 mother  
+4 mother  
+5 mother  
+6 mother  </code></pre>
+</div>
+</div>
+<p>This leaves us with a data frame of one column, showing guardians of the students with the best marks.</p>
+<section id="reshaping-data" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="reshaping-data">Reshaping data</h2>
+<p>It’s not common for social scientific to be longitudinal in nature. This means, that data in a given unit of observation (for example country, household or an individual) is observed on multiple variable (for example GDP, income, well-being) over a period of time. Such data can come in two formats - <code>long</code> and <code>wide</code>.</p>
+<p><strong>Wide data format</strong> - in the wide data format, each column represents a variable - for example, the table presented below presents grades of three students over three academic years in the wide format. Each column represents a separate year.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">student</th>
+<th style="text-align: right;">1</th>
+<th style="text-align: right;">2</th>
+<th style="text-align: right;">3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Thomas</td>
+<td style="text-align: right;">2.34</td>
+<td style="text-align: right;">3.87</td>
+<td style="text-align: right;">2.03</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mary</td>
+<td style="text-align: right;">3.87</td>
+<td style="text-align: right;">4.58</td>
+<td style="text-align: right;">2.70</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">David</td>
+<td style="text-align: right;">3.83</td>
+<td style="text-align: right;">3.92</td>
+<td style="text-align: right;">4.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><strong>Long data format</strong> - in the long data format, a separate column represents the name of the variable and a separate one - value of the corresponding variable. This format is sometimes more useful for particular types of analysis such as panel data models and for visualization. You can see the student scores in the long format below:</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">student</th>
+<th style="text-align: left;">year</th>
+<th style="text-align: right;">grade</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Thomas</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">2.34</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Thomas</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: right;">3.87</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Thomas</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: right;">2.03</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mary</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">3.87</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mary</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: right;">4.58</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mary</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: right;">2.70</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">David</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">3.83</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">David</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: right;">3.92</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">David</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: right;">4.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>We can see an example of such data by loading the dataset <code>gdp.csv</code>, which contains GDP per capita over several years for couple of European countries:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>gdp <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/world_bank/gdp.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gdp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 23
+  country   ccode `2000` `2001` `2002` `2003` `2004` `2005` `2006` `2007` `2008`
+  &lt;chr&gt;     &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+1 Germany   DEU   27209. 28381. 29179. 29875. 31305. 31794. 34119. 36250. 37802.
+2 Denmark   DNK   28669. 29450. 30640. 30787. 32909. 34150. 37289. 38966. 41278.
+3 Spain     ESP   21592. 22959. 24372. 25019. 26120. 27607. 30683. 32436. 33263.
+4 France    FRA   26100. 27502. 28524. 28142. 29034. 30499. 32429. 34086. 35095.
+5 United K… GBR   26413. 27757. 29069. 30262. 31965. 32668. 34761. 35597. 36660.
+6 Greece    GRC   19524. 20964. 22616. 23871. 25437. 25578. 28515. 29290. 30856.
+# ℹ 12 more variables: `2009` &lt;dbl&gt;, `2010` &lt;dbl&gt;, `2011` &lt;dbl&gt;, `2012` &lt;dbl&gt;,
+#   `2013` &lt;dbl&gt;, `2014` &lt;dbl&gt;, `2015` &lt;dbl&gt;, `2016` &lt;dbl&gt;, `2017` &lt;dbl&gt;,
+#   `2018` &lt;dbl&gt;, `2019` &lt;dbl&gt;, X65 &lt;lgl&gt;</code></pre>
+</div>
+</div>
+<p>We can see that the data contains country names, as well as GDP values in years between 2000 and 2015 in the wide format. To reshape the data into the long format, we can use the <code>pivot_longer</code> function, which comes with the <code>tidyr</code> package, another element of the <code>tidyverse</code> suite. In pivot longer, we specify the dataset name as the first argument (which is usually piped to the function), followed by the column names that contain the wide-format variables (assuming that they are in order, this can be specified with a names of the left-most and right-most variable, separated by a colon). Note that in this example, we also use the inverse quotation marks, since the variable are named using numbers. The <code>names_to</code> argument specifies tha name of the variable which will be used to store the names of the re-formatted variables (in our example - years) and the <code>value_to</code> argument specifies the name of the variable which will be used to store values (GDP per capita).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>gdp_long <span class="ot">&lt;-</span> gdp <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(<span class="st">`</span><span class="at">2000</span><span class="st">`</span><span class="sc">:</span><span class="st">`</span><span class="at">2019</span><span class="st">`</span>, </span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">names_to =</span> <span class="st">"year"</span>, <span class="at">values_to =</span> <span class="st">"gdp_pc"</span>)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gdp_long)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+  country ccode X65   year  gdp_pc
+  &lt;chr&gt;   &lt;chr&gt; &lt;lgl&gt; &lt;chr&gt;  &lt;dbl&gt;
+1 Germany DEU   NA    2000  27209.
+2 Germany DEU   NA    2001  28381.
+3 Germany DEU   NA    2002  29179.
+4 Germany DEU   NA    2003  29875.
+5 Germany DEU   NA    2004  31305.
+6 Germany DEU   NA    2005  31794.</code></pre>
+</div>
+</div>
+<p>As you can see, the function produces data in a long format, with only 4 columns, but 140 rows, as opposed to the wide data which consists of only 7 rows, but 22 columns.</p>
+<p>In some cases, your data might come in a long format, yet you might want to reshape it into long. This can be done using the <code>pivot_wider</code> function. This works exactly opposite to <code>pivot_longer</code>. We first specify the data by piping it to the function and then use the <code>names_from</code> argument to specify the name of the variable containing the variable names and <code>value_from</code> to specify the variable containing the values. We end up obtaining the same data frame that we started with.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>gdp_wide <span class="ot">&lt;-</span> gdp_long <span class="sc">%&gt;%</span> <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"year"</span>, <span class="at">values_from =</span> <span class="st">"gdp_pc"</span>)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gdp_wide)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 23
+  country    ccode X65   `2000` `2001` `2002` `2003` `2004` `2005` `2006` `2007`
+  &lt;chr&gt;      &lt;chr&gt; &lt;lgl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+1 Germany    DEU   NA    27209. 28381. 29179. 29875. 31305. 31794. 34119. 36250.
+2 Denmark    DNK   NA    28669. 29450. 30640. 30787. 32909. 34150. 37289. 38966.
+3 Spain      ESP   NA    21592. 22959. 24372. 25019. 26120. 27607. 30683. 32436.
+4 France     FRA   NA    26100. 27502. 28524. 28142. 29034. 30499. 32429. 34086.
+5 United Ki… GBR   NA    26413. 27757. 29069. 30262. 31965. 32668. 34761. 35597.
+6 Greece     GRC   NA    19524. 20964. 22616. 23871. 25437. 25578. 28515. 29290.
+# ℹ 12 more variables: `2008` &lt;dbl&gt;, `2009` &lt;dbl&gt;, `2010` &lt;dbl&gt;, `2011` &lt;dbl&gt;,
+#   `2012` &lt;dbl&gt;, `2013` &lt;dbl&gt;, `2014` &lt;dbl&gt;, `2015` &lt;dbl&gt;, `2016` &lt;dbl&gt;,
+#   `2017` &lt;dbl&gt;, `2018` &lt;dbl&gt;, `2019` &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(gdp_wide, gdp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Names: 21 string mismatches"                                                           
+ [2] "Attributes: &lt; Names: 1 string mismatch &gt;"                                              
+ [3] "Attributes: &lt; Length mismatch: comparison on first 2 components &gt;"                     
+ [4] "Attributes: &lt; Component \"class\": Lengths (3, 4) differ (string compare on first 3) &gt;"
+ [5] "Attributes: &lt; Component \"class\": 3 string mismatches &gt;"                              
+ [6] "Attributes: &lt; Component 2: Modes: numeric, externalptr &gt;"                              
+ [7] "Attributes: &lt; Component 2: Lengths: 7, 1 &gt;"                                            
+ [8] "Attributes: &lt; Component 2: target is numeric, current is externalptr &gt;"                
+ [9] "Component 3: Modes: logical, numeric"                                                  
+[10] "Component 3: target is logical, current is numeric"                                    
+[11] "Component 4: Mean relative difference: 0.04964384"                                     
+[12] "Component 5: Mean relative difference: 0.04797772"                                     
+[13] "Component 6: Mean relative difference: 0.02722602"                                     
+[14] "Component 7: Mean relative difference: 0.05492863"                                     
+[15] "Component 8: Mean relative difference: 0.03197982"                                     
+[16] "Component 9: Mean relative difference: 0.08535064"                                     
+[17] "Component 10: Mean relative difference: 0.04919092"                                    
+[18] "Component 11: Mean relative difference: 0.04411082"                                    
+[19] "Component 12: Mean relative difference: 0.02757141"                                    
+[20] "Component 13: Mean relative difference: 0.05151733"                                    
+[21] "Component 14: Mean relative difference: 0.04769779"                                    
+[22] "Component 15: Mean relative difference: 0.01895478"                                    
+[23] "Component 16: Mean relative difference: 0.03867191"                                    
+[24] "Component 17: Mean relative difference: 0.03078083"                                    
+[25] "Component 18: Mean relative difference: 0.02475497"                                    
+[26] "Component 19: Mean relative difference: 0.05288349"                                    
+[27] "Component 20: Mean relative difference: 0.05189977"                                    
+[28] "Component 21: Mean relative difference: 0.03430557"                                    
+[29] "Component 22: Mean relative difference: 0.04530826"                                    
+[30] "Component 23: Modes: numeric, logical"                                                 
+[31] "Component 23: target is numeric, current is logical"                                   </code></pre>
+</div>
+</div>
+</section>
+<section id="joining" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="joining">Joining</h2>
+<p>The final data manipulation technique that we will discuss in this chapter is joining. In many cases we will have the dataset coming in two or more separate file, each containing different variables for the same unit for observations. This is the case with all the data coming from <a href="https://data.worldbank.org/">World Bank Open Data</a>, where information about each indicator comes in a separate csv file. For example, suppose we have data on GDP and population density of some countries:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>gdp <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/world_bank/gdp.csv"</span>)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>pop <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/world_bank/pop_dens.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gdp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 23
+  country   ccode `2000` `2001` `2002` `2003` `2004` `2005` `2006` `2007` `2008`
+  &lt;chr&gt;     &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+1 Germany   DEU   27209. 28381. 29179. 29875. 31305. 31794. 34119. 36250. 37802.
+2 Denmark   DNK   28669. 29450. 30640. 30787. 32909. 34150. 37289. 38966. 41278.
+3 Spain     ESP   21592. 22959. 24372. 25019. 26120. 27607. 30683. 32436. 33263.
+4 France    FRA   26100. 27502. 28524. 28142. 29034. 30499. 32429. 34086. 35095.
+5 United K… GBR   26413. 27757. 29069. 30262. 31965. 32668. 34761. 35597. 36660.
+6 Greece    GRC   19524. 20964. 22616. 23871. 25437. 25578. 28515. 29290. 30856.
+# ℹ 12 more variables: `2009` &lt;dbl&gt;, `2010` &lt;dbl&gt;, `2011` &lt;dbl&gt;, `2012` &lt;dbl&gt;,
+#   `2013` &lt;dbl&gt;, `2014` &lt;dbl&gt;, `2015` &lt;dbl&gt;, `2016` &lt;dbl&gt;, `2017` &lt;dbl&gt;,
+#   `2018` &lt;dbl&gt;, `2019` &lt;dbl&gt;, X65 &lt;lgl&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 23
+  country   ccode `2000` `2001` `2002` `2003` `2004` `2005` `2006` `2007` `2008`
+  &lt;chr&gt;     &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+1 France    FRA    111.   112.   113.   114.   115.   115.   116.   117.   118. 
+2 United K… GBR    243.   244.   245.   247.   248.   250.   252.   253.   255. 
+3 Ireland   IRL     55.2   56.1   57.1   58.0   59.1   60.4   62.0   63.9   65.2
+4 Italy     ITA    194.   194.   194.   195.   196.   197.   198.   199.   200. 
+5 Poland    POL    125.   125.   125.   125.   125.   125.   125.   124.   124. 
+6 Portugal  PRT    112.   113.   114.   114.   115.   115.   115.   115.   115. 
+# ℹ 12 more variables: `2009` &lt;dbl&gt;, `2010` &lt;dbl&gt;, `2011` &lt;dbl&gt;, `2012` &lt;dbl&gt;,
+#   `2013` &lt;dbl&gt;, `2014` &lt;dbl&gt;, `2015` &lt;dbl&gt;, `2016` &lt;dbl&gt;, `2017` &lt;dbl&gt;,
+#   `2018` &lt;dbl&gt;, `2019` &lt;lgl&gt;, X65 &lt;lgl&gt;</code></pre>
+</div>
+</div>
+<p>Suppose we want to analyze the relationship between population density and gdp per capita. To do that, it would be convenient to merge these two datasets into one, containing the variables <code>gdp</code> and <code>pop_dens</code>. We can achieve this by using <em>joins</em>.</p>
+<p>First, we pivot the data into the long format:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>gdp_long <span class="ot">&lt;-</span> gdp <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(<span class="st">`</span><span class="at">2000</span><span class="st">`</span><span class="sc">:</span><span class="st">`</span><span class="at">2019</span><span class="st">`</span>, </span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">names_to =</span> <span class="st">"year"</span>, <span class="at">values_to =</span> <span class="st">"gdp_pc"</span>)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>pop_long <span class="ot">&lt;-</span> pop <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(<span class="st">`</span><span class="at">2000</span><span class="st">`</span><span class="sc">:</span><span class="st">`</span><span class="at">2019</span><span class="st">`</span>, </span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">names_to =</span> <span class="st">"year"</span>, <span class="at">values_to =</span> <span class="st">"pop_dens"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note that the countries in the two datasets are different:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(gdp_long<span class="sc">$</span>country)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Germany"        "Denmark"        "Spain"          "France"        
+[5] "United Kingdom" "Greece"         "Poland"        </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(pop_long<span class="sc">$</span>country)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "France"         "United Kingdom" "Ireland"        "Italy"         
+[5] "Poland"         "Portugal"      </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">identical</span>(<span class="fu">unique</span>(gdp_long<span class="sc">$</span>country), <span class="fu">unique</span>(pop_long<span class="sc">$</span>country))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+</div>
+<p>To join two data frames, we need an ID variable (or a set of variables) that will identify observations and allow us to join them. In the example, the <code>country</code> and <code>year</code> variables are a perfect candidate, since each corresponds to one observation from a given country in a given period. We would then say that we <em>join the two datasets on country and year</em>. s</p>
+<p>There are three fundamental ways in which we can approach this:</p>
+<ul>
+<li><strong>Inner join</strong> is used to join only the observations where the variables we are joining on which appear in both datasets. The rows where the identifying variables don’t match any observations in the other dataset are dropped from the resulting dataset. This join is used when we care primarily about the completeness of our data. The order of the dataframes does not matter when performing inner join.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(gdp_long, pop_long, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"ccode"</span>, <span class="st">"year"</span>))</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 7
+  country ccode X65.x year  gdp_pc X65.y pop_dens
+  &lt;chr&gt;   &lt;chr&gt; &lt;lgl&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;lgl&gt;    &lt;dbl&gt;
+1 France  FRA   NA    2000  26100. NA        111.
+2 France  FRA   NA    2001  27502. NA        112.
+3 France  FRA   NA    2002  28524. NA        113.
+4 France  FRA   NA    2003  28142. NA        114.
+5 France  FRA   NA    2004  29034. NA        115.
+6 France  FRA   NA    2005  30499. NA        115.</code></pre>
+</div>
+</div>
+<p>We can see that the new dataframe <code>dat</code> contains both <code>gdp_pc</code> and <code>pop_dens</code> variables. Furthermore, only the countries present in both datasets were kept:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(dat<span class="sc">$</span>country)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "France"         "United Kingdom" "Poland"        </code></pre>
+</div>
+</div>
+<ul>
+<li><strong>Left join</strong> is used to join only the observations where the variables we are joining appear in the first dataset (the one on the <em>left</em> of the joining function). This is done primarily when we care about keeping all the observations from the first (left) dataset. The observations where no corresponding identifying values were found are turned into missing values:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">left_join</span>(gdp_long, pop_long, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"ccode"</span>, <span class="st">"year"</span>))</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 7
+  country ccode X65.x year  gdp_pc X65.y pop_dens
+  &lt;chr&gt;   &lt;chr&gt; &lt;lgl&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;lgl&gt;    &lt;dbl&gt;
+1 Germany DEU   NA    2000  27209. NA          NA
+2 Germany DEU   NA    2001  28381. NA          NA
+3 Germany DEU   NA    2002  29179. NA          NA
+4 Germany DEU   NA    2003  29875. NA          NA
+5 Germany DEU   NA    2004  31305. NA          NA
+6 Germany DEU   NA    2005  31794. NA          NA</code></pre>
+</div>
+</div>
+<p>As we can see in this example, the resulting dataset contains missing values for the countries that were not present in the <code>pop_long</code> dataset. All the countries from the <code>gdp_long</code> dataset were kept:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(<span class="fu">unique</span>(gdp_long<span class="sc">$</span>country), <span class="fu">unique</span>(dat<span class="sc">$</span>country))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+<ul>
+<li><strong>Full join</strong> - joining observations from both data frames and producing missing values whenever there’s an observation missing in one of them.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">full_join</span>(gdp_long, pop_long, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"ccode"</span>, <span class="st">"year"</span>))</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 7
+  country ccode X65.x year  gdp_pc X65.y pop_dens
+  &lt;chr&gt;   &lt;chr&gt; &lt;lgl&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;lgl&gt;    &lt;dbl&gt;
+1 Germany DEU   NA    2000  27209. NA          NA
+2 Germany DEU   NA    2001  28381. NA          NA
+3 Germany DEU   NA    2002  29179. NA          NA
+4 Germany DEU   NA    2003  29875. NA          NA
+5 Germany DEU   NA    2004  31305. NA          NA
+6 Germany DEU   NA    2005  31794. NA          NA</code></pre>
+</div>
+</div>
+<p>As a result of a <code>full_join</code>, all countries including in either of the datasets are kept:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(<span class="fu">c</span>(dat<span class="sc">$</span>country))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Germany"        "Denmark"        "Spain"          "France"        
+ [5] "United Kingdom" "Greece"         "Poland"         "Ireland"       
+ [9] "Italy"          "Portugal"      </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(<span class="fu">c</span>(gdp_long<span class="sc">$</span>country, pop_long<span class="sc">$</span>country))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Germany"        "Denmark"        "Spain"          "France"        
+ [5] "United Kingdom" "Greece"         "Poland"         "Ireland"       
+ [9] "Italy"          "Portugal"      </code></pre>
+</div>
+</div>
+<p>There are some other joining techniques, such as <strong>Filtering joins</strong> (<code>semi_join</code> and <code>anti_join</code>), as well as <code>nest_join</code>. You can read more about these in the documentation by typing <code>?join</code> into the console.</p>
+</section>
+<section id="aggregating-data" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="aggregating-data">Aggregating data</h2>
+<p>While we have discussed summary statistics that can be used to summarize data, it’s often very useful to compare their values across group, rather than only look at one number to describe an entire dataset. The <code>tidyverse</code> allows us to calculate summary statistics of variables through the <code>summarise</code> function. For example, to get the average GDP of countries in our data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>gdp_long <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">gdp_avg =</span> <span class="fu">mean</span>(gdp_pc))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  gdp_avg
+    &lt;dbl&gt;
+1  33486.</code></pre>
+</div>
+</div>
+<p>This is no different from using <code>gdp_long$gdp_pc %&gt;% mean()</code>, other than it returns a tibble rather than a scalar value. However, the <code>summarize</code> function is most powerful in conjunction with the <code>group_by</code> function. As the name suggests, <code>group_by</code> function divides the data frame into groups using one of the variables. On the surface, it doesn’t appear to alter much:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>gdp_long_groupped <span class="ot">&lt;-</span> gdp_long <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(country)</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>gdp_long_groupped</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 140 × 5
+# Groups:   country [7]
+   country ccode X65   year  gdp_pc
+   &lt;chr&gt;   &lt;chr&gt; &lt;lgl&gt; &lt;chr&gt;  &lt;dbl&gt;
+ 1 Germany DEU   NA    2000  27209.
+ 2 Germany DEU   NA    2001  28381.
+ 3 Germany DEU   NA    2002  29179.
+ 4 Germany DEU   NA    2003  29875.
+ 5 Germany DEU   NA    2004  31305.
+ 6 Germany DEU   NA    2005  31794.
+ 7 Germany DEU   NA    2006  34119.
+ 8 Germany DEU   NA    2007  36250.
+ 9 Germany DEU   NA    2008  37802.
+10 Germany DEU   NA    2009  36851.
+# ℹ 130 more rows</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>pop_long <span class="sc">%&gt;%</span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(country) <span class="sc">%&gt;%</span></span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_pop =</span> <span class="fu">mean</span>(pop_dens, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">sd_pop =</span> <span class="fu">sd</span>(pop_dens, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  country        avg_pop sd_pop
+  &lt;chr&gt;            &lt;dbl&gt;  &lt;dbl&gt;
+1 France           118.   3.60 
+2 Ireland           63.9  4.89 
+3 Italy            200.   4.67 
+4 Poland           124.   0.301
+5 Portugal         114.   1.13 
+6 United Kingdom   258.  10.3  </code></pre>
+</div>
+</div>
+<p>Similarily, we could compare the country’s average, maximum and minimum GDP growth over the past years:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>gdp_long <span class="sc">%&gt;%</span> </span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(country) <span class="sc">%&gt;%</span></span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gdp_growth =</span> (gdp_pc <span class="sc">-</span> <span class="fu">lag</span>(gdp_pc)) <span class="sc">/</span> <span class="fu">lag</span>(gdp_pc)) <span class="sc">%&gt;%</span></span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_growth =</span> <span class="fu">mean</span>(gdp_growth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">max_growth =</span> <span class="fu">max</span>(gdp_growth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb73-6"><a href="#cb73-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">min_growth =</span> <span class="fu">min</span>(gdp_growth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb73-7"><a href="#cb73-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>avg_growth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 4
+  country        avg_growth max_growth min_growth
+  &lt;chr&gt;               &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+1 Poland             0.0636     0.109      0.0361
+2 Denmark            0.0398     0.0919    -0.0220
+3 Germany            0.0391     0.0914    -0.0252
+4 Spain              0.0364     0.111     -0.0343
+5 France             0.0344     0.0633    -0.0134
+6 United Kingdom     0.0330     0.0641    -0.0445
+7 Greece             0.0264     0.115     -0.0730</code></pre>
+</div>
+</div>
+<p>In this case, we first group the data frame by country. We then use <code>mutate</code> to compute <code>gdp_growth</code> by subtracting GDP from one year before (calculated using the <code>lag</code> function) and dividing this difference by the lagged GDP. Note that the <code>mutate</code> function also applies the computation according to the grouping defined in the <code>group_by</code> - the <code>lag()</code> is computed <em>within</em> each country. We then use <code>summarise</code> to apply the functions. Finally, we use <code>arrange</code> to sort the output according to the negative value of the average GDP growth, i.e.&nbsp;in decreasing order.</p>
+<p>Since the behaviour of <code>group_by</code> affects many operations performed on a dataframe, it is important to call <code>ungroup()</code> at the end of our operations if we assign the data frame to a new name - performing operations on groupped tibbles can lead to suprising results. Coming back to our example, suppose we wanted to obtain the deviation of each country’s GDP growth from the global mean of this growth. First, we would obtain the growths:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>gdp_growths <span class="ot">&lt;-</span> gdp_long <span class="sc">%&gt;%</span> </span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>                <span class="fu">group_by</span>(country) <span class="sc">%&gt;%</span></span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>                <span class="fu">mutate</span>(<span class="at">gdp_growth =</span> (gdp_pc <span class="sc">-</span> <span class="fu">lag</span>(gdp_pc)) <span class="sc">/</span> <span class="fu">lag</span>(gdp_pc))</span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a><span class="co">#store demeaned values:</span></span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a>dem <span class="ot">&lt;-</span> gdp_growths <span class="sc">%&gt;%</span> </span>
+<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">growth_dem =</span> gdp_growth <span class="sc">-</span> <span class="fu">mean</span>(gdp_growth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb75-8"><a href="#cb75-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-9"><a href="#cb75-9" aria-hidden="true" tabindex="-1"></a><span class="co">#stored demeaned values calculated after ungrouping</span></span>
+<span id="cb75-10"><a href="#cb75-10" aria-hidden="true" tabindex="-1"></a>dem_ungr <span class="ot">&lt;-</span> gdp_growths <span class="sc">%&gt;%</span> </span>
+<span id="cb75-11"><a href="#cb75-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb75-12"><a href="#cb75-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">growth_dem =</span> gdp_growth <span class="sc">-</span> <span class="fu">mean</span>(gdp_growth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb75-13"><a href="#cb75-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-14"><a href="#cb75-14" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(dem<span class="sc">$</span>growth_dem, dem_ungr<span class="sc">$</span>growth_dem)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Mean relative difference: 0.3395083"</code></pre>
+</div>
+</div>
+<p>We can see using the <code>all.equal</code> function, that the resulting variables are different. This is because, if the tibble is still groupped, the <code>mutate(growth_dem = gdp_growth - mean(gdp_growth, na.rm = TRUE))</code> expression subtracts the <em>group mean</em> from each observation, wheres if it’s ungrouped, it calculates the <em>global mean</em> and subtracts it. While it may seem trivial in this example, forgetting to ungroup a tibble is a common error and it is <em>crucial to remeber to ungroup the tibble after finishing performing operations on it</em>. Also note that calling <code>group_by()</code> on an already groupped tibble discards the previous groupping and applies the new one instead.</p>
+</section>
+</section>
+<section id="summary" class="level1 unnumbered">
+<h1 class="unnumbered">Summary</h1>
+<ul>
+<li>The <code>tidyverse</code> package is a set of tools for data manipulation commonly used in R.</li>
+<li><code>readr</code> offers a convenient inferface for reading data into R and explicitly specifying column classes through functions such as <code>read_csv</code>, <code>read_delim</code> or <code>read_tsv</code>.</li>
+<li>a <strong>tibble</strong> is a special kind of data frame implemented in the <code>tidyverse</code> package. While it offers some new functionalities, working with tibbles is very similar to working with traditional R data frames.</li>
+<li>the <strong>pipe operator</strong> <code>%&gt;%</code> passess values into functions - instead of evaluating expressions from inside-out, they are evaluated from left to right.</li>
+<li><code>select</code> is used to select columns from a data frame based on their names</li>
+<li><code>filter</code> is used to filter rows from a data frame based on a logical statement</li>
+<li><code>mutate</code> is used to modify the values of existing columns or to create new columns in a data frame</li>
+<li>Data can often come in a <strong>long</strong> or <strong>wide</strong> format. You can use <code>pivot_longer</code> and <code>pivot_wider</code> to switch between these data formats.</li>
+<li>You can merge two data frames by a common column (or a set of columns) using <code>dplyr</code>’s <code>join</code> functions. Depending on the way you want to treat non-matching records, you may use a <code>left_join</code>, <code>inner_join</code> or a <code>full_join</code></li>
+<li>You can aggregate data using the <code>summary</code> function. It works best with <code>group_by</code>, which allows you to get statistics by group, following a group defined by a variable or a set of variables. You should call <code>ungroup()</code> on the tibble, to avoid errors.</li>
+</ul>
+</section>
+<section id="exercises" class="level1 unnumbered">
+<h1 class="unnumbered">Exercises</h1>
+<ol type="1">
+<li>Select true statements about joins and correct the false statements:</li>
+</ol>
+<p>A. Full join will always produce a dataframe with more rows than inner join. B. Inner join will never produce any new missing values. C. Full join will always produce at least as many rows as left join. D. Left join is used when we want to ensure that the observations from the left data frame are always matched by a non-missing element from the right data frame.</p>
+<p>The remaining exercises will use the student data, which consists of three .csv files: <code>math.csv</code>, which contains grades achieved by each student in each of the years in a long format, <code>port.csv</code>, with the same data for portugeese classes and <code>info.csv</code>, which contains demographic variables.</p>
+<ol start="2" type="1">
+<li><p>Load the <code>math</code> and <code>port</code> data to R. Specify the id variable to be a character column.</p></li>
+<li><p>Load the <code>info</code> data into R and join it with the grades datasets. Make sure to keep only the records of the students who have reported grades in both portugeese and math. Use the <code>suffix</code> argument of the join function to specify the names of the duplicated variable names (<code>G1</code>, <code>G2</code> and <code>G3</code>) to be <code>_por</code> for portugeese grades and <code>_mat</code> for math grades.</p></li>
+<li><p>Create a vector called <code>port_missing</code> which contains student IDs that are present in the <code>math</code> dataset but missing from the <code>port</code> dataset.</p></li>
+<li><p>Compare the average performance in Portugeese and Math in third year between the schools:</p></li>
+<li><p>Did the student grades improve on average in each subject? Was the improvement better in one school than the other? (HINT: you might want your data in a long format and use the <code>lag</code> function used at the end of the chapter. Store the data in a new tibble called <code>students_imp</code>, as it will be useful for next exercises).</p></li>
+<li><p>Did the grade improvements vary across schools?</p></li>
+<li><p>Which form of support - <code>famsup</code> or <code>schoolsup</code> lead to higher average improvement in students’ grades in each subject?</p></li>
+<li><p>Does any of the two schools seem more effective in rising the average grade through school support?</p></li>
+</ol>
+
+
+</section>
+
+</main> <!-- /main -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const buttons = document.querySelectorAll(".delayed-download");
+
+    buttons.forEach(function (btn) {
+      const releaseDate = new Date(btn.dataset.date);
+      const now = new Date();
+
+      if (now >= releaseDate) {
+        btn.classList.remove("disabled");
+        btn.setAttribute("aria-disabled", "false");
+        btn.setAttribute("href", btn.dataset.path);
+        btn.setAttribute("download", btn.dataset.path.split('/').pop());
+        btn.innerHTML = btn.dataset.label || "📄 Download Document";
+      }
+    });
+  });
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./05-key_programming_concepts.html" class="pagination-link" aria-label="Key Programming Concepts">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Key Programming Concepts</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./07-data_visualization.html" class="pagination-link" aria-label="Data Visualization">
+        <span class="nav-page-text"><span class="chapter-title">Data Visualization</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

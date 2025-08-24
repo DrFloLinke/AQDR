@@ -1,0 +1,427 @@
+#' # Data structures 
+
+#' 
+#' 
+#' 
+#' 
+#' ## Content
+#' 
+#' 
+#' The the previous chapter you have become familiar with the most common data structure in R programming - a vector. In this section, you will be introduced to some more advanced data structures that are often used in R, in particular the `data.frame`, which is the most common way of storing and manipulating data in R.
+#' 
+#' Generally, the best way to examine any R object is using the `str()` function, which returns contents of the object along with its class. For example you can check how it works for simple vectors
+#' 
+## ------------------------------------------------------------------------------------------------
+numbers <- c(5, 3, 8)
+str(numbers)
+
+#' 
+#' `num` indicates that it is an integer vector and `[1:3]` tells us that its index ranges from 1 to 3.
+#' 
+#' 
+## ------------------------------------------------------------------------------------------------
+words <- c("five","three","eight")
+str(words)
+
+#' 
+#' 
+#' ### Data Frames 
+
+#' 
+#' In the previous chapter's exercises you've manipulated data related to some basic development indicators of several countries. When we're dealing with multiple variables represented by multiple vectors, it's often very useful to store them toegether as one entity - a `data.frame`. Data frames can simply be thought of as tables, where each of the columns is a vector with its unique name. In this case, we can store the information about countries in a data frame called `dev_data`. 
+#' 
+## ------------------------------------------------------------------------------------------------
+country <- c("Argentina", "Georgia", "Mexico", 
+             "Philippines", "Turkey", "Ukraine")
+eys <- c(17.6, 15.4, 14.3, 12.7, 16.4, 15.1)
+mys <- c(10.6, 12.8, 8.6, 9.4, 7.7, 11.3)
+lexp <- c(76.5, 73.6, 75, 71.1, 77.4, 72)
+gni <- c(17611, 9570, 17628, 9540, 24905, 7994)
+dev_data <- data.frame(country, eys, mys, lexp, gni)
+
+#' 
+#' 
+#' We can use the `head` function to see the first 5 rows of the data (in the toy example we have above it might seem unnecessary, but it is useful to get an overview of all the variables when the data consists of potentially thousands of rows).
+#' 
+## ------------------------------------------------------------------------------------------------
+head(dev_data)
+
+#' 
+#' The `str()` function is also very useful to get an overview of the variables included in a dataframe:
+#' 
+## ------------------------------------------------------------------------------------------------
+str(dev_data)
+
+#' 
+#' 
+#' To access a column stored in a dataframe, you can use the `$` operator. 
+#' 
+## ------------------------------------------------------------------------------------------------
+dev_data$gni
+
+#' 
+#' Similarily, we can use the same operator to create a new column:
+#' 
+## ------------------------------------------------------------------------------------------------
+dev_data$log_gni <- log(dev_data$gni)
+dev_data$log_gni
+
+#' 
+#' As in the case of vectors, data frames can be indexed to retrieve values stored at specific positions. Since data frame is a table, each position in a dataframe is associated with _two_ indices - one for rows, the other for columns - the first index references the row and the second the column. For example, the code below retrieves the value from the second row from the third column of `dev_data`.
+#' 
+## ------------------------------------------------------------------------------------------------
+dev_data[2, 3]
+
+#' 
+#' Note that this is identical to:
+#' 
+## ------------------------------------------------------------------------------------------------
+dev_data$mys[2]
+
+#' 
+#' This is because the `mys` is the third column in `dev_data`.
+#' 
+#' By leaving one of the indices empty, we can also retrieve entire row/column of a data frame:
+#' 
+## ------------------------------------------------------------------------------------------------
+dev_data[1, ] #get first row
+dev_data[, 2] #get second column
+
+#' 
+#' Data frames can also be indexed with integer vectors. Such indexing will always return a smaller data frame. For example, to retrieve rows 1 and 5 from columns 2 and 3, we can do:
+#' 
+## ------------------------------------------------------------------------------------------------
+dev_data[c(1,5), c(2,3)]
+
+#' 
+#' 
+#' Similarily, character vectors referencing the column names can be used to subset a dataframe. To achieve similar result to the one above, one could also type:
+#' 
+## ------------------------------------------------------------------------------------------------
+dev_data[c(1,5), c("eys","mys")]
+
+#' 
+#' 
+#' We can also use logical indexing to subset dataframes. Recall from the previous  chapter, that we can check which values of a given vector satisfy a certain condition by:
+#' 
+## ------------------------------------------------------------------------------------------------
+dev_data$gni > 10000
+
+#' 
+#' 
+#' We can then use the output generated by the above code to index the `dev_data` data frame and obtain the rows with gni per capita larger than 10000:
+#' 
+## ------------------------------------------------------------------------------------------------
+dev_data[dev_data$gni > 10000, ]
+
+#' 
+#' 
+#' 
+#' 
+#' There are many useful functions that work in combination with data frames. Below, there are several examples: 
+#' 
+## ------------------------------------------------------------------------------------------------
+is.data.frame(dev_data) #check if an object is of class `data.frame`
+nrow(dev_data) #number of rows
+ncol(dev_data) #number of columns
+colnames(dev_data) #column names
+rownames(dev_data) #row names
+
+#' 
+#' The `with` command allows to evaluate column names _in the context of a given data frame_. This means, that we do not have to reference the data frame name whenever we use one of its columns. Suppose we wanted to calculate the UN's *Education Index* as in the previous section's exercises and assign it's values to a new column in `dev_data`, `dev_data$edu_ind`. This could be done by:
+#' 
+## ------------------------------------------------------------------------------------------------
+dev_data$edu_ind <- (dev_data$mys / 15 + dev_data$eys / 18)/2
+
+#' 
+#' However, in many circumstances this will require you to reference the name of the data frame you are using multiple times, often making the code long and unreadable. To avoid it, it's often useful to do:
+#' 
+## ------------------------------------------------------------------------------------------------
+dev_data$edu_ind <- with(dev_data, (mys / 15 + eys / 18)/2)
+
+#' 
+#' 
+#' The `with` function takes name of the dataframe as its first argument and the operation you want to perform as the second argument.
+#' 
+#' Similarily, to subset a dataframe by multiple variables, the `subset()` command can be used:
+#' 
+## ------------------------------------------------------------------------------------------------
+dev_data[dev_data$eys > 15 & dev_data$lexp > 75, ]
+subset(dev_data, eys > 15 & lexp > 75)
+
+#' 
+#' 
+#' 
+#' 
+#' 
+#' ### Factors 
+
+#' 
+#' When looking at the `str(dev_data)` you could've noticed that the `country` variable is a vector type that we haven't encountered earlier - a _factor_. Factors are a specific type of vectors used to store values that take a _prespecified_ set of values, called factor levels. For example, suppose we have two character vectors storing names of students and their year. We can use `factor()` to create a factor vector from a character vector. This can be done for any other type of vector as well. 
+#' 
+#' 
+## ------------------------------------------------------------------------------------------------
+name <- c("Thomas","James","Kate","Nina","Robert","Andrew","John")
+year_ch <- c("Freshman","Freshman","Junior","Sophmore","Freshman","Senior","Junior")
+year_ch
+year <- factor(year_ch)
+year
+
+#' 
+#' We can view the unique levels of the factor using the `levels()` function:
+#' 
+## ------------------------------------------------------------------------------------------------
+levels(year)
+
+#' 
+#' A crucial difference between factor and character vectors is that the former have an underlying integer representation. That means, that there's a natural ordering to their levels, which is alphabetic by default. We can see that using the [coercion function](#coercion) `as.numeric` on the `year` factor. 
+#' 
+## ------------------------------------------------------------------------------------------------
+year
+as.numeric(year)
+
+#' 
+#' Note that the ordering of the values corresponds with the ordering obtained by the `levels()` function. This matters in some circumstances (such as when using factor variables in regression models, discussed in the [Linear Regression](#ols) section of the course). It's a good practice to explicitly pass the factor levels to the `factor()` constructor. For example, in our case, "Sophmore" comes as the last value of the factor, even though it would make more sense for it to be second. Explicit creation of the factor levels can be seen below:
+#' 
+## ------------------------------------------------------------------------------------------------
+year_ch <- c("Freshman","Freshman","Junior",
+          "Sophmore","Freshman","Senior","Junior")
+year <- factor(year_ch, levels = c("Freshman","Sophmore","Junior","Senior"))
+
+#' 
+#' We can now see that the ordering of the levels is different, and so is the underlying numeric representation of the factor:
+#' 
+## ------------------------------------------------------------------------------------------------
+levels(year)
+as.numeric(year)
+
+#' 
+#' 
+#' Note that we cannot change the value of a factor vector to any other than the pre-specified levels:
+#' 
+## ------------------------------------------------------------------------------------------------
+year[1] <- "Graduate"
+
+#' 
+#' The error message returned by R means that the value we were trying to assign to the factor is not one of the predefined levels (i.e. "Freshman","Junior", "Senior" and "Sophmore") and thus `NA` missing value was generated. 
+#' 
+#' However, if we know that a level that has no values attached to it will be created in the future, `NA`s can be avoided by explicitly creating an unused levels when constructing the factor vector.
+#' 
+## ------------------------------------------------------------------------------------------------
+year_ch <- c("Freshman","Freshman","Junior",
+          "Sophmore","Freshman","Senior","Junior")
+year <- factor(year_ch, levels = c("Freshman","Sophmore","Junior","Senior", "Graduate"))
+
+#' 
+#' Here, we have created the variable with 5 levels: `r levels(year)`, even though only 4 of them are actual values of the factor. As a result, we can assign a value with the "Graduate" value without producing `NA`s. The relevance of having empty factor levels will become apparent in the next part of the book when discussing [Cross-Tabulation](#cross-tabulation). 
+#' 
+## ------------------------------------------------------------------------------------------------
+year[1] <- "Graduate"
+year
+
+#' 
+#' 
+#' We can also rename the levels of an existing factor, by using the `levels<-` command. This can be done either to specific levels of a factor...
+#' 
+## ------------------------------------------------------------------------------------------------
+year <- factor(year_ch, levels = c("Freshman","Sophmore","Junior","Senior"))
+levels(year)[1] <- "Fresher"
+year
+
+#' 
+#' ...or to all the levels:
+#' 
+## ------------------------------------------------------------------------------------------------
+levels(year) <- c("First","Second","Third","Final")
+year
+
+#' 
+#' This way, all the values of the character are changed very quickly.
+#' 
+#' Finally, there's some confusion about the difference between `factor()` and `as.factor()` functions. In many contexts, these can be used equivalently, since both create a factor vector from a numeric or a character vector. However, some important differences include:
+#' 
+#' 1. `factor()` allows to explicitly pass vector levels at construction, whether `as.factor()` assigns them by default
+#' 
+#' 2. The behaviour of the two functions is different when passed factors with empty levels. For example, let's create the `year` factor as earlier and only keep the first three values. In this case, the _Sophmore_ and _Senior_ levels are unused.
+#' 
+## ------------------------------------------------------------------------------------------------
+year_char <- c("Freshman","Freshman","Junior",
+          "Sophmore","Freshman","Senior","Junior")
+year <- factor(year_char, levels = c("Freshman","Sophmore","Junior","Senior"))
+year <- year[1:3]
+year
+
+#' 
+#' Passing the `year` vector to `as.factor` will not change anything in the vector's structure:
+#' 
+## ------------------------------------------------------------------------------------------------
+as.factor(year)
+
+#' 
+#' However, using `factor()` constructor on an existing factor vector is a convenient way to drop unused levels (when it's desirable):
+#' 
+## ------------------------------------------------------------------------------------------------
+factor(year)
+
+#' 
+#' 3. The performance of `as.factor()` tends to be quicker when numeric or character vectors are passed to it. The two commands also treat `NA` levels slightly differently. You can read more about it in this [Stack Overflow post](https://stackoverflow.com/questions/39279238/why-use-as-factor-instead-of-just-factor?answertab=oldest#tab-top). 
+#' 
+#' Finally, some R functions such as the `data.frame` constructor treat all read all character vectors as factors by default. This can be noticed by examining the `dev_data` data frame we created earlier:
+#' 
+## ------------------------------------------------------------------------------------------------
+str(dev_data)
+
+#' 
+#' 
+#' As you can see `country` is a factor with 6 levels - each for one country name. This doesn't make too much sense, as the column is unlikely to have any repeating values. To avoid this behaviour, we can set the `stringsAsFactors` optional argument in the `data.frame` function explicitly to `FALSE`. This way, all the character vectors remain character variables in the data frame.
+#' 
+## ------------------------------------------------------------------------------------------------
+dev_data <- data.frame(country, eys, mys, lexp, gni, stringsAsFactors = FALSE)
+str(dev_data)
+
+#' 
+#' 
+#' ### Reading and writing the data 
+
+#' 
+#' 
+#' #### Reading from CSV 
+
+#' 
+#' While so far, we've created small and simple datasets by manually typing them into the scripts, the usual way of loading data into R is through external files. The most common format used to store data for R analysis is a CSV file, which stands for Comma Separated Values. This essentially means, that the data is represented as a text file, in which values are separeted by columns to indicate their relative positions - for example, a csv file with 5 columns will have 4 commas to separate them in each row. 
+#' 
+#' In the example below, we read in data on Human Development Indicators for 209 countries for 2018 obtained from the [UN Human Development Reports](http://hdr.undp.org/en/data). Yuo can download the file used in the example from `r xfun::embed_file("data/un_data/dev2018.csv", text = "here")`. 
+#' 
+## ------------------------------------------------------------------------------------------------
+dev <- read.csv("data/un_data/dev2018.csv", stringsAsFactors = FALSE)
+
+#' 
+#' In the above example, the first argument specifies the path to the file read as a _string_, i.e. enclosed in quotation marks. The file can be read:
+#' 1. using *absolute path* - for example `dev <- read.csv("C:/Users/yourusername/Documents/dev2018.csv")` in Windows or `dev <- read.csv("/Users/yourusername/Documents/dev2018.csv")` in MacOS. In this case, you need to provide the full path to where the file is located in the computer. 
+#' 
+#' 
+#' 2. using *relative path*, as in the above example. In this case, R will search for the directory *in your current working directory*. *Working directory* is simply the specific folder in your computer in which R looks for the data.  R Studio usually sets one default working directory (this can be changed under Tools -> Global Options -> Set Default Working Directory). This means that every time you open RStudio or restart your R session (as described in [Chapter 1](#a-short-note-on-keeping-your-working-environment-clean), the working directory is set to this default. You can also change working directory *manually* by executing the `setwd()` function from your script or the console. 
+#' 
+#' 
+#' 
+#' 
+#' You can also get your current working directory by using the `getwd()` function:
+#' 
+#' 
+#' 
+#' 
+#' While some users tend to include `setwd(path/to/project)` in the beginnings of their scripts, this is potentially problematic, as whenever you move your data or script to another folder, errors are likely to occur. Therefore, it is a good practice to *always set working directory to the location of your R Source script* and keep the data in the same folder as your source script. This can be done by choosing the Session tab
+#' 
+#' Note that in this case, it is assumed that you have selected "Set Working Directory" > "To Source File" location from the "Session" tab in Rstudio, as discussed in the [Introduction] and that the directory of the source file has a folder called "data" in which the `dev2018.csv` file is stored. Alternatively, `dev <- read.csv("dev2018.csv")` would read the file directly from your working directory. You could also use `dev <- read.csv("C:/Users/yourusername/Documents/dev2018.csv")` in Windows or `dev <- read.csv("/Users/yourusername/Documents/dev2018.csv")` in MacOS to read the data file from an arbitary folder using its absolute path. Similarily to the `data.frame` constructor, we can also use the `stringsAsFactors` argument to ensure all character variables are read as strings.
+#' 
+#' You can also save data to .csv files by using the `write.csv`, which takes the data frame as its first argument and the string specifying the path to which you want to save the file as the second argument. For example, suppose we want to keep only the first 40 rows of the data and store it in a separate file. 
+#' 
+## ------------------------------------------------------------------------------------------------
+dev_new <- dev[1:40, ]
+write.csv(dev_new, "data/un_data/dev_new.csv")
+
+#' 
+#' #### Reading from other formats 
+
+#' 
+#' While csv is the most common format, the data is often likely to come in many other variants - common examples include Stata's `.dta` files or SPSS' `.sav`, as well as `.xlsx` Excel format. Some of the R packages offer functionalities percisely to deal with such files. 
+#' 
+#' So far, we have only used the built-in functionalities offered by R. While their range is pretty extensive and the ones covered in this course are only the tip of the iceberg, much more than that is offered by user-made packages, which offer new functions useful for specific tasks. The official R packages are available through [CRAN](https://cran.r-project.org/). To use a package it needs to be installed first and then loaded. For example, to use an example package named _foo_, you should first run `install.packages("foo")` to download the package files from CRAN and install it and then put `library(foo)` in your R Script to load it into R. Note that while installation has to be done only once, you have to load the library every time you use it - that's why, you should always put the `library` calls at the top of your R script. If you use a function from that package without loading it first, your R script execution will fail! Please also note, that you pass the package name as a _string_ (i.e. in quotation marks) to the `install.packages`, but without them to `library`.
+#' 
+#' 
+#' 
+#' 
+#' 
+#' Coming back to our example, we can use the R package `haven` to load Stata, SPSS and SAS files. You can see an example below:
+#' 
+## ------------------------------------------------------------------------------------------------
+library(haven)
+dev_stata <- read_dta("data/un_data/dev2018.dta")
+
+#' 
+#' Similarily, the data can be written using:
+#' 
+## ------------------------------------------------------------------------------------------------
+write_dta(dev, "data/un_data/dev2018.dta")
+
+#' 
+#' Other alternatives offered by the `haven` package inlcude `read_sav` or `read_xpt`. Other packages useful for reading unusual data types include `readxl` for reading Excel files and `foreign` for a broader choice of file types.
+#' 
+#' ### Missing values 
+
+#' 
+#' As mentioned earlier, the `NA` missing value constant is particularly important in R. Real-life data that you are likely to deal with most of the time when using R in practice is often imperfect and missingness should be addressed as one of the first steps of the analysis process.
+#' 
+#' `is.na()` command can be used to determine whether a value of an R object is missing. It returns true for each value of the index which is missing.
+#' 
+## ------------------------------------------------------------------------------------------------
+numbers <- c(1, 4, NA, 6, NA)
+is.na(numbers)
+
+#' 
+#' To count NAs in an R object we can levarage the fact that `TRUE` values are also interpreted as 1 and use the `sum` function:
+#' 
+## ------------------------------------------------------------------------------------------------
+sum(is.na(numbers))
+
+#' 
+#' You can also verify whether an object contains `NA`s using the `anyNA` function. Let's check if the HDI data we have loaded contains any missing values:
+#' 
+## ------------------------------------------------------------------------------------------------
+dev <- read.csv("data/un_data/dev2018.csv")
+anyNA(dev)
+
+#' 
+#' The column returns `TRUE`. Therefore there is some missingness in the data.
+#' 
+#' Another useful function for missing data analysis is `complete.cases`. As the name suggests, given a data frame it returns a logical vector with `TRUE` for each row which doesn't contain missing values. We can verify which observations are the cause of the data missingness:
+#' 
+## ------------------------------------------------------------------------------------------------
+dev[!complete.cases(dev), ]
+
+#' 
+#' 
+#' ### Lists 
+
+#' 
+#' The final key R data structure covered in this section are lists. Similarily to data frames, lists can be thought of containers to store other data structures.^[More specifically, the `data.frame` class is a special type of `list` - you can verify that by running the `typeof` function with a data frame as input.] However, unlike data frames, they are less strict in terms of their contents - a list can store vectors of different length, data frames and even other lists. Lists are created with the `list()` constructor.
+#' 
+## ------------------------------------------------------------------------------------------------
+my_list <- list(names = c("Tom","James","Tim"), values = 1:20)
+my_list
+
+#' 
+#' You can extract elements from a list using their names or their numeric index. To index a list, _double square brackets_ `[[` are used, as opposed to vectors.
+#' 
+## ------------------------------------------------------------------------------------------------
+my_list[[1]]
+
+#' 
+## ------------------------------------------------------------------------------------------------
+my_list[["names"]]
+
+#' 
+#' If a list is indexed with single brackets, it returns a one-element list, rather than the object stored in it:
+#' 
+## ------------------------------------------------------------------------------------------------
+values <- my_list[["values"]]
+str(values)
+values <- my_list["values"]
+str(values)
+
+#' 
+#' You can also extract elements from a list using the `$` operator, similarily to data.frames. Finally, you can assign values to lists similarily as in the case of vectors or data.frames:
+#' 
+## ------------------------------------------------------------------------------------------------
+my_list[["new"]] <- c("new","values")
+str(my_list)
+
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
+ 
