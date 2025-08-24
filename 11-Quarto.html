@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Quarto – Analysing Quantitative Data with R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./12-downloads.html" rel="next">
+<link href="./10-logit.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-7c884608bb88d9d23eddf9360d6659a5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<meta name="theme-color" content="#1d1f2b" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#1d1f2b" media="(prefers-color-scheme: light)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<script>
+// This MUST come before the script src above
+window.MathJax = {
+  tex: {
+    // (Quarto already sets these, but harmless to repeat)
+    inlineMath: [['\\(', '\\)'], ['$', '$']],
+    displayMath: [['\\[', '\\]'], ['$$', '$$']]
+  },
+  // Tell the CHTML output to use Fira
+  chtml: { font: 'mathjax-fira' }
+};
+</script>
+
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./images/Crest_white.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title"><span class="title-long">Analysing Quantitative Data with R</span> <span class="title-short">AQDR</span></span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://drfloreiche.github.io/"> 
+<span class="menu-text">Flo’s Home</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./09-ols.html">FURTHER TOPICS</a></li><li class="breadcrumb-item"><a href="./11-Quarto.html"><span class="chapter-title">Quarto</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">THE BASICS</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-introduction.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-basics.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Basics of R Programming</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-data_structures.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Data Structures</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">ADVANCED DATA MANIPULATION</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-exploratory_analysis.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Exploratory Data Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-key_programming_concepts.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Key Programming Concepts</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-dplyr_data_manipulation.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Data Manipulation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">DATA ANLYSIS</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-data_visualization.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Data Visualization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-statistical_association.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Statistical Inference and Association</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">FURTHER TOPICS</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-ols.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Linear Regression</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-logit.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Logistic Regression</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-Quarto.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Quarto</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">DOCUMENTS</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-downloads.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Downloads</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#professional-writing-in-political-science" id="toc-professional-writing-in-political-science" class="nav-link active" data-scroll-target="#professional-writing-in-political-science">Professional Writing in Political Science</a></li>
+  <li><a href="#introduction-to-quarto" id="toc-introduction-to-quarto" class="nav-link" data-scroll-target="#introduction-to-quarto">Introduction to Quarto</a>
+  <ul class="collapse">
+  <li><a href="#yaml" id="toc-yaml" class="nav-link" data-scroll-target="#yaml">YAML</a></li>
+  <li><a href="#text" id="toc-text" class="nav-link" data-scroll-target="#text">Text</a></li>
+  <li><a href="#code-chunks" id="toc-code-chunks" class="nav-link" data-scroll-target="#code-chunks">Code Chunks</a></li>
+  <li><a href="#list-of-references" id="toc-list-of-references" class="nav-link" data-scroll-target="#list-of-references">List of References</a></li>
+  <li><a href="#rendering" id="toc-rendering" class="nav-link" data-scroll-target="#rendering">Rendering</a></li>
+  </ul></li>
+  <li><a href="#assessment-template" id="toc-assessment-template" class="nav-link" data-scroll-target="#assessment-template">Assessment Template</a>
+  <ul class="collapse">
+  <li><a href="#the-template-explained" id="toc-the-template-explained" class="nav-link" data-scroll-target="#the-template-explained">The Template Explained</a></li>
+  <li><a href="#assessment-submission" id="toc-assessment-submission" class="nav-link" data-scroll-target="#assessment-submission">Assessment Submission</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./09-ols.html">FURTHER TOPICS</a></li><li class="breadcrumb-item"><a href="./11-Quarto.html"><span class="chapter-title">Quarto</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">Quarto</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="professional-writing-in-political-science" class="level1 unnumbered">
+<h1 class="unnumbered">Professional Writing in Political Science</h1>
+<p>Before I even start this section, please read <a href="https://stimson.web.unc.edu/wp-content/uploads/sites/9919/2018/02/Writing.pdf">Professional Writing in Political Science: A Highly opinionated Essay</a> by James A. Stimson. The article is opinionated, but there is plenty of excellent advice in it on how to approach writing a research project. And that is, after all, what we learn quantitative methods for.</p>
+</section>
+<section id="introduction-to-quarto" class="level1 unnumbered">
+<h1 class="unnumbered">Introduction to Quarto</h1>
+<p>Stimson rejects Word and other similarly inclined word processing programs, as they are unable to achieve the standard required in professional academic writing. In the context of tables, for example, Stimson writes</p>
+<blockquote class="blockquote">
+<p>You are a professional author. Learn to use the tools of authorship or choose a profession for which you are better suited.</p>
+</blockquote>
+<p>I agree. And I wish more people, students and faculty members alike, would take note of this. The good news for you is that R, amongst the many other millions of things that this program enables us to do, provides an interface to write with <a href="https://quarto.org/">Quarto</a>.</p>
+<p>Writing a quantitative research project in Quarto has some very notable benefits, such as great formatting, the seamless integration of graphs and results tables, and a semi-automatic list of references.</p>
+<p>But what is Quarto? Quarto is “an open-source scientific and technical publishing system”<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. When we use it in R, the document will have essentially three parts:</p>
+<ul>
+<li>YAML</li>
+<li>Text</li>
+<li>Code Chunks</li>
+</ul>
+<p>I will go through these in turn now. To follow along, I recommend you download the <a href="files/Quarto/PO33Q Assessment Template.qmd">Assessment Template</a> I wrote for my Deterinants pf Democracy module, PO33Q. Once you open it, delete the hashtag in the first line, so that Line 1 only contains three dashes <code>---</code>. Otherwise, don’t do anything with it, yet. But whilst you are reading what I am discussing here, try to match it to what you see in the qmd file. If you want to jump ahead and render it into a pdf, please follow the instructions in the <a href="https://drfloreiche.github.io/AQDR/11-Quarto.html#assessment-template">template section</a>.</p>
+<p>Once you open the essay template in R Studio, you will obtain a few more options in the task bar at the top which will allow you to turn this raw file into a pdf. More on this below, under “Rendering”.</p>
+<div style="height:1em;">
+
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="files/Quarto/visual.png" class="img-fluid figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<div style="height:1em;">
+
+</div>
+<p>It is possible that R will ask you to install the <code>quarto</code> package. Please do so, and also allow the installation of any dependencies if prompted.</p>
+<section id="yaml" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="yaml">YAML</h3>
+<p>YAML is an acronym for “Yet Another Markup Language”. This section of the document usually contains the settings for the entire document, such as the title, information about the bibliography (see below), and additional packages we might need to load. The YAML is gated by three horizontal dashes at the top and at the bottom. In the template, there is some more formatting going on outside of the YAML and finishes at line 136.</p>
+</section>
+<section id="text" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="text">Text</h3>
+<p>Then, in line 139, follows the text which you can basically type as you always would. In order to use the familiar text formatting icons that turn text into headings, or into bold, change the font size, etc. you can switch the Quarto editor to “Visual” at the top. In the template, this is set to “Source” where Quarto would expect code to achieve all of these formatting operations.</p>
+<div style="height:1em;">
+
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="files/Quarto/visual1.png" class="img-fluid figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<div style="height:1em;">
+
+</div>
+<p>Once you activate it, this task bar will appear at the top of the qmd file:</p>
+<div style="height:1em;">
+
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="files/Quarto/wysiwyg.png" class="img-fluid figure-img" style="width:90.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<div style="height:1em;">
+
+</div>
+<div class="warning">
+<p>When you structure your document, it is essential that you format headings as such in the document and don’t just make the font larger. Otherwise, the automated table of contents will not work.</p>
+<p><img src="files/Quarto/headings.png" alt="Warwick logo" style="width:40%; height:auto;"></p>
+</div>
+<p>The visual editing bar will also allow you to include external pictures (external in the sense that you are not creating them in R whilst creating the document). For this purpose, click on the image icon in the visual editing bar, and a new window will pop up. Under the tab “Image” you can select the image from a file in your computer. Be sure to add a caption in this tab, as well. This will be printed underneath the image in your pdf. Then click the tab “Attributes”, and in the box “ID” enter a unique identifier for the image you are inserting. I usually use “fig” for figure, a colon, and then the name of the figure:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="files/Quarto/labelpic.png" class="img-fluid figure-img" style="width:40.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Once you have done that, click OK, and the image will appear where you have placed it. Because you created a caption and a label, you can now refer to this picture in the text, using the <code>\ref{}</code> function. When you write</p>
+<p><code>As we can see in Figure \ref{fig:distribution} ...</code>,</p>
+<p>R will insert a cross reference which will get updated automatically when you render the document. This has the advantage that you will never have to say “the figure below” or the “figure above”. This is both imprecise and dangerous, as the position of the figure might change as you write your assessment.</p>
+<p>You can also set beautiful equations in quarto Unless you really want to explain what conditional probabilities are in the the methods section of your assessment, I don’t think you will have to use this feature, however.</p>
+</section>
+<section id="code-chunks" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="code-chunks">Code Chunks</h3>
+<p>As I mentioned in the introduction, one of the perks of writing an assignment in Quarto is that you can automate the generation of results tables. You can hide all of the ugly code, and just show a beautifully formatted table at the end. How do you do that? There are quite a few packages around to do this, but the best and most adaptable to my mind is <code>modelsummary</code>. To get started, please switch from the “Visual” mode back to “Source”. You can return to “Visual” editing mode once you are done with this.</p>
+<p>To include raw R code in a Quato dicument, we need to create a code chunk, such as this:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo=FALSE, message=F, warning=FALSE}</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To produce such a fence, there is a shortcut available on Mac and Microsoft:</p>
+<ul>
+<li>Mac: Option + Command + I</li>
+<li>Windows: Ctrl + Alt + I</li>
+</ul>
+<p>In the chunk above, I have set <code>echo=FALSE</code> which prevents the raw R code being shown in the rendered document. I have done the same thing for warnings, and messages. This should cover you for the creation of results tables.</p>
+<p>To start, we need to load two packages, <code>modelsummary</code> and <code>tinytable</code>. We will use <code>tinytable</code> to adjust the style of the “default” table produced by <code>modelsummary</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tinytable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let us now run three regression models with some data taken from the <code>carData</code> package, so we have something to display in our table:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(carData) <span class="co"># only needed for data to illustrate this here</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"Prestige"</span>, <span class="at">package =</span> <span class="st">"carData"</span>) <span class="co"># only needed for data to illustrate this here</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(prestige <span class="sc">~</span> education, <span class="at">data =</span> Prestige)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(prestige <span class="sc">~</span> income <span class="sc">+</span> type, <span class="at">data =</span> Prestige)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(prestige <span class="sc">~</span> education <span class="sc">+</span> income, <span class="at">data =</span> Prestige)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To produce the table, our first step is to store the results of all three regression models in a list:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"(1)"</span> <span class="ot">=</span> m1, <span class="st">"(2)"</span> <span class="ot">=</span> m2, <span class="st">"(3)"</span> <span class="ot">=</span> m3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>By default, the results table would print the variable names in the left hand side column (called the stub). But this is not good practice, as variable names are often cryptic and won’t allow a reader to understand the results without looking at the table (something Stimson is very adamant about). So let’s replace the variable names with their labels in a so-called coefficient map. The order in which you place the variables in this map will be replicated in the results table:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>cm <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"education"</span>   <span class="ot">=</span> <span class="st">"Years of Education"</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"income"</span>      <span class="ot">=</span> <span class="st">"Average Income"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"(Intercept)"</span> <span class="ot">=</span> <span class="st">"Constant"</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Finally, the table itself. There is a lot going on in the following code chunk, and so I have annotated it, rather than delivering an endless explanation here in the text.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the modelsummary table</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models, </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">title =</span> <span class="st">"Regression Models"</span>,     <span class="co"># this is the caption/title of the table</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">gof_omit =</span> <span class="st">'DF|Deviance|Log.Lik|F|AIC|BIC|RMSE'</span>, <span class="co"># control goodness of fit measures</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">stars=</span><span class="cn">TRUE</span>,                                    <span class="co"># info on statistical significance</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">coef_map =</span> cm,                                 <span class="co"># the coefficient map</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">escape =</span> <span class="cn">FALSE</span>,                                <span class="co"># needed for spacer below</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">notes =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">vspace{0.1</span><span class="sc">\\</span><span class="st">baselineskip}"</span>,         <span class="co"># add space before caption</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">notes_append =</span> <span class="cn">TRUE</span>)<span class="sc">|&gt;</span>                         <span class="co"># this is the custom row</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_tt</span>(<span class="at">j =</span> <span class="fu">list</span>(<span class="st">"Bivariate"</span> <span class="ot">=</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>, <span class="st">"Multivariate"</span> <span class="ot">=</span> <span class="dv">4</span>)) <span class="sc">|&gt;</span> <span class="co"># emergence/survival in assignment</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_tt</span>(<span class="at">j =</span> <span class="fu">list</span>(<span class="st">"Dependent Variable: Prestige Score"</span> <span class="ot">=</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>))<span class="sc">|&gt;</span> <span class="co"># add header</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_latex</span>(<span class="at">outer =</span> <span class="st">"label={tblr:regmodels}"</span>)<span class="sc">|&gt;</span>           <span class="co"># label for crossref</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_latex</span>(<span class="at">placement=</span> <span class="st">"H"</span>)<span class="sc">|&gt;</span>                             <span class="co"># place table [H]ere</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_latex</span>(<span class="at">resize_width=</span> <span class="fl">0.5</span>, <span class="at">resize_direction=</span><span class="st">"both"</span>)   <span class="co"># adjust table size (% of textwidth)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div style="width:75%; margin:auto;">
+<div class="cell">
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script>
+
+      function styleCell_hqbzam3gpahn8l5s9800(i, j, css_id) {
+          var table = document.getElementById("tinytable_hqbzam3gpahn8l5s9800");
+          var cell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
+          if (cell) {
+              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
+              cell.classList.add(css_id);
+          } else {
+              console.warn(`Cell at (${i}, ${j}) not found.`);
+          }
+      }
+      function spanCell_hqbzam3gpahn8l5s9800(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_hqbzam3gpahn8l5s9800");
+        const targetCell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
+        if (!targetCell) {
+          console.warn(`Cell at (${i}, ${j}) not found.`);
+        }
+
+        // Get all cells that need to be removed
+        const cellsToRemove = [];
+        for (let r = 0; r < rowspan; r++) {
+          for (let c = 0; c < colspan; c++) {
+            if (r === 0 && c === 0) continue; // Skip the target cell
+            const cell = table.querySelector(`[data-row="${i + r}"][data-col="${j + c}"]`);
+            if (cell) {
+              cellsToRemove.push(cell);
+            }
+          }
+        }
+
+        // Remove all cells
+        cellsToRemove.forEach(cell => cell.remove());
+
+        // Set rowspan and colspan of the target cell if it exists
+        if (targetCell) {
+          targetCell.rowSpan = rowspan;
+          targetCell.colSpan = colspan;
+        }
+      }
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '-1', j: 3 },  ], css_id: 'tinytable_css_btriaozgyameq6c0mh4s',}, 
+          { positions: [ { i: '-2', j: 3 }, { i: '-2', j: 2 },  ], css_id: 'tinytable_css_o0e3cdygo1pd22q1vt7g',}, 
+          { positions: [ { i: '6', j: 2 }, { i: '6', j: 1 }, { i: '6', j: 3 },  ], css_id: 'tinytable_css_8uk8ubsa265km5rydh09',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '5', j: 1 }, { i: '1', j: 3 }, { i: '4', j: 1 }, { i: '4', j: 3 }, { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '5', j: 3 }, { i: '3', j: 1 }, { i: '3', j: 3 }, { i: '2', j: 3 },  ], css_id: 'tinytable_css_xr79ujaxv2831ariahi2',}, 
+          { positions: [ { i: '-2', j: 1 },  ], css_id: 'tinytable_css_uxuoczjvhc5uwph5od8l',}, 
+          { positions: [ { i: '-1', j: 2 }, { i: '-1', j: 1 },  ], css_id: 'tinytable_css_d9450bwqg5urw0f2c3sy',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 3 }, { i: '0', j: 2 },  ], css_id: 'tinytable_css_uq7ki6pqlzjvfavlplgs',}, 
+          { positions: [ { i: '6', j: 0 },  ], css_id: 'tinytable_css_n9mxg601apdyjiji962o',}, 
+          { positions: [ { i: '1', j: 0 }, { i: '2', j: 0 }, { i: '3', j: 0 }, { i: '4', j: 0 }, { i: '5', j: 0 },  ], css_id: 'tinytable_css_oza086buypzibmvtybvx',}, 
+          { positions: [ { i: '-2', j: 0 },  ], css_id: 'tinytable_css_b3cfjrgmx5nqzs3q0nzk',}, 
+          { positions: [ { i: '-1', j: 0 },  ], css_id: 'tinytable_css_7dfp988naoprumvcdr1w',}, 
+          { positions: [ { i: '0', j: 0 },  ], css_id: 'tinytable_css_80hp0lob7fdtjkix9uwd',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  styleCell_hqbzam3gpahn8l5s9800(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <style>
+      /* tinytable css entries after */
+      .table td.tinytable_css_btriaozgyameq6c0mh4s, .table th.tinytable_css_btriaozgyameq6c0mh4s { text-align: center; text-align: center; }
+      .table td.tinytable_css_o0e3cdygo1pd22q1vt7g, .table th.tinytable_css_o0e3cdygo1pd22q1vt7g { text-align: center; border-top: solid #d3d8dc 0.1em; text-align: center; }
+      .table td.tinytable_css_8uk8ubsa265km5rydh09, .table th.tinytable_css_8uk8ubsa265km5rydh09 { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_xr79ujaxv2831ariahi2, .table th.tinytable_css_xr79ujaxv2831ariahi2 { text-align: center; }
+      .table td.tinytable_css_uxuoczjvhc5uwph5od8l, .table th.tinytable_css_uxuoczjvhc5uwph5od8l { text-align: center; border-top: solid #d3d8dc 0.1em; text-align: center; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_d9450bwqg5urw0f2c3sy, .table th.tinytable_css_d9450bwqg5urw0f2c3sy { text-align: center; text-align: center; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_uq7ki6pqlzjvfavlplgs, .table th.tinytable_css_uq7ki6pqlzjvfavlplgs { text-align: center; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_n9mxg601apdyjiji962o, .table th.tinytable_css_n9mxg601apdyjiji962o { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_oza086buypzibmvtybvx, .table th.tinytable_css_oza086buypzibmvtybvx { text-align: left; }
+      .table td.tinytable_css_b3cfjrgmx5nqzs3q0nzk, .table th.tinytable_css_b3cfjrgmx5nqzs3q0nzk { text-align: left; border-top: solid #d3d8dc 0.1em; text-align: center; }
+      .table td.tinytable_css_7dfp988naoprumvcdr1w, .table th.tinytable_css_7dfp988naoprumvcdr1w { text-align: left; text-align: center; }
+      .table td.tinytable_css_80hp0lob7fdtjkix9uwd, .table th.tinytable_css_80hp0lob7fdtjkix9uwd { text-align: left; border-bottom: solid #d3d8dc 0.05em; }
+    </style>
+    <div class="container">
+      <table class="table table-borderless" id="tinytable_hqbzam3gpahn8l5s9800" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true"><caption><p>Regression Models</p></caption>
+        <thead>
+<tr>
+<th scope="col" align="center" colspan="1" data-row="-2" data-col="0"> </th>
+<th scope="col" align="center" colspan="3" data-row="-2" data-col="1">Dependent Variable: Prestige Score</th>
+</tr>
+<tr>
+<th scope="col" align="center" colspan="1" data-row="-1" data-col="0"> </th>
+<th scope="col" align="center" colspan="2" data-row="-1" data-col="1">Bivariate</th>
+<th scope="col" align="center" colspan="1" data-row="-1" data-col="2">Multivariate</th>
+</tr>
+        
+              <tr>
+                <th scope="col" data-row="0" data-col="0"> </th>
+                <th scope="col" data-row="0" data-col="1">(1)</th>
+                <th scope="col" data-row="0" data-col="2">(2)</th>
+                <th scope="col" data-row="0" data-col="3">(3)</th>
+              </tr>
+        </thead>
+        <tfoot><tr><td colspan="4">+ p &lt; 0.1, * p &lt; 0.1, ** p &lt; 0.05, *** p &lt; 0.01</td></tr></tfoot>
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="0">Years of Education</td>
+                  <td data-row="1" data-col="1">5.361***</td>
+                  <td data-row="1" data-col="2"></td>
+                  <td data-row="1" data-col="3">4.137***</td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="0"></td>
+                  <td data-row="2" data-col="1">(0.332)</td>
+                  <td data-row="2" data-col="2"></td>
+                  <td data-row="2" data-col="3">(0.349)</td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="0">Average Income</td>
+                  <td data-row="3" data-col="1"></td>
+                  <td data-row="3" data-col="2">0.001***</td>
+                  <td data-row="3" data-col="3">0.001***</td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="0"></td>
+                  <td data-row="4" data-col="1"></td>
+                  <td data-row="4" data-col="2">(0.000)</td>
+                  <td data-row="4" data-col="3">(0.000)</td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="0">Constant</td>
+                  <td data-row="5" data-col="1">-10.732**</td>
+                  <td data-row="5" data-col="2">27.997***</td>
+                  <td data-row="5" data-col="3">-6.848*</td>
+                </tr>
+                <tr>
+                  <td data-row="6" data-col="0"></td>
+                  <td data-row="6" data-col="1">(3.677)</td>
+                  <td data-row="6" data-col="2">(1.801)</td>
+                  <td data-row="6" data-col="3">(3.219)</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+</div>
+<p>Because we have included a label, you can now refer to this table with a cross-reference in the text, for example by writing <code>As we can see in Table \ref{tblr:regmodels} ...</code>. For more information on styling options, please consult the <a href="https://modelsummary.com/">modelsummary webpage</a>. I have split the code chunks into smaller parts for explanatory purposes here, but you can do all of this in one, big code chunk, such as this:</p>
+<pre><code>```{r, echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
+# set your wd
+setwd()
+
+# load packages
+library(modelsummary)
+library(tinytable)
+
+# load data
+
+# carry out the analysis
+
+# write the modelsummary code
+modelsummary()
+
+```
+</code></pre>
+<p>It is important that none of the code in this mini-script produces any visible output (everything needs to be carried out quietly and would not produce output in the console if executed from an R Script), as these results will otherwise appear in the final document. It almost goes without saying that the data set you are analysing will also have to be present in the folder that contains the qmd file<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
+<p>I recommend you use a regular RScript to carry out the analysis, as you can execute commands, and play around with this more easily (rather than rendering the entire thing every time). Once you are happy with the output, create the chunk in the .qmd file and copy/paste your code.</p>
+</section>
+<section id="list-of-references" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="list-of-references">List of References</h3>
+<p>OK, the biggest selling point of this is probably that Quarto will auto-generate a complete list of references by pressing a button. By the way, do you know what the difference is between a bibliography and a list of references?</p>
+<div class="def">
+<p>A <strong>bibliography</strong> lists all sources you have consulted for a project regardless of whether they are cited in the text, whereas a <strong>list of references</strong> only lists what has been cited in the text.</p>
+<p><strong>Warning:</strong></p>
+<p>The <a href="https://warwick.ac.uk/fac/soc/pais/currentstudents/undergraduate/handbook/coursework/#bibliography">PAIS UG Handbook</a> wants you to produce a list of references, but calls it a bibliography 🙄. Please produce a list of references, and call it “List of References” in this assessment. You know better now.</p>
+<p>This list of references must:</p>
+<ul>
+<li>
+be organised alphabetically by surname of author
+</li>
+<li>
+not be in bullet points
+</li>
+<li>
+consistently formatted
+</li>
+<li>
+preferably APA styled, but I’m not too precious as long as it’s consistent
+</li>
+</ul>
+</div>
+<p>I wrote earlier that generating the list of references is <strong>semi</strong>-automatic, because – as you will have come to realise by now – there is no such thing as a free lunch. The process requires a little preparation, and I am afraid some in-text code.</p>
+<p>First, you need to create a separate file in which all of the sources you wish to cite are hosted – a so called .bib file. You can download the full .bib file for each module I teach in the <a href="https://drfloreiche.github.io/downloads.html">Downloads Section of my GitHub page</a>, in the hope that it already covers some sources you may wish to cite in your assessment. You can open this file in R Studio. As you will see, the structure of each entry depends on the type of document you are citing: a book, an article in a journal, or a website, for example. Here is an entry for a book:</p>
+<div style="height:1em;">
+
+</div>
+<pre><code>
+@Book{prz:2000,
+  author    = {Adam Przeworski and Michael E. Alvarez and Jos\'e A. Cheibub and Fernando Limongi},
+  publisher = {Cambridge: Cambridge University Press},
+  title     = {{Democracy and Development - Political Institutions and Well-Being in the World, 1950-1990}},
+  year      = {2000},
+  doi       = {10.1017/CBO9780511804946},
+}
+</code></pre>
+<p>In this entry, <code>prz:2000</code> is called the citation key. This is what you will use in the qmd file. For example when you type <code>\citep{prz:2000}</code> this will be shown as <span class="citation" data-cites="prz:2000">(<strong>prz:2000?</strong>)</span> in the final document. In the template, I have enabled the following styles for including a reference in the text:</p>
+<div style="height:1em;">
+
+</div>
+<div class="custom-html-table">
+<div style="width:75%; margin:auto;">
+<table class="table">
+<colgroup>
+<col style="width: 45%">
+<col style="width: 54%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Input</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>\citep{prz:2000}</code></td>
+<td>(Przeworski et al., 2000)</td>
+</tr>
+<tr class="even">
+<td><code>\citep[p. 20]{prz:2000}</code></td>
+<td>(Przeworski et al., 2000, p.&nbsp;20)</td>
+</tr>
+<tr class="odd">
+<td><code>\citep[see][p. 20]{prz:2000}</code></td>
+<td>(see Przeworski et al., 2000, p.&nbsp;20)</td>
+</tr>
+<tr class="even">
+<td><code>\citet{prz:2000}</code></td>
+<td>Przeworski et al.&nbsp;(2000)</td>
+</tr>
+<tr class="odd">
+<td><code>\citet[p. 20]{prz:2000}</code></td>
+<td>Przeworski et al.&nbsp;(2000, p.&nbsp;20)</td>
+</tr>
+<tr class="even">
+<td><code>\citet[see][p. 20]{prz:2000}</code></td>
+<td>see Przeworski et al.&nbsp;(2000, p.&nbsp;20)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div style="height:1em;">
+
+</div>
+<p>When you render the essay template, Quarto will automatically put a list of references together and place it where it belongs<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. But how do you render the document?</p>
+</section>
+<section id="rendering" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="rendering">Rendering</h2>
+<p>To convert the qmd file to a pdf, you will have to “render” the qmd file. An icon with an arrow is located in the task bar at the top whenever you have an qmd file open. Click it to start the conversion.</p>
+<div class="warning">
+<p>When there is a mistake in your qmd file, such as an unbalanced bracket in a code chunk, for example, R will not render the pdf. Therefore, knit your document regularly, so that you can trace the error more easily.</p>
+</div>
+</section>
+</section>
+<section id="assessment-template" class="level1 unnumbered">
+<h1 class="unnumbered">Assessment Template</h1>
+<p>In order to make your life as easy as possible, I have put together an Assessment Template in the form of an qmd file that you can knit in R. The template is for for my Determinants of Democracy module (PO33Q), but you can easily adapt it to suit the needs for assessments on other modules. You can download it <a href="files/Quarto/PO33Q Assessment Template.qmd">here</a>. In order to knit this document, you need to remove the hashtag in the first line, so that line 1 only contains three dashes <code>---</code>, and place the following files in the same folder as the qmd file:</p>
+<ul>
+<li><a href="files/Quarto/Crest.png">Warwick Crest</a> for the title page.</li>
+<li><a href="files/Quarto/Warwick.png">Warwick Text</a> for the title page.</li>
+<li><a href="files/Quarto/referencesPO33Q.bib">referencesPO33Q.bib</a> which contains all entries for the complete <a href="files/Downloads/PO33Q_Bibliography.pdf">bibliography</a> of the module.</li>
+</ul>
+<p>Render / knit this document without making any changes to ensure this works. It should look like <a href="files/Quarto/PO33Q-Assessment-Template.pdf">this</a>. Then you can start writing your assessment. Again, let me encourage you to render/knit the document often, so that you can locate a potential mistake more easily should you receive an error message.</p>
+<section id="the-template-explained" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="the-template-explained">The Template Explained</h2>
+<p>There is quite a bit of formatting going on in the qmd file, and this is what all of this code achieves:</p>
+<ul>
+<li>Light grey background to improve readability (a little present to myself for marking)</li>
+<li>Font size 12, one-half spacing</li>
+<li>Main font: Latin Modern Sans Serif for legibility</li>
+<li>Maths font: Fira Maths, ditto</li>
+<li>Title page with module name, your registration number, submission date, and word count. No page number.</li>
+<li>Page numbering in Roman numerals for table of contents, list of figures, and list of tables</li>
+<li>Table of contents, list of figures, and list of tables are automatic</li>
+<li>Page numbering in Arabic numerals from the start of the text</li>
+<li>All captions are placed beneath figures and tables</li>
+<li>Fully adjustable size of <code>modelsummary</code> table (controlled via percentage of text width), so you can control the number of words the table “costs”</li>
+<li>Automatic page break if there are fewer than seven lines after a (sub-)section heading</li>
+<li>Automatic List of References, formatted in APA (American Psychological Association) style</li>
+<li>Appendix after the List of References</li>
+<li>Code chunks are set by default not to show the code in the rendered file. Messages, warnings, and errors are suppressed</li>
+</ul>
+</section>
+<section id="assessment-submission" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="assessment-submission">Assessment Submission</h2>
+<p>When it comes to submitting your assessment, please only submit the rendered pdf, and NOT the qmd file. This will not be accepted by Tabula. If you wish to use Quarto on modules other than those taught by me, then please consult the module director whether they are happy to accept submissions in pdf format.</p>
+<p>For the purpose of reproducibility, please ensure that you have copied and pasted your complete RScript into the Appendix section of the template. By complete I mean a script that takes you (or anybody else) from loading the original data set (“as is”) to the output you include in the assignment you submit on Tabula. The script should be properly annotated to make your work reproducible and easy to follow.</p>
+
+
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>https://quarto.org/<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>You can create absolute and relative file paths to other locations, but let’s not over-complicate things here.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Otherwise, this will be placed into the document as the very last thing, but because you have an appendix, I needed to overrule this behaviour in the template.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const buttons = document.querySelectorAll(".delayed-download");
+
+    buttons.forEach(function (btn) {
+      const releaseDate = new Date(btn.dataset.date);
+      const now = new Date();
+
+      if (now >= releaseDate) {
+        btn.classList.remove("disabled");
+        btn.setAttribute("aria-disabled", "false");
+        btn.setAttribute("href", btn.dataset.path);
+        btn.setAttribute("download", btn.dataset.path.split('/').pop());
+        btn.innerHTML = btn.dataset.label || "📄 Download Document";
+      }
+    });
+  });
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./10-logit.html" class="pagination-link" aria-label="Logistic Regression">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Logistic Regression</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./12-downloads.html" class="pagination-link" aria-label="Downloads">
+        <span class="nav-page-text"><span class="chapter-title">Downloads</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
